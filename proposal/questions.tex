@@ -1,0 +1,55 @@
+\fancybreak{\pfbreakdisplay}
+
+\section{Research Questions}
+\label{sec:questions}
+
+An essential part of knowing what kind of search-driven tools could help developers find the right examples to reuse is knowing precisely why search-driven development is so difficult. I would examine this question by answering the following guiding questions: 
+
+\begin{itemize}
+	
+	\item[RQ1] What kind of SnipR commands could be invoked directly---and 
+	non-intrusively---from the search box? 
+	
+	Unpacking this a bit, I am looking for a design of code retargeting commands that 
+	could be invoked directly from the search box without losing any sight of the current 
+	search goal. This design should balance two inter-related principles: ease of use and 
+	generality. That is, it should resemble the language used by developers when 
+	modifying source code.
+	
+	% \item[RQ1] How does \emph{SnipR} compare to existing search-driven development 
+	% 	systems~\cite{Bajracharya:2010um, Gysin:2010kt, Hartmann:2010hx, McMillan:2012dj, Sawadsky:2011eh, Wightman:2012gc} and are there any decisive factors in deciding on the approach or 
+	% 	system to be used for search-driven development? 
+	% 	
+	% 		
+	% 	I will show \emph{SnipR} is less a competitor to any of the above referenced systems and more 
+	% 	of a platform. It is an effective way to improve the search for suitable 
+	% 	examples, but any number of other development tools can come into play after 
+	% 	the retargeting of the first few examples.  
+	% 	%\emph{SnipR} will target a situation where the users don't know what they want until 
+	% 	%they see it. There's no prior knowledge about the usefulness or uselessness of those 
+	% 	%examples, and there is limited time and resources.
+	% 	
+	\item[RQ2] What is the impact on programming time when retargeting is done at the 
+	integrated development environment versus when it is done at the search interface?  
+	
+	Significant amount of time is lost when developers must move retrieved code from one 
+	environment to another. The screening and changing of the retrieved code at the 
+	search interface would minimize any back and forth movement between results 
+	evaluation and further searches.
+	
+	\item[RQ3] Will productivity time increase when using SnipR versus not using SnipR?
+	
+	Retargeting time is directly linked to integration time. If integration time goes 
+	down, then productivity time goes up. Since SnipR is trying to minimize 
+	integration time, then productivity is likely to increase.
+	
+	\item[RQ4] Would the very way code manipulation is piggy-backed to query processing 
+	and advised by users' queries lead to a successful code integration?
+	
+	If the most suitable results are found by retargeting, then the odds of code 
+	integration success are increased. By validating the SnipR approach 
+	and results in practice, I would be able to confirm whether the retargeted code 
+	produced by SnipR was successfully integrated.
+\end{itemize}
+
+All this work is motivated by a grander vision of where the next generation of programming practices and behaviors involving code search could take us. I, for one, believe the time is ripe to change the role of code search as a development tool; i.e., changing its role from a mere supporting role to a starring role.
