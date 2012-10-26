@@ -6,7 +6,7 @@ def config
 end
 
 # main TeX file without extension
-config['main'] = 'master'
+config['main'] = 'proposal'
 
 # TeX command to invoke: xelatex, pdflatex, etc
 config['latex'] = 'pdflatex'
