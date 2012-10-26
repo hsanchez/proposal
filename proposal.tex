@@ -1,0 +1,97 @@
+\documentclass[fontsize=8pt]{memoir} % use article if you want to use the old IPAD latex 
+% otherwise use memoir class
+\usepackage[utf8]{inputenc}
+\usepackage[paperwidth=9cm, paperheight=11.5cm, top=0.5cm, left=0.5cm, right=0.5cm, bottom=0.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{url}
+
+% remove this if you wanted to use the old IPAD latex
+% just added
+\usepackage{tikz, blindtext}
+
+\makechapterstyle{box}{
+  \renewcommand*{\printchaptername}{}
+  \renewcommand*{\chapnumfont}{\normalfont\sffamily\huge\bfseries}
+  \renewcommand*{\printchapternum}{
+    \flushright
+    \begin{tikzpicture}
+      \draw[fill,color=black] (0,0) rectangle (2cm,2cm);
+      \draw[color=white] (1cm,1cm) node { \chapnumfont\thechapter };
+    \end{tikzpicture}
+  }
+  \renewcommand*{\chaptitlefont}{\normalfont\sffamily\Huge\bfseries}
+  \renewcommand*{\printchaptertitle}[1]{\flushright\chaptitlefont##1}
+}
+
+% end of just added
+
+
+% fonts
+
+%%\usepackage[scaled]{helvet}
+%%\usepackage[defaultsans]{droidsans}
+%%\usepackage[scaled]{libertine} 
+%%\usepackage{lmodern} 
+
+%% \usepackage[T1]{fontenc}
+%% \usepackage{berasans}
+
+% \usepackage[default]{gfsneohellenic}
+% \usepackage[LGR,T1]{fontenc}
+
+% \usepackage[light,math]{kurier}
+% \usepackage[T1]{fontenc}
+
+% \usepackage[math]{iwona}
+% \usepackage[T1]{fontenc}
+
+\usepackage{cmbright}
+\usepackage[T1]{fontenc}
+
+\renewcommand*\familydefault{\sfdefault}
+
+% end of fonts
+
+% uncomment this if you wanted to use the old IPAD latex
+% \newcommand{\chapter}[2]{\begin{center}\section*{#1}\textbf{#2}\end{center}}
+
+\usepackage{todo}
+%Begin Decorative packages
+\usepackage{type1cm}
+\usepackage{lettrine}
+\usepackage{fourier-orns}
+
+\renewcommand{\pfbreakdisplay}{%
+\decofourright\quad\decofourright\quad\decofourright
+}
+
+\usepackage{natbib}
+
+%End decorative packages
+
+\frenchspacing
+\sloppy
+\pagestyle{empty}
+
+% remove this if you wanted to use the old IPAD latex
+\chapterstyle{box}
+\begin{document}
+
+\title{\uppercase{SnipR}: Anticipating the Usefulness of Code Examples Via Code Retargeting.}
+\author{by Huascar A. Sanchez}
+
+\date{}
+\maketitle
+%\newpage
+%\noindent
+%[Disclaimer: For sake of convenience, I am temporarily using this latex template to improve the readability and accessibility of this document. Page margins and font size are increased, etc., giving the illusion of long sections. This template works perfectly in cases where you want to review this document from portable devices, such as the iPhone, iPad, Kindle, Android Tablet, etc.]
+% \newpage
+
+\input{proposal/intro}
+\input{proposal/relatedwork}
+
+\todos
+\bibliographystyle{abbrv}
+\bibliography{proposal}
+
+\end{document}
