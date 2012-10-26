@@ -8,3 +8,7 @@ $ sudo gem install rake
 
 To run:
 $ rake pdf
+
+
+To clean:
+$ rake clean
