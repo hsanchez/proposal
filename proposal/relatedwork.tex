@@ -1,19 +1,31 @@
 \chapter{Related Work}{}
 \label{sec:related}
 
-\lettrine[lraise=0.1, nindent=0em, slope=-.5em]{S} {NIPR IS RELATED} to prior work in three areas: example-centric programming; better code search systems; and systems for transitioning code to alternate contexts and/or APIs.
+\lettrine[lraise=0.1, nindent=0em, slope=-.5em]{S} {NIPR IS RELATED TO} prior work in three areas: example-centric programming; better code search systems; and systems for transitioning code to alternate contexts and/or APIs.
 
 \fancybreak{\pfbreakdisplay}
 
 \subsection{Finding Suitable Examples}
 \label{sec:codesearch}
 
-Many systems have been built to aid programmers with finding trustable and relevant example code. This includes systems that have gone on to include communal input or knowledge collaboration to suggest solutions to problems in the programmers' code. These systems differ from \emph{SnipR} in focus and approach. Instead of enabling programmers to examine---by retargeting in advance---whether a ranked search result is really suitable before trying any code integration, these systems simply return many ranked results that programmers have to manually combine and retarget to discover if an example code is a best fit. 
+Many systems have been built to aid programmers with finding trustable and relevant example code. This includes systems that have gone on to include communal input or knowledge collaboration to suggest solutions to problems in the programmers' code. These systems differ from \emph{SnipR} in focus and approach. Instead of enabling programmers to examine---by retargeting in advance---whether a searched source is really suitable for their code in progress, these systems simply return many ranked results that programmers have to manually combine and retarget to discover if an example code is a best fit. 
 
-For example, Brandt’s Blueprint system~\cite{Brandt:2010tp} couples Web search with development environments. Assieme~\cite{Hoffmann:2007wo} combines documentation search results with code snippets of the relevant functions currently in use. Stylos's Mica system~\cite{Stylos:2006gu} integrates search for documentation and example source code. Hartmann's HyperSource system~\cite{Hartmann:2011ii} associates browsing histories with source code edits. Hartmann's HelpMeOut system~\cite{Hartmann:2010hx} aids the debugging of code-related error messages by suggesting solutions that peers have applied in the past. McMillan's Portfolio and Source Code Recommender systems~\cite{McMillan:2011wq, McMillan:2012dj} combines mining written code specifications and open sourced code to recommend source code modules relevant to the application under development.
+For example, Brandt’s Blueprint system~\cite{Brandt:2010tp} couples Web search with development environments. Assieme~\cite{Hoffmann:2007wo} combines documentation search results with code snippets of the relevant functions currently in use. Stylos's Mica system~\cite{Stylos:2006gu} integrates search for documentation and example source code. Hartmann's HyperSource system~\cite{Hartmann:2011ii} associates browsing histories with source code edits. Hartmann's HelpMeOut system~\cite{Hartmann:2010hx} aids the debugging of code-related error messages by suggesting solutions that peers have applied in the past. McMillan's Source Code Recommender systems~\cite{McMillan:2012dj} combines mining written code specifications and open sourced code to recommend source code modules relevant to the application under development.
 % dont trust me just because I am telling u to do it. E.g., dont trust this code is relevant just because there is a score that tells u that.
 
 \fancybreak{\pfbreakdisplay}
 
 \subsection{Code Search Engines}
 \label{sec:searchengines}
+
+In recent years many search engines for source code have appeared. The basic idea of such engines is to let developers search for example code and to present them results for their query. These engines use either keywords, unit tests, or semantic information to find large sets of relevant example code. Working examples of new functionality and solutions to problems in the developers’ code are now just one search away. This easy access to such an amazing treasure of trove code clearly has value; however, it has also significant limitations as a platform. These engines give developers no guidance as to which result may be a best fit for the developers' code in progress, beyond the existing ranking values. As for how they differ from \emph{SnipR}, one could see \emph{SnipR} as complementary to such research in code-centric engines. Indeed, \emph{SnipR} is less a competitor to any of the above engines and more of a platform. It is a way to improve the search for suitable example code, but any number of other development tools can come into play after the retargeting of a few searched sources. 
+         
+
+Better code search engines, e.g., Sourcerer~\cite{Bajracharya:2006vn}, and Merobase~\cite{Hummel:eq}, provide ways of structured code search. They are accessible through IDEs---e.g., Eclipse---through plug-ins. These plug-ins allow developers to write unit tests, which in turn expands queries to find relevant classes and methods~\cite{Hummel:eq}. S$^{6}$ project\cite{Reiss:2009fu}, Code Genie~\cite{LazzariniLemos:2007jh}, Code Conjurer~\cite{Hummel:eq}, and Stolee's semantic searcher~\cite{Stolee:2012wp} focus on lowering the barrier for software reuse by using either a combination of meaningful specifications over source code or unit tests to search for relevant example code. McMillan's Portfolio~\cite{McMillan:2011cm, McMillan:2011wq} uses a combination of natural language processing (NLP), indexing techniques with PageRank and spreading activation network (SAN), while Prospector~\cite{Mandelin:2005uj} uses input and output types, etc.
+
+\fancybreak{\pfbreakdisplay}
+
+\subsection{Retargeting Source Code}
+\label{sec:retargetingcode}
+
+
