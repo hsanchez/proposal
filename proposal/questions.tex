@@ -11,11 +11,16 @@ An essential part of knowing what kind of search-driven tools could help develop
 	non-intrusively---from the search box? 
 	
 	Unpacking this a bit, I am looking for a design of code retargeting commands that 
-	could be invoked directly from the search box without losing any sight of the current 
+	could be invoked from the search box without losing any sight of the current 
 	search goal. This design should balance two inter-related principles: ease of use and 
-	generality. That is, it should resemble the language used by developers when 
-	modifying source code.
-	
+	generality. I will apply a simple but well principled rule to decide when I have completed this question: 
+	This question is complete when I have stopped finding reasons to change any of the already defined commands.
+		
+	% That is, it should resemble the language used by developers when 
+	% 	modifying source code, and allow a reasonable set of code changes to be expressed. By applying a 
+	% 	simple but well principled rule, I would be able to decide when I have completed this question: This question is 
+	% 	complete when I have stopped finding reasons to change any of the already defined commands.
+	% 	
 	% \item[RQ1] How does \emph{SnipR} compare to existing search-driven development 
 	% 	systems~\cite{Bajracharya:2010um, Gysin:2010kt, Hartmann:2010hx, McMillan:2012dj, Sawadsky:2011eh, Wightman:2012gc} and are there any decisive factors in deciding on the approach or 
 	% 	system to be used for search-driven development? 
@@ -29,27 +34,52 @@ An essential part of knowing what kind of search-driven tools could help develop
 	% 	%they see it. There's no prior knowledge about the usefulness or uselessness of those 
 	% 	%examples, and there is limited time and resources.
 	% 	
-	\item[RQ2] What is the impact on programming time when retargeting is done at the 
-	integrated development environment versus when it is done at the search interface?  
+	\item[RQ2] How expensive is it to retarget (part of) examples each time?
 	
-	Significant amount of time is lost when developers must move retrieved code from one 
-	environment to another. The screening and changing of the retrieved code at the 
-	search interface would minimize any back and forth movement between results 
-	evaluation and further searches.
+	This question is about answering how long it will take developers to retarget example code 
+	using \emph{SnipR}. Code modification or retargeting is an operation that can operate on a single result 
+	or an entire result set. The key idea is that, while going through the code of the results being retrieved, 
+	cases where a code mapping be applied are carefully identified---to avoid unnecessary work---and subsequently 
+	consumed. I will rely on experimentation and the creation of clever algorithms for retargeting to answer this 
+	question.     
 	
-	\item[RQ3] Will productivity time increase when using SnipR versus not using SnipR?
+	% Per Jim's comment on Sunday Oct 28, 2012 
+	% \item[RQ2] What is the impact on programming time when retargeting is done at the 
+	% integrated development environment versus when it is done at the search interface?  
+	% 
+	% Significant amount of time is lost when developers must move retrieved code from one 
+	% environment to another. The screening and changing of the retrieved code at the 
+	% search interface would minimize any back and forth movement between results 
+	% evaluation and further searches.
 	
-	Retargeting time is directly linked to integration time. If integration time goes 
-	down, then productivity time goes up. Since SnipR is trying to minimize 
-	integration time, then productivity is likely to increase.
+	\item[RQ3] How does \emph{SnipR} fit in the querying process of a modern code search engine?
 	
-	\item[RQ4] Would the very way code manipulation is piggy-backed to query processing 
-	and advised by users' queries lead to a successful code integration?
+	The question is about how we fit the \emph{SnipR} approach in the query processing of a 
+	code search engine. The answer to this question will be based on the Sourcerer\cite{Bajracharya:2006vn} 
+	Internet-scale code search engine, where the user is provided with ways of structure-based code search to 
+	find relevant example code.
+	% 
+	% \item[RQ3] Will productivity time increase when using SnipR versus not using SnipR?
+	% 
+	% Retargeting time is directly linked to integration time. If integration time goes 
+	% down, then productivity time goes up. Since SnipR is trying to minimize 
+	% integration time, then productivity is likely to increase.
 	
-	If the most suitable results are found by retargeting, then the odds of code 
-	integration success are increased. By validating the SnipR approach 
-	and results in practice, I would be able to confirm whether the retargeted code 
-	produced by SnipR was successfully integrated.
+	\item[RQ4] Will there be a productivity boost when using \emph{SnipR} versus not using \emph{SnipR}?
+	
+	Retargeting in advance is directly linked to minimizing integration time. If integration time goes 
+	down, then productivity---the time required to write a fixed amount of code---goes up. Since the 
+	retarget code produced by \emph{SnipR} is the best fit, then the integration of such code is faster than the 
+	integration of less suitable code; i.e., code that relies only on ranking values. Consequently, I anticipate a 
+	boost in productivity.
+		
+	% \item[RQ4] Would the very way code manipulation is piggy-backed to query processing 
+	% and advised by users' queries lead to a successful code integration?
+	% 
+	% If the most suitable results are found by retargeting, then the odds of code 
+	% integration success are increased. By validating the SnipR approach 
+	% and results in practice, I would be able to confirm whether the retargeted code 
+	% produced by SnipR was successfully integrated.
 \end{itemize}
 
 All this work is motivated by a grander vision of where the next generation of programming practices and behaviors involving code search could take us. I, for one, believe the time is ripe to change the role of code search as a development tool; i.e., changing its role from a mere supporting role to a starring role.
