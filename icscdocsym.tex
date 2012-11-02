@@ -1,0 +1,356 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+% *** CITATION PACKAGES ***
+%
+\usepackage{cite}
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
+% not currently provide for hyperlinked citations.
+% The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
+% The documentation is contained in the cite.sty file itself.
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+  \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../pdf/}{../jpeg/}}
+  \graphicspath{{images/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  \DeclareGraphicsExtensions{.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at: 
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found as epslatex.ps or
+% epslatex.pdf at: http://www.ctan.org/tex-archive/info/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+% *** MATH PACKAGES ***
+%
+%\usepackage[cmex10]{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics. If using
+% it, be sure to load this package with the cmex10 option to ensure that
+% only type 1 fonts will utilized at all point sizes. Without this option,
+% it is possible that some math symbols, particularly those within
+% footnotes, will be rendered in bitmap form which will result in a
+% document that can not be IEEE Xplore compliant!
+%
+% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+%\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+%\usepackage{algorithmic}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
+% There is also a support site at:
+% http://algorithms.berlios.de/index.html
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
+
+
+% *** ALIGNMENT PACKAGES ***
+%
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/tools/
+
+
+%\usepackage{mdwmath}
+%\usepackage{mdwtab}
+% Also highly recommended is Mark Wooding's extremely powerful MDW tools,
+% especially mdwmath.sty and mdwtab.sty which are used to format equations
+% and tables, respectively. The MDWtools set is already installed on most
+% LaTeX systems. The lastest version and documentation is available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/mdwtools/
+
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+
+%\usepackage{eqparbox}
+% Also of notable interest is Scott Pakin's eqparbox package for creating
+% (automatically sized) equal width boxes - aka "natural width parboxes".
+% Available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/eqparbox/
+
+
+
+
+
+% *** SUBFIGURE PACKAGES ***
+%\usepackage[tight,footnotesize]{subfigure}
+% subfigure.sty was written by Steven Douglas Cochran. This package makes it
+% easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
+% work, it is a good idea to load it with the tight package option to reduce
+% the amount of white space around the subfigures. subfigure.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at:
+% http://www.ctan.org/tex-archive/obsolete/macros/latex/contrib/subfigure/
+% subfigure.sty has been superceeded by subfig.sty.
+
+
+
+%\usepackage[caption=false]{caption}
+%\usepackage[font=footnotesize]{subfig}
+% subfig.sty, also written by Steven Douglas Cochran, is the modern
+% replacement for subfigure.sty. However, subfig.sty requires and
+% automatically loads Axel Sommerfeldt's caption.sty which will override
+% IEEEtran.cls handling of captions and this will result in nonIEEE style
+% figure/table captions. To prevent this problem, be sure and preload
+% caption.sty with its "caption=false" package option. This is will preserve
+% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later 
+% (recommended due to many improvements over 1.2) of subfig.sty supports
+% the caption=false option directly:
+%\usepackage[caption=false,font=footnotesize]{subfig}
+%
+% The latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
+% The latest version and documentation of caption.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/caption/
+
+
+
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure. The latest version and documentation can be found at:
+% http://www.ctan.org/tex-archive/macros/latex/base/
+
+
+
+%\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
+% Documentation is contained in the stfloats.sty comments as well as in the
+% presfull.pdf file. Do not use the stfloats baselinefloat ability as IEEE
+% does not allow \baselineskip to stretch. Authors submitting work to the
+% IEEE should note that IEEE rarely uses double column equations and
+% that authors should try to avoid such use. Do not be tempted to use the
+% cuted.sty or midfloat.sty packages (also by Sigitas Tolusis) as IEEE does
+% not format its papers in such ways.
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/misc/
+% Read the url.sty source comments for usage information. Basically,
+% \url{my_url_here}.
+
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+% Drop caps with \lettrine
+\usepackage{type1cm}
+\usepackage{lettrine}
+
+\begin{document}
+\title{\uppercase{SnipR}: Complementing Code Search with Code Retargeting Capabilities}
+
+\author{\IEEEauthorblockN{Huascar A. Sanchez\thanks{Advisor: Prof. Jim Whitehead, University of California, Santa Cruz}}
+\IEEEauthorblockA{
+Computer Science Department\\University of California, Santa Cruz\\
+Santa Cruz, CA 95060\\
+hsanchez@cs.ucsc.edu}}
+
+% conference papers do not typically use \thanks and this command
+% is locked out in conference mode. If really needed, such as for
+% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
+% after \documentclass
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+% 
+%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
+%Homer Simpson\IEEEauthorrefmark{2},
+%James Kirk\IEEEauthorrefmark{3}, 
+%Montgomery Scott\IEEEauthorrefmark{3} and
+%Eldon Tyrell\IEEEauthorrefmark{4}}
+%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
+%Georgia Institute of Technology,
+%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
+%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212, Fax: (888) 555--1212}
+%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+
+
+
+% make the title area
+\maketitle
+
+\begin{abstract}
+%\boldmath
+In a typical code search process, developers are given no guidance as to which result may be a best fit for their code in progress, beyond the use of ranking values. Tool support for predetermining whether any ranked searched source is a best fit for one’s code is still non-existent. This makes any integration tasks needlessly costly and difficult. This paper introduces a new approach in search-oriented architecture, called the Snippet Retargeting Model or simply \uppercase{SnipR}. \uppercase{SnipR} addresses the aforementioned limitation by complementing code search with code retargeting capabilities (i.e., code manipulation). The intent of these capabilities is to expedite the process of determining if a source code is a best fit--- i.e., suitable---directly from the search interface. 
+\end{abstract}
+% IEEEtran.cls defaults to using nonbold math in the Abstract.
+% This preserves the distinction between vectors and scalars. However,
+% if the conference you are submitting to favors bold math in the abstract,
+% then you can use LaTeX's standard command \boldmath at the very start
+% of the abstract to achieve this. Many IEEE journals/conferences frown on
+% math in the abstract anyway.
+
+% no keywords
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+\section{Research Problem and Solution Outline}
+\lettrine[lraise=0.1, nindent=0em, slope=-.5em]{T} {he recent rise} of Internet-scale code search engines---e.g., SEAHAWK~\cite{Bacchelli:2012dl}, Portfolio~\cite{McMillan:2011wq}, Sourcerer~\cite{Bajracharya:2006vn}, Koders~\footnote{\url{http://www.koders.com}}---has catapulted search-driven development from backwater to ubiquity, and given rise to an active research community focused on this phenomena~\cite{Bajracharya:2009fj, Bajracharya:2010iy, Bajracharya:2011kw}. The increased prevalence of such engines has given search-driven development more diverse sources of information---e.g., from open sourced code to code snippets from StackOverflow~\footnote{\url{http://www.stackoverflow.com}} on programming questions---and a more open platform---the Internet~\cite{GallardoValencia:2009gr, GallardoValencia:2010ij, Ying:2012tr}. This new condition has enabled developers to build applications opportunistically by iteratively finding, combining, and reusing online source code~\cite{Brandt:2008wi, Brandt:2009jb, Ying:2012tr}. This opportunistic way of building applications is not easy because searched sources are large, in most cases unsuitable, and quite often unrelated~\cite{GallardoValencia:2009gr}. Consequently, if search-driven development were to be established as a best practice, then the time involved in deciding the best search result(s) to reuse must be minimized.
+
+Previously published work has tried to tackle the above problem from different directions. Two of these directions are the most popular. One direction focuses entirely on enhancing search technology~\cite{Bajracharya:2010um, Gysin:2010kt, Mandelin:2005uj, McMillan:2011cm, McMillan:2012dj}, while the other direction focuses on coupling Web search and/or community-based knowledge with IDEs~\cite{Bacchelli:2012dl, Brandt:2010tp, Hartmann:2010hx, Hoffmann:2007wo, Wightman:2012gc}. Although these directions focus on addressing the trustability and relevance of search results in one way or another, none of them adequately address the \emph{suitability} of such results. In other words, developers are given no guidance as to which result may be a best fit for their code in progress, beyond the existing ranking values. Precisely, developers still have to \emph{manually} mine and try all these ranked results before they could possibly realize their usefulness---or uselessness. This limitation is one of the main reasons why search-driven development is so cumbersome, and ultimately can be a drain on one of the most precious resources in software development: time. 
+
+To alleviate this problem imposed by the above limitation, I propose a new approach in search-oriented architecture, called the Snippet Retargeting Model or simply \uppercase{SnipR}. \uppercase{SnipR} complements code search with code retargeting capabilities---i.e., code manipulation---(See Figure~\ref{fig:retargeting}). The intent of these capabilities is to expedite the process of determining if a source code is a best fit; i.e., suitable. These capabilities are embedded within \emph{query processing} in order to automatically modify retrieved source code. Each query issued by a developer is interpreted by the query engine not only as a request for a particular result set, but also as a command to retarget relevant bodies of code in that set; e.g., modify a retrieved example---in place---to use an alternative API. This offers two important advantages. If the developer retargets the source in advance, then the analysis results (i.e., evaluation) of retargeted examples are available immediately, which saves valuable human time searching for appropriate example code. If the developer is choosing what example code to retarget, then the analysis results can inform the decision, pointing the developer to the best choice. This is an attractive proposition and very different to the direction taken by previously published work. It is attractive because one can figure out as early as possible if an example code is appropriate or not. It is different because one can do this without requiring to leave the search interface. The \uppercase{SnipR} approach will be examined by addressing the following:
+
+\begin{itemize}  
+\item[RQ1] What kind of \uppercase{SnipR} commands could be invoked directly from the search box?
+\item[RQ2] How expensive is it to retarget (part of) examples each time?
+\item[RQ3] Where does \uppercase{SnipR} belong within the query processing step of any modern code search engine?
+\item[RQ4] How does the time needed to perform a more complete code search task of the SnipR approach compare to the current approaches of code search? 
+\end{itemize}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=2.5in]{images/searchprocess}
+    \caption{Search Process before and with \uppercase{SnipR}. A pre--\uppercase{SnipR} scenario requires effort from the developer to find and select the most promising examples (i.e., screening), and to evaluate each one of them before eventually consuming them (e.g., done with integration) after many code modifications in the IDE. If the resulting code is not the desired code, then the developer will restart the search process. In the \uppercase{SnipR} scenario, the developer engages in a virtuous loop where he/she finds and selects only the promising examples that can be retargeted.}
+    \label{fig:retargeting}
+\end{figure}
+
+For RQ1, a command line language for retargeting source code is proposed. This language will enable developers to intermix---or used separately---request for results and retargeting commands to explore code changes over the retrieved example code. For RQ2, a set of algorithms for learning semantic-preserving code transformations---i.e., code mappings---from example code is proposed. This also includes, a set of code retargeting operators well-suited for manipulating example code---i.e., applying code mappings---within the query processing step of a code search engine. For RQ3, a realization of the \uppercase{SnipR} conceptual architecture in a working code search engine is proposed. For RQ4, an evaluation of the efficiency of the \uppercase{SnipR} approach vs. existing approaches for code search is provided. 
+ 
+% Of the various sources of information developers find on the Web, example code is the most popular choice since they demonstrate how one should use an given API~\cite{Robillard:2009cs}. Tool support for predetermining whether any ranked example code is a best fit for one’s code is still non-existent. Researchers in search-driven development have tackled 
+
+These solutions are the anticipated contributions in Search-Driven Development and thus in Software Engineering. All this work is motivated by a grander vision of where the next generation of programming practices and behaviors involving code search could take us. The time is ripe to change the role of code search as a development tool from a mere supporting role to a starring role. For the rest of the paper, the focus will shift to the proposed solution to RQ1 (Section~\ref{sec:rq1}), and briefly describe RQ2, RQ3, and RQ4. Section~\ref{sec:rq1} outlines the progress to date.
+
+\section{Proposed Solutions}
+\subsection{The kinds of \uppercase{SnipR} commands that could be invoked directly from the search box (RQ1)}
+\label{sec:rq1}
+Unpacking this a bit, the key idea is to design a set of retargeting commands that could be invoked from the search box without losing any sight of the current search goal. This design should balance two inter-related principles: ease of use and generality. To better understand what it would take to achieve this goal, I'll turn to seminal work on sloppy command lines for Web~\cite{Little:2007dh, Miller:2008ge} and linguistic command lines~\cite{Raskin:2008wb}. Similar to these systems, the \uppercase{SnipR}'s command line will have a flexible syntax requirements. This flexibility will allow request for results and commands to be intermixed---or used separately---by the developer to perform code modifications on retrieved example code. A simple but well principled rule will be applied to decide when I have completed RQ1: This question is complete when I have stopped finding reasons to change any of the already defined commands. Previous work in command lines for code modifications exist and could be usually found in mainstream IDEs such as Eclipse\footnote{\url{http://www.eclipse.org}} and IntelliJ IDEA\footnote{\url{http://www.jetbrains.com}}. In contrast, with \uppercase{SnipR} developers will continue to use their Web browser. 
+
+\subsection{Performing Code Retargeting (RQ2, RQ3, and RQ4)}
+
+Code modification or retargeting is an operation that can operate on a single result or an entire result set. Hence, this requires that, while going through the code of the results being retrieved, cases where a code mapping can be learned and/or applied are carefully identified---to avoid any unnecessary work---and subsequently consumed. Consequently, one must guarantee a few things if one wants automatic code modifications as part of search. First, these algorithms should be reliable and cached conscious (RQ2). They should reliable in the sense of consistently learning code mappings from example code. They should be cached conscious in the sense that they will try to exploit recently read example code if this code must read again in the future. Second, reliable retargeting operators should be created to apply the learned mappings (RQ2) and should be as close to the existing query operators as possible---i.e., they should embedded within the querying processing step of a code search engine (RQ3). 
+
+The SnipR approach is based on the hypothesis that if the developer retargets searched sources in advance, then the analysis results (See the evaluation step in Figure~\ref{fig:retargeting}) of \emph{retargeted examples} are available immediately. This immediate feedback saves valuable human time searching for appropriate example code. As a result, by getting this immediate feedback, the developer gets the work done more quickly (RQ4). This will hold true only if \uppercase{SnipR}'s retargeting operations are efficient, will be demonstrated by answering RQ2. 
+
+Experimentation will be the main tool to answer all of these questions. The experimentation will be based on a working system for code search, such the Sourcerer\cite{Bajracharya:2006vn} Internet-scale code search engine, where the user is provided with ways of structure-based code search to find relevant example code. As for the related work, previous work in transitioning code to alternate contexts and/or APIs exist. The result of this work are systems that help developers with many development tasks, such adapting example code to new contexts~\cite{Wightman:2012gc} or APIs~~\cite{Nita:2010en}, quickly resolving many simple coding errors\footnote{Quick Fix Scout: \url{https://code.google.com/p/quick-fix-scout/}}, or suggesting ways for correcting compiler and runtime errors~\cite{Hartmann:2010hx}. Unlike SnipR, any interaction for finding and/or integrating any example code or solution to a problem in the developer's code is done directly in the IDE. 
+
+\section{Progress to Date}
+\label{sec:progress}
+This work is still at early stages. Work in progress include my advancement to candidacy by the end of this year, and an early design of the command line language for retargeting source code. The development of code retargeting algorithms, the realization of the \uppercase{SnipR} conceptual architecture, and the development of a set of retargeting operators are work that remains.
+
+\section{Conclusion}
+This paper has introduced \uppercase{SnipR}, an approach that complements code search with code retargeting capabilities. Unlike prior work, the \uppercase{SnipR} enables developers to engage in a virtuous loop where they find and select only the promising example code that can be retargeted. This will minimize the number of iterations in the search process the developer has to go through, since the evaluation step is only dealing with best choices---choices that would be easier to consume at the IDE. It is envisioned that \uppercase{SnipR} is seen as less a competitor and more of a platform. It is geared towards improving the search for suitable example code, but any number other search-driven development tools can come into play after the retargeting of a few code examples.      
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+\bibliography{IEEEabrv,icscdocsym}
+%
+	
+\end{document}
