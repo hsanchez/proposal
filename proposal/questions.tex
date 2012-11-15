@@ -9,11 +9,11 @@ An essential part of knowing what kind of search-driven tools could help develop
 	
 	\item[RQ1] What kind of SnipR commands could be invoked directly from the search box? 
 	
-	Unpacking this a bit, I am looking for a design of code retargeting commands that 
-	could be invoked from the search box without losing any sight of the current 
-	search goal. This design should balance two inter-related principles: ease of use and 
-	generality. I will apply a simple but well principled rule to decide when I have completed this question: 
-	This question is complete when I have stopped finding reasons to change any of the already defined commands.
+	The aim is to design a set of retargeting commands that could be invoked from the search box, 
+	without losing any sight of the current search goal. This design should balance two 
+	inter-related principles: ease of use and generality. A simple but well principled rule 
+	will be applied to decide when RQ1 has been completed: there are no longer reasons to 
+	change any of the already defined commands.
 		
 	% That is, it should resemble the language used by developers when 
 	% 	modifying source code, and allow a reasonable set of code changes to be expressed. By applying a 
@@ -36,11 +36,12 @@ An essential part of knowing what kind of search-driven tools could help develop
 	\item[RQ2] How expensive is it to retarget (part of) examples each time?
 	
 	This question is about answering how long it will take developers to retarget example code 
-	using \emph{SnipR}. Code modification or retargeting is an operation that can operate on a single result 
-	or an entire result set. The key idea is that, while going through the code of the results being retrieved, 
-	cases where a code mapping can be applied are carefully identified---to avoid unnecessary work---and subsequently 
-	consumed. I will rely on experimentation and the creation of clever algorithms for retargeting to answer this 
-	question.     
+	using \uppercase{SnipR}. Code retargeting is an operation that can operate on a 
+	single result or an entire result set. Therefore, this operation requires that those cases where 
+	code mappings can be learned and/or applied are carefully identified. This will prevent any 
+	unnecessary work from happening as matched code examples are being returned by the query engine. 
+	I will rely on experimentation and the creation of clever algorithms for retargeting to answer 
+	this question.     
 	
 	% Per Jim's comment on Sunday Oct 28, 2012 
 	% \item[RQ2] What is the impact on programming time when retargeting is done at the 
@@ -51,7 +52,7 @@ An essential part of knowing what kind of search-driven tools could help develop
 	% search interface would minimize any back and forth movement between results 
 	% evaluation and further searches.
 	
-	\item[RQ3] Where does \emph{SnipR} belong within the query processing step of any 
+	\item[RQ3] Where does \uppercase{SnipR} belong within the query processing step of any 
 	modern code search engine?
 	
 	The answer to this question will be based on a working system for code search, such as 
@@ -71,14 +72,15 @@ An essential part of knowing what kind of search-driven tools could help develop
 	% \item[RQ4] How does the performance---in terms of the time needed to perform a more complete 
 	% code search task---of the SnipR approach compare to the current approaches of code search? 
 	
-	\item[RQ4] How does the time needed to perform a more complete code search task of the SnipR approach compare 
-	to the current approaches of code search? 
+	\item[RQ4] How does the time needed to perform a more complete code search task of the 
+	\uppercase{SnipR} approach compare to the current approaches of code search? 
 	
-	If the developer retargets the source in advance, then the analysis results (See the evaluation step in 
-	Figure~\ref{fig:retargeting}) of retargeted examples are available immediately. This immediate feedback saves 
-	valuable human time searching for appropriate example code. As a result, by getting immediate feedback, the developer 
-	gets the work done more quickly. This will hold true only if \emph{SnipR}'s retargeting operations are efficient, which 
-	will be demonstrated by answering RQ2.
+	If the developer is retargeting the source in advance, then the evaluation results of 
+	retargeted examples are available immediately (See \uppercase{SnipR} scenario in 
+	Figure~\ref{fig:retargeting}). This immediate feedback saves valuable time searching for an 
+	appropriate example code. As a result, by getting immediate feedback, the developer gets the 
+	work done more quickly. This will hold true only if \uppercase{SnipR}'s retargeting operations 
+	are efficient, which will be demonstrated by answering RQ2.
 	
 	% 
 	%  
