@@ -15,7 +15,7 @@
 Eager retargeting is the policy of continually making code changes on a result (s), and feeding any suitability scrutiny on the outcome back into the search process\footnote{A rapid experimentation of example code}. A process that has such a policy operates under two assumptions:
 
 \begin{enumerate}
-	\item Code retargeting is a \emph{cheap} operation, and
+	\item Code retargeting is a \emph{cheap}---efficient---operation, and
 	\item Code retargeting ought to be done often
 \end{enumerate}
 
@@ -36,7 +36,7 @@ The expected advantages of eager retargeting are:
 Lazy retargeting is the policy of only making code changes on a result at the point of integration. Under this policy, there is no guarantee---beyond relative ranking values---of the result's suitability. A process that has such a policy operates under two assumptions:
 
 \begin{enumerate}
-	\item Code retargeting is a \emph{expensive} operation, and
+	\item Code retargeting is an \emph{expensive} operation, and
 	\item Code retargeting ought to be done at the point of integration
 \end{enumerate}
 
@@ -58,8 +58,16 @@ Since the major ``cost'' of each policy is directly connected to the time spent 
 
 Another way of looking at this is through probabilities. Say a developer performs a search and finds 100 code examples (with 5 suitable examples). The lazy retargeting policy gives a developer a 1/20 chance of finding a suitable example---i.e., after 20 long tries, a suitable example is found. While the eager retargeting policy aims to reduce the number of unsuitable examples---say 20 examples (with 4 suitable examples). Consequently, this policy will give a developer a 1/5 chance of finding a suitable example---i.e., after 5 quick tries, a suitable example is found.
 
+% 
+% \section{What rules should guide the Retargeting of found code?}
+% \label{sec:sniprrules}
+% 
+% \uppercase{SnipR} models code searching as a short cycle of alternating query, screen, and retarget phases: found code is retargeted with commands issued just following to the displaying of a result set or prior to issuing a query (Figure). This model is operationalized using a state machine (Figure): during browsing, reported results are added to a queue; when the user .    
+% 
+% when the user edits code, all pages in the queue are assigned to new characters. 
 
-\section{How to start developing with SNIPR}
+
+\section{How to start developing with \uppercase{SnipR}}
 \label{sec:sniprscenario}
 
 A scenario will be given to help introduce the main interaction techniques. \uppercase{SnipR} offers two choices for interacting with code-centric sites: to issue queries and commands separately, or to intermix queries and commands. For sake of clarity, this section will focus on the former.
