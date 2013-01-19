@@ -1,0 +1,86 @@
+\chapter{\uppercase{SnipR} Fundamentals}{}
+\label{sec:fundamentals}
+
+% \fancybreak{\pfbreakdisplay}
+
+\lettrine[lraise=0.1, nindent=0em, slope=-.5em]{T} {HIS CHAPTER} sets the stage for the complete description of the \uppercase{SnipR} in the next sections.
+
+\section{Eager vs. Lazy Code Retargeting}
+\label{sec:eagervslazy}
+
+\uppercase{SnipR} builds on an eager code retargeting policy, a policy that is executed from the search interface. Later in this text, this policy and its opposite---a lazy code retargeting policy, a policy that is executed at the IDE---are described.
+
+\subsection{Eager Retargeting}
+
+Eager retargeting is the policy of continually making code changes on a result (s), and feeding any suitability scrutiny on the outcome back into the search process\footnote{A rapid experimentation of example code}. A process that has such a policy operates under two assumptions:
+
+\begin{enumerate}
+	\item Code retargeting is a \emph{cheap}---efficient---operation, and
+	\item Code retargeting ought to be done often
+\end{enumerate}
+
+Code retargeting ought to be done often in dynamic and exploratory scenarios---i.e., when the developer is working in an unfamiliar domain~\cite{Brandt:2009ew}. In such a scenario the type and number of example code may quickly change as further searches are performed. Also, if one wants to assure a rapid understanding of unfamiliar found code~\cite{Brandt:2009ew}, then it helps to frequently retarget any results to get a better picture of the result's suitability.
+
+The expected advantages of eager retargeting are:
+
+\begin{enumerate}
+	\item The example code is more likely to match what the end user had in mind.
+	\item The end user can have more confidence sooner that the picked example (s) was the right one.
+\end{enumerate}
+
+
+\fancybreak{\pfbreakdisplay}
+
+\subsection{Lazy Retargeting}
+
+Lazy retargeting is the policy of only making code changes on a result at the point of integration. Under this policy, there is no guarantee---beyond relative ranking values---of the result's suitability. A process that has such a policy operates under two assumptions:
+
+\begin{enumerate}
+	\item Code retargeting is an \emph{expensive} operation, and
+	\item Code retargeting ought to be done at the point of integration
+\end{enumerate}
+
+A process that has such a policy assumes code retargeting is a costly operation~\cite{Brandt:2009ew, Wightman:2012gc}. This is based on the observation that---at the point of integration---unrelated and/or unsuitable results require many more code changes than suitable results.
+
+\fancybreak{\pfbreakdisplay}
+
+\subsection{Reasoning about these two policies}
+
+Intuitively, one needs to figure out whether an eager code retargeting policy leads to a \emph{cheaper} and thus \emph{faster} code search process than its opposite. 
+
+One could generalize the notion of ``cost'' to be the penalties one will get for \emph{restarting} the code search process due to the discarding of tried examples. One can assume that the values of such penalties are integers greater or equal than zero and can be summed up together. Therefore, the \emph{winner} policy is the one with the smallest total penalty.
+
+Eager retargeting assumes a low penalty. This is based on the observation that unsuitable results---i.e., results that cannot be retargeted---are excluded more often\footnote{i.e., the search space is reduced.}, leaving only suitable choices to evaluate. In other words, instead of looking at each retrieved result (suitable or unsuitable) in its entirety, one retargets in advance and more frequently, so that one can deal with only suitable choices---i.e., results that were retargeted. Obviously, this policy leads to less frequent restarts and thus to a low total penalty.
+
+In contrast, as it has been already suggested in previous work~\cite{Brandt:2009ew, Wightman:2012gc}, a lazy retargeting policy assumes a high penalty. Under this policy, it is common for one to look at each promising result (suitable or unsuitable) in its entirety\footnote{all the way to try to retarget each individual result at the IDE.}---usually one by one. If the retargeting of such result is unsuccessful, then a restart may be triggered. Not only this could lead to more frequent restarts and thus to a high total penalty, but also to a sluggish searching interaction~\cite{Gray:2000im}.
+
+Since the major ``cost'' of each policy is directly connected to the time spent by the developer searching for suitable code, a policy leading to a \emph{cheaper} code search process leads also to a \emph{faster} code search process.
+
+Another way of looking at this is through probabilities. Say a developer performs a search and finds 100 code examples (with 5 suitable examples). The lazy retargeting policy gives a developer a 1/20 chance of finding a suitable example---i.e., after 20 long tries, a suitable example is found. While the eager retargeting policy aims to reduce the number of unsuitable examples---say 20 examples (with 4 suitable examples). Consequently, this policy will give a developer a 1/5 chance of finding a suitable example---i.e., after 5 quick tries, a suitable example is found.
+
+% 
+% \section{What rules should guide the Retargeting of found code?}
+% \label{sec:sniprrules}
+% 
+% \uppercase{SnipR} models code searching as a short cycle of alternating query, screen, and retarget phases: found code is retargeted with commands issued just following to the displaying of a result set or prior to issuing a query (Figure). This model is operationalized using a state machine (Figure): during browsing, reported results are added to a queue; when the user .    
+% 
+% when the user edits code, all pages in the queue are assigned to new characters. 
+
+
+\section{How to start developing with \uppercase{SnipR}}
+\label{sec:sniprscenario}
+
+A scenario will be given to help introduce the main interaction techniques. \uppercase{SnipR} offers two choices for interacting with code-centric sites: to issue queries and commands separately, or to intermix queries and commands. For sake of clarity, this section will focus on the former.
+
+Olivia is an amateur developer and open source evangelist who frequently practice search-driven development at her workplace. Olivia would like to transition a sentiment analysis tool (that uses the Twitter API) to use the Facebook API. The updated tool should handle the sentiment classification of status updates in Facebook. She wants status updates to be classified dynamically. She is familiar with Java and has some Machine Learning experience, but does not consider herself an expert developer.
+
+Olivia starts by browsing the Github\footnote{Online project hosting using Git} site---a site she frequently visits for discovering open source projects. In short, this site spans large sets of open source projects.
+
+To start gathering example code, Olivia opens the Github site in her browser and issues a query targeting Facebook APIs written in Java. She screens the top 30 results and selects the top 10 most promising results---those ones with an API that deal with a list of status updates. Some of these results have highly coupled dependencies that Olivia is not interested in using. She then issues a retargeting command that will replace those dependencies with APIs found in the Java SDK. This reloads the Github page, adding dashed borders around the affected code blocks that she can further retarget. Those results where the retargeting command could not be applied are marked in red---i.e., pointing at which results she should not evaluate.
+
+She arbitrarily right-clicks on individual results---a result found in the result set---that she sees as promising for additional retargeting. This action offers the choice to further filtering of these results---by retargeting---to gain more confidence of these results' suitability (see Figure~\ref{fig:retargeting}). She then invokes a few additional commands: rename certain variables, change the initialization location of these variables, and add a few conditional statements matching what Olivia had in mind for how and what status updates are obtained\footnote{This process can continue (See Eager retargeting policy) until Olivia decides to stop.}. The affected result appears in a floating layer atop the page. Again, those unsuitable results will be filtered out and thus reducing the number of results to be evaluated by Olivia.
+
+Continuing her information gathering, Olivia may continue retargeting results until there are no more results to screen. This can happen, which can lead Olivia to modify her previous queries to obtain similar or different results than she had previously obtained.
+
+When she is satisfied with the resulting example code, she can evaluate these results in more detail and thus pick the most suitable example she can integrate into her own code.
+

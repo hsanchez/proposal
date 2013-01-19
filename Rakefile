@@ -8,6 +8,9 @@ end
 # main TeX file without extension
 config['main'] = 'proposal'
 
+# ICSE 2013 Doctoral Symp. TeX file without extension
+config['icse'] = 'icscdocsym'
+
 # TeX command to invoke: xelatex, pdflatex, etc
 config['latex'] = 'pdflatex'
 
@@ -18,6 +21,9 @@ config['bibtex'] = 'bibtex'
 ##############################################################################
 # This Rakefile is written to simplify the compiling of
 # LaTeX documents.
+#
+# v0.2.2 
+# added icse task for the ICSE 2013 Doctoral Symp..
 #
 # v0.2.1 
 # Use system instead of sh and call view inside pdf.
@@ -57,6 +63,24 @@ task :pdf => [ :info, :clean] do
   latex '-halt-on-error', '-shell-escape', "#{config['main']}.tex"
   Rake::Task["view"].execute
 end
+
+desc 'Build ICSE Doctoral Symposium 2013'
+task :icse => [ :info, :clean] do
+  
+  latex '-draftmode', '-halt-on-error', '-shell-escape', "#{config['icse']}.tex"
+  if config['bibtex']
+    bibtex config['icse']
+    latex '-draftmode', '-halt-on-error', '-shell-escape', "#{config['icse']}.tex"
+  end
+  latex '-halt-on-error', '-shell-escape', "#{config['icse']}.tex"
+  unless Rake::Win32.windows?
+    invoke 'open', "#{config['icse']}.pdf"
+  else
+    raise NotImplementedError
+  end
+  
+end
+
 
 namespace :pdf do
   desc 'Build PDF in Draft Mode'
