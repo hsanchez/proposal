@@ -52,27 +52,27 @@ One could model the notion of ``cost'' to retarget code examples by the followin
 
 \begin{enumerate}
 	\item Code understanding
-	\item Code tinkering
-	\item Code tinkering disturbance
+	\item Code modification
+	\item Code disturbance
 \end{enumerate}
  
 The code understanding effort takes into account the time needed to carry out basic program comprehension actions, such as locating the snippet, doing content analysis, deciding which snippets to exclude. This effort is denoted by $U_{s}$, which is defined as the average effort required before starting the actual retargeting actions.
 
-Code tinkering efforts represents the cost of changing the necessary tokens in a snippet in many different ways when facing a problematic situation. For a sequence of tokens `a', let $\alpha^{+}(a)$ and $\alpha^{-}(a)$ denote the cost of changing and rolling back `a'. This term is formulated as: 
+Code modification efforts represents the cost of changing the necessary tokens in a snippet. For a sequence of tokens `a', let $\alpha^{+}(a)$ and $\alpha^{-}(a)$ denote the cost of changing and rolling back `a'. This term is formulated as: 
 
 \begin{equation}
-	\alpha(S_{1}, S_{2}) = C_{s} \times T_s \times (\sum_{a \in S_2 - S_1}\alpha^{+}(a) + \sum_{a \in S_1 - S_2}\alpha^{-}(a))
+	\alpha(S_{1}, S_{2}) = C_{s} \times (\sum_{a \in S_2 - S_1}\alpha^{+}(a) + \sum_{a \in S_1 - S_2}\alpha^{-}(a))
 	\label{costmodification}
-\end{equation} where $C_{s}$ is the average estimated time for one generic snippet change, and $T_s$ is the average number of tinkering actions performed by the developer.
+\end{equation} where $C_{s}$ is the average estimated time for one generic snippet change performed by the developer.
 
-Code tinkering disturbance expresses the amount of interruptions---errors---experienced as a snippet varies. It is assumed that the code tinkering disturbance is proportional to the number of interruptions experienced by a developer to put a snippet in a state he/she is satisfied. This also include the reaction time between interruptions. This term is formulated as:
+Code disturbance expresses the cost of tinkering when developers face a problematic situation. It is assumed that code disturbance is proportional to the amount of interruptions---e.g., unpredictable errors---experienced by a developer during retargeting and how long each interruption takes as a snippet varies. This term is formulated as:
 
 \begin{equation}
-	\epsilon(S_{j}) = R_{s} \times Interruption(S_j)
+	\epsilon(S_{j}) = T_{s} \times Interruption(S_j)
 	\label{costmodification}
-\end{equation} where $R_{s}$ is the average estimated reaction time between interruptions, $S_j$ the snippet being modified, and $Interruption(S_j)$ the number of interruptions experienced when changing a snippet $S_j$. 
+\end{equation} where $T_{s}$ is the average estimated time an interruption takes, $S_j$ the snippet being modified, and $Interruption(S_j)$ the number of interruptions experienced when changing a snippet $S_j$. 
 
-Therefore, the overall cost required to retarget a snippet is defined as:
+Therefore, the overall retargeting cost is defined as:
 
 \begin{equation}
 	cost(S_1, ..., S_n) = U_s + (\sum_{i-1}^{n}(\alpha(S_{i-1}, S_{i}) + \epsilon(S_{i})))
@@ -81,9 +81,9 @@ Therefore, the overall cost required to retarget a snippet is defined as:
 
 From the above model, one can assume that the \emph{winner} policy is the one with the smallest total cost.
 
-Eager retargeting assumes a low cost. This is based on the observation that unsuitable results---i.e., results that cannot be retargeted---are excluded more often\footnote{i.e., the search space is reduced.}, leaving the developer only suitable choices to handle. These suitable choices permit developers to confidently `under-tinker' in comparison to the level of tinkering they might expect with non-suitable source code. Obviously, this policy leads to less frequent tinkering and thus to a low total effort.
+Eager retargeting assumes a low cost. This is based on the observation that unsuitable results---i.e., results that cannot be retargeted---are excluded more often\footnote{i.e., the search space is reduced.}, leaving the developer only suitable choices to handle. Obviously, this will lead to a low total cost. This is because the number of interruptions and code modifications effort experienced by a developer to put a code snippet in a state that he/she is satisfied with is minimized. 
 
-In contrast, as it has been already suggested in previous work~\cite{Brandt:2009ew, Wightman:2012gc}, a lazy retargeting policy assumes a high cost. Under this policy, it is common for one to look at each promising result (suitable or unsuitable) in its entirety\footnote{all the way to try to retarget each individual result at the IDE.}---usually one by one. If the retargeting of such result is unsuccessful, then the developer will try to explore the problem and then try all possible ways he/she can correct the problem. Not only this could lead to more frequent tinkering and thus to a high total cost, but also to a sluggish searching interaction~\cite{Gray:2000im}.
+In contrast, as it has been already suggested in previous work~\cite{Brandt:2009ew, Wightman:2012gc}, a lazy retargeting policy assumes a high cost. Under this policy, it is common for one to look at each promising result (suitable or unsuitable) in its entirety\footnote{all the way to try to retarget each individual result at the IDE.}---usually one by one. If the retargeting of such result is unsuccessful, then the developer will try to explore the problem and then try all possible ways he/she can correct the problem. Not only this could lead to more frequent interruptions, more code changes and thus to a high total cost, but also to a sluggish searching interaction~\cite{Gray:2000im}.
 
 Since the major ``cost'' of each policy is directly connected to the time spent by the developer searching for suitable code, a policy leading to a \emph{cheaper} code search process leads also to a \emph{faster} code search process.
 
