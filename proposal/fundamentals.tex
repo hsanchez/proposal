@@ -65,7 +65,7 @@ Code modification efforts represents the cost of changing the necessary tokens i
 	\label{costmodification}
 \end{equation} where $C_{s}$ is the average estimated time for one generic snippet change performed by the developer.
 
-Code disturbance expresses the cost of tinkering when developers face a problematic situation. It is assumed that code disturbance is proportional to the amount of interruptions---e.g., unpredictable errors---experienced by a developer during retargeting and how long each interruption takes as a snippet varies. This term is formulated as:
+Code disturbance expresses the cost of tinkering\cite{Jadud:2006ir} when developers face a problematic situation. It is assumed that code disturbance is proportional to the amount of interruptions---e.g., unpredictable errors---experienced by a developer during retargeting and how long each interruption takes as a snippet varies. This term is formulated as:
 
 \begin{equation}
 	\epsilon(S_{j}) = T_{s} \times Interruption(S_j)
@@ -81,7 +81,7 @@ Therefore, the overall retargeting cost is defined as:
 
 From the above model, one can assume that the \emph{winner} policy is the one with the smallest total cost.
 
-Eager retargeting assumes a low cost. This is based on the observation that unsuitable results---i.e., results that cannot be retargeted---are excluded more often\footnote{i.e., the search space is reduced.}, leaving the developer only suitable choices to handle. Obviously, this will lead to a low total cost. This is because the number of interruptions and code modifications effort experienced by a developer to put a code snippet in a state that he/she is satisfied with is minimized. 
+Eager retargeting assumes a low cost. This is based on the observation that unsuitable results---i.e., results that cannot be retargeted---are excluded more often\footnote{i.e., the search space is reduced.}, leaving the developer only suitable choices to handle; choices that are retargetable and help reduce the cognitive distance\cite{Krueger:1992wf}, experienced by developers, to understand how to use them. Obviously, this will lead to a fewer interruptions and thus to a low total cost.  
 
 In contrast, as it has been already suggested in previous work~\cite{Brandt:2009ew, Wightman:2012gc}, a lazy retargeting policy assumes a high cost. Under this policy, it is common for one to look at each promising result (suitable or unsuitable) in its entirety\footnote{all the way to try to retarget each individual result at the IDE.}---usually one by one. If the retargeting of such result is unsuccessful, then the developer will try to explore the problem and then try all possible ways he/she can correct the problem. Not only this could lead to more frequent interruptions, more code changes and thus to a high total cost, but also to a sluggish searching interaction~\cite{Gray:2000im}.
 
@@ -113,7 +113,7 @@ Olivia starts by opening Twist---a \uppercase{SnipR}-aware snippet-centric searc
 \end{figure}
 % \pagebreak
 
-To start gathering code examples, Olivia issues a query targeting Facebook APIs written in Java. Olivia specifically looks for functionality that deals with status or post updates. She does not want any android specific source code. Consequently, Olivia's first query will contain a list of words matching her intent and a reduction in search scope. Figure~\ref{fig:twistquery} shows this query and the results produced by it. 
+To start gathering code examples, Olivia issues a query targeting Facebook APIs written in Java. Olivia specifically looks for functionality that deals with status or post updates. She does not want any Android\footnote{\url{http://www.android.com}} specific source code. Consequently, Olivia's first query will contain a list of words matching her intent and a reduction in search scope. Figure~\ref{fig:twistquery} shows this query and the results produced by it. 
 
 \begin{figure}[!ht]
     \centering
@@ -123,7 +123,7 @@ To start gathering code examples, Olivia issues a query targeting Facebook APIs 
 \end{figure}
 % \pagebreak
 
-She tries to screen all of the results but gives up after some time. She does not have time to look at every single results. Consequently, she will use Twist's functionality to her own advantage. She issues a command that will filter out those results which size (size in terms of lines of code) exceeds 20 lines of code (Figure~\ref{fig:twistslash}). The output of this command is clearly a fewer number of results to handle. Consequently, Olivia's screening efforts will be reduced.
+She tries to screen all of the results but gives up after some time. She does not have time to look at every single results. Consequently, she will use Twist's functionality to her own advantage. She issues a command that will filter out those results which size exceeds 20 lines of code (Figure~\ref{fig:twistslash}). The output of this command is clearly a fewer number of results for Olivia to handle. Consequently, Olivia's screening efforts will be reduced.
 
 \begin{figure}[!ht]
     \centering
@@ -134,7 +134,7 @@ She tries to screen all of the results but gives up after some time. She does no
     \label{fig:twistslash}
 \end{figure}  
 
-Some of these results (Figure~\ref{fig:twistslash}) have highly coupled dependencies that Olivia is not interested in using, such as ImmutableList from Google Guava library. She then issues a retargeting request that will replace those dependencies with APIs found in the Java SDK. Olivia can specify these dependencies by typing an associated abbreviation; e.g., ImmutableList can be written as IL or ImL. The execution of this request reloads the Twist page, listing the successfully retargeted snippets and adding red markers next to the failed-to-retarget snippets.  These markers can point Olivia at which results she should not spend any retargeting effort from now on. Figure~\ref{fig:twistretarget} shows this command and the results produced by it\footnote{favorites is a sub list extracted from list and its defined as: learn(favorites, (0, 1, ...) list )}. 
+Some of these results (Figure~\ref{fig:twistslash}) have highly coupled dependencies that Olivia is not interested in using, such as ImmutableList from the Google's Guava library\footnote{\url{http://code.google.com/p/guava-libraries/}}. She then issues a retargeting request that will replace those dependencies with APIs found in the Java SDK. Olivia can specify these dependencies by typing an associated abbreviation; e.g., ImmutableList can be written as IL or ImL. The execution of this request reloads the Twist page, listing the successfully retargeted snippets and adding red markers next to the failed-to-retarget snippets.  These markers can point Olivia at which results she should not spend any retargeting effort from now on. Figure~\ref{fig:twistretarget} shows this command and the results produced by it\footnote{favorites is a sub list extracted from list and its defined as: learn(favorites, (0, 1, ...) list )}. 
 
 \begin{figure}[!ht]
     \centering
@@ -144,7 +144,7 @@ Some of these results (Figure~\ref{fig:twistslash}) have highly coupled dependen
     \label{fig:twistretarget}
 \end{figure} 
 
-For Olivia, having the failed-to-retarget snippets around is distracting. Therefore, she issues another command which will drop any failed-to-retarget results from the current list of results. Figure~\ref{fig:twistclean} shows this action. 
+For Olivia, the whole idea of having the failed-to-retarget snippets around is distracting. Therefore, she issues another command which will drop any failed-to-retarget results from the current list of results. Figure~\ref{fig:twistclean} shows this action. 
 
 \begin{figure}[!ht]
     \centering
@@ -154,7 +154,7 @@ For Olivia, having the failed-to-retarget snippets around is distracting. Theref
     \label{fig:twistclean}
 \end{figure}   
 
-She arbitrarily clicks on individual results---a result found in the result set---that she sees as promising for additional retargeting. This action offers the choice to further filtering of these results---by retargeting---to gain more confidence of these results' suitability (see Figure~\ref{fig:retargeting}). She then invokes a few additional commands: rename certain variables, and change a condition-controlled loop (e.g., for loop) to another one (e.g., while loop), matching what Olivia had in mind for how and what status updates are obtained\footnote{This process can continue (See Eager retargeting policy in Section~\ref{sec:eagervslazy}) until Olivia decides to stop.}. Again, those unsuitable results will be filtered out and thus reducing the number of results to be inspected by Olivia.
+She arbitrarily clicks on individual results---a result found in the result set---that she sees as promising for additional retargeting. This action offers the choice for further retargeting to gain more confidence of these results' suitability (see Figure~\ref{fig:basealternative} for an example). She then invokes a few additional commands: rename certain variables, and change a condition-controlled loop (e.g., for loop) to another one (e.g., while loop), matching what Olivia had in mind for how and what status updates are obtained\footnote{This process can continue (See Eager retargeting policy in Section~\ref{sec:eagervslazy}) until Olivia decides to stop.}. Again, those unsuitable results will be filtered out and thus reducing the number of results to be inspected by Olivia.
 
 Continuing her information gathering, Olivia may continue retargeting results until there are no more results to screen or to not like any of the different variations. This can happen, which can lead Olivia to modify her previous queries to obtain similar or different results than she had previously obtained.
 
