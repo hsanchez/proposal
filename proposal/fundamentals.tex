@@ -103,11 +103,58 @@ A scenario will be given to help introduce the main interaction techniques. \upp
 
 Olivia is an amateur developer and open source evangelist who frequently practice search-driven development at her workplace. Olivia would like to transition a sentiment analysis tool (that uses the Twitter API) to use the Facebook API. The updated tool should handle the sentiment classification of status updates in Facebook. She wants status updates to be classified dynamically. She is familiar with Java and has some Machine Learning experience, but does not consider herself an expert developer.
 
-Olivia starts by browsing the Github\footnote{Online project hosting using Git} site---a site she frequently visits for discovering open source projects. In short, this site spans large sets of open source projects.
+Olivia starts by opening Twist---a \uppercase{SnipR}-aware snippet-centric search engine she frequently visits for discovering open source libraries. This engine spans large sets of open source projects; mostly indexed from a variety of project hosting sites, such as Github, and Google code. Olivia interacts with Twist by using Twist's own language (also called Twist). This language allows Olivia to use queries and/or code retargeting operations to do code searching. The design of this language will be described in Chapter~\ref{chap:twist}. Figure~\ref{fig:twist} shows Twist's Web interface. 
 
-To start gathering example code, Olivia opens the Github site in her browser and issues a query targeting Facebook APIs written in Java. She screens the top 30 results and selects the top 10 most promising results---those ones with an API that deal with a list of status updates. Some of these results have highly coupled dependencies that Olivia is not interested in using. She then issues a retargeting command that will replace those dependencies with APIs found in the Java SDK. This reloads the Github page, adding dashed borders around the affected code blocks that she can further retarget. Those results where the retargeting command could not be applied are marked in red---i.e., pointing at which results she should not evaluate.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/twistsite}
+    \caption{Twist's Web Interface.}
+    \label{fig:twist}
+\end{figure}
+% \pagebreak
 
-She arbitrarily right-clicks on individual results---a result found in the result set---that she sees as promising for additional retargeting. This action offers the choice to further filtering of these results---by retargeting---to gain more confidence of these results' suitability (see Figure~\ref{fig:retargeting}). She then invokes a few additional commands: rename certain variables, change the initialization location of these variables, and add a few conditional statements matching what Olivia had in mind for how and what status updates are obtained\footnote{This process can continue (See Eager retargeting policy) until Olivia decides to stop.}. The affected result appears in a floating layer atop the page. Again, those unsuitable results will be filtered out and thus reducing the number of results to be evaluated by Olivia.
+To start gathering code examples, Olivia issues a query targeting Facebook APIs written in Java. Olivia specifically looks for functionality that deals with status or post updates. She does not want any android specific source code. Consequently, Olivia's first query will contain a list of words matching her intent and a reduction in search scope. Figure~\ref{fig:twistquery} shows this query and the results produced by it. 
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/twistquery}
+    \caption{Olvia's first query, which targets Facebook APIs written in Java.}
+    \label{fig:twistquery}
+\end{figure}
+% \pagebreak
+
+She tries to screen all of the results but gives up after some time. She does not have time to look at every single results. Consequently, she will use Twist's functionality to her own advantage. She issues a command that will filter out those results which size (size in terms of lines of code) exceeds 20 lines of code (Figure~\ref{fig:twistslash}). The output of this command is clearly a fewer number of results to handle. Consequently, Olivia's screening efforts will be reduced.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/twistslash}
+    \caption{Olivia filters out the code examples whose size exceeds 20 lines of code. The 
+	 filter command takes as an input the list of current results and an anonymous function, 
+	 which is applied to every result in that list.}
+    \label{fig:twistslash}
+\end{figure}  
+
+Some of these results (Figure~\ref{fig:twistslash}) have highly coupled dependencies that Olivia is not interested in using, such as ImmutableList from Google Guava library. She then issues a retargeting request that will replace those dependencies with APIs found in the Java SDK. Olivia can specify these dependencies by typing an associated abbreviation; e.g., ImmutableList can be written as IL or ImL. The execution of this request reloads the Twist page, listing the successfully retargeted snippets and adding red markers next to the failed-to-retarget snippets.  These markers can point Olivia at which results she should not spend any retargeting effort from now on. Figure~\ref{fig:twistretarget} shows this command and the results produced by it\footnote{favorites is a sub list extracted from list and its defined as: learn(favorites, (0, 1, 2, 11) list )}. 
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/twistretarget}
+    \caption{Olivia issues the subs command, which will replace one type for 
+	 another.}
+    \label{fig:twistretarget}
+\end{figure} 
+
+For Olivia, having the failed-to-retarget snippets around is distracting. Therefore, she issues another command which will drop any failed-to-retarget results from the current list of results. Figure~\ref{fig:twistclean} shows this action. 
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/twistclean}
+    \caption{Olivia issues a user-defined command, named dropfailed, which will drop 
+	 any failed-to-retarget results from the current list.}
+    \label{fig:twistclean}
+\end{figure}   
+
+She arbitrarily clicks on individual results---a result found in the result set---that she sees as promising for additional retargeting. This action offers the choice to further filtering of these results---by retargeting---to gain more confidence of these results' suitability (see Figure~\ref{fig:retargeting}). She then invokes a few additional commands: rename certain variables, change the initialization location of these variables, and add a few conditional statements matching what Olivia had in mind for how and what status updates are obtained\footnote{This process can continue (See Eager retargeting policy) until Olivia decides to stop.}. The affected result appears in a floating layer atop the page. Again, those unsuitable results will be filtered out and thus reducing the number of results to be evaluated by Olivia.
 
 Continuing her information gathering, Olivia may continue retargeting results until there are no more results to screen. This can happen, which can lead Olivia to modify her previous queries to obtain similar or different results than she had previously obtained.
 
