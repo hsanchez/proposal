@@ -7,14 +7,21 @@ An essential part of knowing what kind of search-driven tools could help develop
 
 \begin{itemize}
 	
-	\item[RQ1] What kind of \uppercase{SnipR} commands could be invoked directly from the search 
+	\item[RQ1] What kind of \uppercase{SnipR} operations could be invoked directly from the search 
 	box? 
 	
-	The aim is to design a set of retargeting commands that could be invoked from the search box, 
-	without losing any sight of the current search goal. This design should balance two 
-	inter-related principles: ease of use and generality. A simple but well principled rule 
-	will be applied to decide when RQ1 has been completed: there are no longer reasons to 
-	change any of the already defined commands.
+	The aim is to design a set of retargeting operations that could be invoked by developers from the 
+	search box, without losing any sight of their current search goal. This design should balance 
+	two inter-related principles: simplicity and flexibility. For simplicity, SNIPR will provide 
+	most of the mechanisms for expression and control of changes that could be made to modules 
+	(methods that implement an API). This involves discovering the fundamental concepts of 
+	retargeting modules, to extract them from their various reincarnations, and to present them in a 
+	pure and distilled form. This form will be inspired by the syntax of the Io programming 
+	language\footnote{\url{http://iolanguage.org/}}. For flexibility, a simple language for combining, and 
+	executing code retargeting commands will be developed. This language's goal is to extend \uppercase{SnipR}'s 
+	available functionality. To evaluate simplicity, a user study and a survey will be performed. For 
+	flexibility, the statistics on the use and execution effort for supporting and using different 
+	commands will be reported.
 		
 	% That is, it should resemble the language used by developers when 
 	% 	modifying source code, and allow a reasonable set of code changes to be expressed. By applying a 
@@ -34,15 +41,17 @@ An essential part of knowing what kind of search-driven tools could help develop
 	% 	%they see it. There's no prior knowledge about the usefulness or uselessness of those 
 	% 	%examples, and there is limited time and resources.
 	% 	
-	\item[RQ2] How expensive is it to retarget (part of) examples each time?
+	\item[RQ2] How expensive is it to retarget (part of) found source code each time?
 	
-	This question is about answering how long it will take developers to retarget example code 
-	using \uppercase{SnipR}. Code retargeting is an operation that can operate on a 
-	single result or an entire result set. Therefore, this operation requires that those cases where 
-	code mappings can be learned and/or applied are carefully identified. This will prevent any 
-	unnecessary work from happening as matched code examples are being returned by the query engine. 
-	I will rely on experimentation and the creation of clever algorithms for retargeting to answer 
-	this question.     
+	This question is about the performance (in terms of computational throughput) of the code 
+	retargeting algorithms. In other words, this is about how long it will take the code retargeting 
+	algorithms to apply the appropriate code mappings to any found source code. Code retargeting is 
+	an operation that can operate on a single result or an entire result set. Therefore, this 
+	operation requires that those cases where code mappings can be learned and/or applied are 
+	carefully identified. This will prevent any unnecessary work from happening as matched code 
+	examples are being returned by the query engine. To evaluate the performance of this algorithms, 
+	a user study will be performed, a set of microbenchmarks will be implemented, and the obtained statistics 
+	will be reported.
 	
 	% Per Jim's comment on Sunday Oct 28, 2012 
 	% \item[RQ2] What is the impact on programming time when retargeting is done at the 
