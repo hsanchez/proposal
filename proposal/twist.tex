@@ -6,15 +6,15 @@
 \section{Twist}
 \label{sec:twist}
 
-Twist is an experiment in designing a simple language for combining, and executing code retargeting commands---directly from the search box---with a syntax inspired by multiple languages, such as C, SmallTalk, Chuck, and Io. It's very early, so there isn't much to see yet, but---at least by reading this chapter---one can still get a feeling of what's envisioned for the language. This chapter will go over its focus, philosophy, core syntax, built-in functions, and how to run it.
+Twist is an experiment in designing a simple language for combining, and executing code retargeting commands---directly from the search box---with a syntax inspired by multiple languages, such as C, and Io. It's very early, so there isn't much to see yet, but---at least by reading this chapter---one can still get a feeling of what's envisioned for the language. This chapter will go over its focus, philosophy, core syntax, built-in functions, and how to run it.
 
 \subsection{Twist's Focus}
 \label{sec:focus}
 
-Typically, most of example code comes in libraries, which are often made of a set of static and instance methods defined within a Java class. Most of these libraries address a specific computational task by either creating or combining these methods. This form of modular programming has important benefits\cite{Sedgewick:2011tx}. Some of these benefits include 
+Typically, most code examples come from libraries, which are often made of a set of static and instance methods defined within a Java class. Most of these libraries address a specific computational task by either creating or combining these methods. This form of modular programming has important benefits\cite{Sedgewick:2011tx}. Some of these benefits include 
 
 \begin{enumerate}
-	\item One typically deal with modules of reasonable size.
+	\item One could deal with modules of reasonable size.
 	\item One could share and reuse code without having to reimplement it.
 	\item One could substitute improved implementations.
 	\item One could develop abstract models for addressing programming problems.
@@ -42,7 +42,6 @@ Twist has a very simple syntax. It has three expression types:
 \begin{enumerate}
 	\item Atoms: names, identifiers, and other literals.
 	\item Lists: an ordered set of other expressions. 
-	\item One could substitute improved implementations.
 	\item Calls: a pair of expressions.
 \end{enumerate}
 
@@ -62,7 +61,7 @@ are all the same.
 \subsubsection{Operators}
 \label{sec:operators}
 
-Operators are a special case in the Twist's syntax. They are parsed like in Io. The Twist's parser intercepts any operator defined by the interpreter, and translate them to method calls. The fact that they do not require explicitly parenthesis is a convenience. For example, the expression
+Operators are a special case in the Twist's syntax. They are parsed like in Io. The Twist's parser intercepts any operator defined by the interpreter, and translate them to method calls. The fact that they do not require explicit parenthesis is convenient. For example, the expression
 
 \begin{minted}{java}
 : 1 + 10 * 9 + 1
@@ -76,9 +75,9 @@ is equivalent to
 
 Operators in Twist have a little  bit of operator precedence. Twist has the same operator precedence as with the C language precedence levels.
 
-In addition to these operators, Twist supports three special operators: the braces, {}, operator, the chain, >, operator, and the slash, =/, operator.
+In addition to these operators, Twist supports three special operators: the braces, \{;\}, operator, the chain, >, operator, and the slash, =/, operator.
 
-The {} is a left-to-right operator. This operator helps express a series of operations that are executed in order. This series of operations, separated by semicolons and surrounded by curly braces, is a syntactical sugar for a ``do'' method call. So this
+The \{;\} is a left-to-right operator. This operator helps express a series of operations that are executed in order. This series of operations, separated by semicolons and surrounded by curly braces, is a syntactical sugar for a ``do'' method call. So this
 
 \begin{minted}{java}
 : {display("Hello, World!"); display(1 + 2)}
@@ -109,13 +108,13 @@ where:
 
 \begin{enumerate}
 	\item \_ is a placeholder for the output of a previous method call.
-	\item The rename command returns the a list of results where the parameter   		``twitter'' was renamed.
+	\item The rename command returns the list of results where the parameter ``twitter'' was renamed.
 	\item The split command returns the list of functions produced by the split command.
 	\item The subs command replaces the TwitterService (abbreviated as TS) type for the 
 	FacebookService (FS) type.
 \end{enumerate}
 
-The =/ operator is also a left-to-right operator. It will attempt to cut down on any failed results product of the execution of Twist's operations. The following example demonstrates this command. The statement before the : separator is query. Like this:
+The =/ operator is also a left-to-right operator. It will attempt to cut down on any failed results, which are a product of the execution of Twist's operations. The following example demonstrates this command. The statement before the : separator is a query. Like this:
 
 \begin{minted}{java}
 : factorial +Double => Double : =/ subs(
@@ -161,7 +160,7 @@ This is a function with two arguments. If the version function had zero argument
 : version
 \end{minted}
 
-This function with zero arguments prints the current version of Twist. With two arguments, it print additional informations in regards to Twist's 1.0 version, such as changes that went in version 1.0. 
+This function with zero arguments prints the current version of Twist. With two arguments, it prints additional information in regards to Twist's 1.0 version, such as changes that went in version 1.0. 
 
 As of now, only a few built-in functions have been designed:
 
@@ -213,8 +212,8 @@ This is still very early, so only a few built-in commands are designed.
 	The redo is the opposite to the undo command.  
 	\item loc(<result>): It returns the size of snippet (represented as an item in the 
 	list of results produced by a query).
-	\item morph(<statement>, <statement>): It tries change smoothly from one statement 
-	(e.g., switch) to another (e.g., a series of if:else statements) by small gradual 
+	\item morph(<statement>, <statement>): It tries to change smoothly from one statement 
+	(e.g., switch statement) to another (e.g., a series of if:else statements) by small gradual 
 	steps.
 	\item err(result): It returns true if the result contains syntactic (parsing) errors. 
 	It returns false otherwise.
@@ -232,7 +231,7 @@ This is still very early, so only a few built-in commands are designed.
 \subsection{Mixing Queries and Commands}
 \label{sec:queriescommands}
 
-Code searches can be either textual (a list of words), or by type (type signature\footnote{<InputTypes>=><OutputType>}), or both. A search is considered a text search unless it contains a combination of text and symbols, or if starts with :. To search for both a type signature and a name, place the + symbol between them. Any expression written after the : symbol represents a command to be executed against the results of a query. A few examples are illustrated below:
+Code searches can be either textual (a list of words), or by type (type signature\footnote{<InputTypes>=><OutputType>}), or both. A search is considered a text search unless it contains a combination of text and symbols, or if starts with `:'. To search for both a type signature and a name, place the + symbol between them. Any expression written after the : symbol represents a command to be executed against the results of a query. A few examples are illustrated below:
 
 \begin{minted}{java}
 // search for the text fibonacci	
@@ -287,7 +286,7 @@ The following image (Figure~\ref{fig:runtime}) represent the processing of comma
     \label{fig:runtime}
 \end{figure} 
 
-Any errors cause by misusing Twist's syntax and built-in functionality will be displayed to the user right after the user has pressed the enter key. Figure~\ref{fig:error} display this.
+Any errors caused by misusing Twist's syntax and built-in functionality will be displayed to the user right after the user has pressed the enter key. Figure~\ref{fig:error} display this.
 
 \begin{figure}[!ht]
     \centering
