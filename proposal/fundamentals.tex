@@ -21,7 +21,7 @@ Eager retargeting is the policy of continually making code changes on one or mor
 
 Code retargeting ought to be done often in dynamic and exploratory scenarios---i.e., when the developer is working in an unfamiliar domain~\cite{Brandt:2009ew}. In such a scenario the type and number of example code may quickly change as further searches are performed. Also, if one wants to assure a rapid understanding of unfamiliar found code~\cite{Brandt:2009ew}, then it helps to frequently retarget any results to get a better picture of the result's suitability.
 
-This policy accounts for the fact that it may not be possible to completely and safely perform code retargeting on certain snippets. In this case, the retargeting operation will result in an error. Therefore, we can hypothesize that if changes such as renaming functions or parameters, adding or removing arguments, or reorganizing structures cannot be applied, then the cognitive distance of the snippet's abstractions is high and the pay-off for reusing it is relatively small. Consequently, it can be safely discarded from the list of results to be screened.    
+This policy accounts for the fact that it may not be possible to completely and safely perform code retargeting on certain snippets. In this case, the retargeting operation will result in an error. Therefore, we can hypothesize that if changes such as renaming functions or parameters, adding or removing arguments, or reorganizing structures cannot be applied, then the cognitive distance of the snippet's abstractions is high and the pay-off for reusing it is relatively small. Consequently, it can be safely discarded from the list of results to be screened by the developer.    
 
 The expected advantages of eager retargeting are:
 
@@ -72,7 +72,7 @@ Code disturbance expresses the cost of tinkering\cite{Jadud:2006ir} when develop
 \begin{equation}
 	\epsilon(S_{i}) = T_{s} \times Interruption(S_i)
 	\label{costmodification}
-\end{equation} where $T_{s}$ is the average estimated time an interruption takes, $S_j$ the snippet being modified, and $Interruption(S_i)$ the number of interruptions experienced when changing a snippet $S_j$. 
+\end{equation} where $T_{s}$ is the average estimated time an interruption takes, $S_j$ the snippet being modified, and $Interruption(S_i)$ the number of interruptions experienced when changing a snippet $S_i$. 
 
 Therefore, the overall retargeting cost is defined as:
 
