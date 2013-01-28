@@ -27,6 +27,8 @@ For a larger number $n$ of libraries, the precomputation of a \emph{Snippet Spac
 
 This section discusses, at a very high level, the learning algorithm for building mapping-based program transformations. These programming transformations allow \uppercase{SnipR} to transfer structure between similar code snippets; i.e., perform code retargeting.
 
+To learn code mappings in a principled way, we leveraged techniques in structured prediction. In particular, we cast the problem as a translation problem: giving a source and a clone snippet respectively, we induced a translation table over their similar structures. Once induced, this table can be used to determine structure translation candidates and thus synthesize a code mapping between the two snippets. 
+
 The core of this algorithm is based on the hypothesis that a general code retargeting scheme could be produced by training a machine learning algorithm (machine learner) based on human-generated mappings (human-generated corpus). The machine learner can use the knowledge gained from the collected corpus to learn how to build mappings from further snippets using only what it learned during training. The entries of these mappings will specify how two related snippets correspond to one another (Figure~\ref{fig:mappings}). SNIPR will use these mappings to automate the process of changing the implementation of one snippet to the implementation of another. Mappings of this kind will have an abstract syntax similar to the mapping syntax proposed by Nita and Notkin in their paper~\cite{Nita:2010en}.
 
 \begin{figure}[!ht]
