@@ -21,7 +21,7 @@ Eager retargeting is the policy of continually making code changes on one or mor
 
 Code retargeting ought to be done often in dynamic and exploratory scenarios---i.e., when the developer is working in an unfamiliar domain~\cite{Brandt:2009ew}. In such a scenario the type and number of example code may quickly change as further searches are performed. Also, if one wants to assure a rapid understanding of unfamiliar found code~\cite{Brandt:2009ew}, then it helps to frequently retarget any results to get a better picture of the result's suitability.
 
-This policy accounts for the fact that it may not be possible to completely and safely perform code retargeting on certain snippets. In this case, the retargeting operation will result in an error. Therefore, we can hypothesize that if changes such as renaming functions or parameters, adding or removing arguments, or reorganizing structures cannot be applied, then the cognitive distance of the snippet's abstractions is high and the pay-off for reusing it is relatively small. Consequently, it can be safely discarded.    
+This policy accounts for the fact that it may not be possible to completely and safely perform code retargeting on certain snippets. In this case, the retargeting operation will result in an error. Therefore, we can hypothesize that if changes such as renaming functions or parameters, adding or removing arguments, or reorganizing structures cannot be applied, then the cognitive distance of the snippet's abstractions is high and the pay-off for reusing it is relatively small. Consequently, it can be safely discarded from the list of results to be screened.    
 
 The expected advantages of eager retargeting are:
 
@@ -125,13 +125,13 @@ To start gathering code examples, Olivia issues a query targeting Facebook APIs 
 \end{figure}
 % \pagebreak
 
-She tries to screen all of the results but gives up after some time. She does not have time to look at every single result. Consequently, she will use Twist's functionality to her own advantage. She issues a command that will filter out those results which size exceeds 20 lines of code (Figure~\ref{fig:twistslash}). The output of this command is clearly more manageable for Olivia. Consequently, Olivia's screening efforts will be reduced.
+She tries to screen all of the results but gives up after some time. She does not have time to look at every single result. Consequently, she will use Twist's functionality to her own advantage. She issues a command that will reject those results which size exceeds 20 lines of code (Figure~\ref{fig:twistslash}). The output of this command is clearly more manageable for Olivia. Consequently, Olivia's screening efforts will be reduced.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/twistslash}
-    \caption{Olivia filters out the code examples whose size exceeds 20 lines of code. The 
-	 filter command takes as an input the list of current results and an anonymous function, 
+    \caption{Olivia rejects the code examples whose size exceeds 20 lines of code. The 
+	 reject operation takes as an input the list of current results and an anonymous function, 
 	 which is applied to every result in that list.}
     \label{fig:twistslash}
 \end{figure}  
@@ -152,8 +152,8 @@ For Olivia, the whole idea of having the failed-to-retarget snippets around is d
     \centering
     \includegraphics[width=\textwidth]{images/twistclean}
     \caption{Olivia issues a user-defined command, named dropfailed, which will drop 
-	 any failed-to-retarget results from the current list. The dropfailed was defined as : learn(dropfailed, 
-	 filter(list, (a) = (err(a) == false)))}
+	 any failed-to-retarget results from the current list. The dropfailed was defined as : 
+	 learn(dropfailed, reject(list, err == false))}
     \label{fig:twistclean}
 \end{figure}   
 

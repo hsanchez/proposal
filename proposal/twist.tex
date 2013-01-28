@@ -119,7 +119,7 @@ The /> operator is similar to the > operator. It differs to the > in the sense o
 
 \begin{minted}{java}
 : factorial +Double => Double : subs(
-	 list, (Double, Int)
+	(Double, Int)
 	 ) /> rename-param(n, nth) 
 \end{minted}
 
@@ -169,23 +169,29 @@ As of now, only a few built-in functions have been designed:
 	\item do <expr>: If the <expr> is anything but a list, Twist will evaluate it and 
 	return. If it is a list, then Twist will evaluate each item in the list, in order, 
 	and then return the evaluated of the last item.
+	
 	\item <params> = <body>: It creates an anonymous function. <params> should either be 
 	a single name or a list of parameter names. <body> represents the body of a 
 	function. It is also an expression. For example, : (a = loc(a) < 20) is an 
 	anonymous function that returns true if a snippet's size is less than 20 lines of 
 	code. 
+	
 	\item if(<predicate>, then-clause, else-clause): Twist evaluates the predicate. If 
 	the predicate evaluates to true, then it evaluates and returns the <expr>. Otherwise, 
 	it will evaluate and return the <expr> in the else clause. For example, : if(true 
 	\&\& true, display ``Y'', display ``N'').
+	
 	\item learn(<name>, <expr>): Twist binds a value to a variable in the current scope. 
 	<name> should be a single name. Twist will evaluate <expr> and then it will bound the 
 	result to the name. For example, : learn(twist, ``SNIPR's tiny language'' )
-   \item isbool? <expr>, isint? <expr>, islist? <expr>, isname? <expr>, isunit? <expr>: Twist 
+   
+	\item isbool? <expr>, isint? <expr>, islist? <expr>, isname? <expr>, isunit? <expr>: Twist 
 	evaluates <expr>, and then returns true if the result is the given type.
- 	\item <int> <expr>: Twist evaluates <expr>, expecting to be a list. Then, it will 
+ 	
+	\item <int> <expr>: Twist evaluates <expr>, expecting to be a list. Then, it will 
 	return the item at the <int> position in the list. For example, : 2 (1, 2, 3) will 
 	return 3.
+	
 	\item size <expr>: Twist evaluates <expr>, expecting it to be a list. Then, it will 
 	return the size of the list.
 \end{enumerate}
@@ -202,31 +208,59 @@ This is still very early, so only a few built-in commands are designed.
 	\item import <url>: The command will import a twist file containing a set of 
 	user-defined functions. Once the twist file is loaded, any function in the file will 
 	be interpreted by the Twist's interpreter and ready to be used by the user.
+	
 	\item list: It returns the current list of results, or () if it is empty.
-	\item apply(<list>, <expr>): It applies the <expr>(usually an anonymous function) 
-	to the given list of results. For example, :apply(list, (a) = (if(loc(a) < 20, 
-	something, something-else))).
-	\item filter(<list>, <expr>): It filters out elements in the list that don't satisfy 
-	a given <expr>. This command expects the <expr> to be condition each result should 
-	satisfy.
+	
+	\item select(<list>, <predicate>): It applies the <predicate>(usually an anonymous function) 
+	to the given list of results. When using the current list of results (results produced by a 
+	query) or using the > or /> operators, the list is implicit in the operation. Therefore it can 
+	be omitted. For example, fibonacci +Int=>Int : select(loc > 20), which is the same as 
+	fibonacci +Int=>Int : select(list, a = (loc(a) > 20)). Or, fibonacci +Int=>Int : select(loc > 
+	20) > select(loc < 7).
+	
+	\item apply(<list>, <expr>): It applies the <expr>(usually a retargeting operation) 
+	to the given list of results. Similar to the select operation, the list of results can be 
+	omitted. For example, fibonacci +Int=>Int : apply(rename-method(from, to)). Or, fibonacci 
+	+Int=>Int : apply(rename-method\footnote{learn(rename-method, a, b, name(method(a), b))}(from, 
+	to)) > apply(rename-param\footnote{learn(rename-param, a, b, name(param(a), b))}(from, to)).
+		
+	\item reject(<list>, <expr>): It is similar to the select operation. The main difference is 
+	that instead of selecting those results that matched the predicate, it will reject those ones 
+	who do. 
+	
 	\item undo, redo: The undo command rolls back a change made to one or more results. 
 	The redo is the opposite to the undo command.  
-	\item loc(<result>): It returns the size of snippet (represented as an item in the 
-	list of results produced by a query).
-	\item morph(<statement>, <statement>): It tries to change smoothly from one statement 
-	(e.g., switch statement) to another (e.g., a series of if:else statements) by small gradual 
-	steps.
+	
+	\item loc(<result>): It returns the size of snippet (represented as a result in the 
+	list of results produced by a query). When using this operation within the select and reject 
+	operations, the <result> is implicit in the operation; therefore it can be omitted. 
+	
+	\item morph(<list>, <statement>, <statement>): It tries to change from one type of statement 
+	(e.g., switch statement) to another type (e.g., a series of if:else statements). Returning an 
+	error if the change cannot be made. Similar to the select, apply, and reject operations, the 
+	list of results can be omitted (this is the same for the rest of operations).   
+	
 	\item err(result): It returns true if the result contains syntactic (parsing) errors. 
-	It returns false otherwise.
+	It returns false otherwise. Similar to the loc operation, when used in the select and reject 
+	operations, the <result> can be omitted.
+	
 	\item subs(<list>, <pairs-of-types>). It replaces one type for another. The 
-	<pairs-of-types> is a list of source-target pairs. For example, : subs(list, (Int, 
-	Double), (ArrayList, LinkedList)).
-	\item split(<int> = 2): It splits a method into <int> parts. If <int> is not 
-	specified, the it is assumed that the user wants to split the method into two methods.
+	<pairs-of-types> is a list of source-target pairs. For example, : subs((Int, Double),
+	(ArrayList, LinkedList)).
+	
+	\item split(<list>, <int> = 2): It splits a method into <int> parts. If <int> is not 
+	specified, the it is assumed that the user wants to split the method into two methods. For 
+	example, fibonacci +Int=>Int : split
+
+   \item merge(<list>, <list-of-methods>, <method>): This is the opposite of the split command. 
+	For example, fibonacci +Int=>Int : merge((method(fib-helper), method(fib)))
+	
 	\item param <name>, method <name>: It returns either a param matching a given name, 
 	or a method matching a given name.
-	\item rename(<param | method>, <to>): It renames either a param or a method.
-   \item merge(<methods>, <method>): This is the opposite of the split command.
+	
+	\item name (<member>, <new-name>): It gives a new name to an existing member (parameter in 
+	a method, or the name of the method).
+	
 \end{enumerate}
 
 \subsection{Mixing Queries and Commands}
@@ -247,13 +281,12 @@ fibonacci +Int=>BigInteger
 // current list of results.
 : learn(first, 0 (list))
 // rename the first item's parameter 
-// from "n" to "number".
-fibonacci +Int=>Int : first > rename (
-param "%n", "number"
-) 
+// from n to number.
+fibonacci +Int=>Int : first > 
+rename-param(n, number) 
 \end{minted}
 	 
-Let's make one important observation. The + symbol, besides helping search by type, can be used to reduce the search scope of a query. For example, if one knows in advance what library to search, then one can use the + (it means ``only in'') to specify the name of the library. Like this:
+Let's make one important observation. The + symbol, besides helping search by type, can be used to reduce the search scope of a query. For example, if one knows in advance what library (separated by comma if there are more than one library) to search, then one can use the + (it means ``only in'') to specify the name of the library. Like this:
 
 \begin{minted}{java}
 : fibonacci +supermath-1.0 
