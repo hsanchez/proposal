@@ -58,7 +58,7 @@ One could model the notion of ``cost'' to retarget code examples with the follow
 	\item Code disturbance
 \end{enumerate}
  
-The code understanding effort takes into account the time needed to carry out basic program comprehension actions, such as locating the snippet, doing content analysis, deciding which snippets to exclude. This effort is denoted by $U_{s}$, which is defined as the average effort required before starting the actual retargeting actions.
+The code understanding effort takes into account the time needed to carry out program comprehension actions, such as locating the snippet, doing content analysis, screening snippets. This effort is denoted by $U_{s}$, which is defined as the average effort required before starting the actual retargeting actions:
 
 Code modification efforts represents the cost of changing the necessary tokens in a snippet. For a sequence of tokens `a', let $\alpha^{+}(a)$ and $\alpha^{-}(a)$ denote the cost of adding changes to ``a'' and removing those changes from ``a'' respectively. This term is formulated as: 
 
@@ -72,7 +72,7 @@ Code disturbance expresses the cost of tinkering\cite{Jadud:2006ir} when develop
 \begin{equation}
 	\epsilon(S_{i}) = T_{s} \times Interruption(S_i)
 	\label{costmodification}
-\end{equation} where $T_{s}$ is the average estimated time an interruption takes, $S_j$ the snippet being modified, and $Interruption(S_i)$ the number of interruptions experienced when changing a snippet $S_i$. 
+\end{equation} where $T_{s}$ is the average estimated time an interruption takes, $S_i$ the snippet being modified, and $Interruption(S_i)$ the number of interruptions experienced when changing a snippet $S_i$. 
 
 Therefore, the overall retargeting cost is defined as:
 
