@@ -75,7 +75,7 @@ is equivalent to
 
 Operators in Twist have a little  bit of operator precedence. Twist has the same operator precedence as with the C language precedence levels.
 
-In addition to these operators, Twist supports three special operators: the braces, \{;\}, operator, the chain, >, operator, and the slash, />, operator.
+In addition to these operators, Twist supports three special operators: the braces (\{;\}) operator, the chain (>) operator, and the slash (/>) operator.
 
 The \{;\} is a left-to-right operator. This operator helps express a series of operations that are executed in order. This series of operations, separated by semicolons and surrounded by curly braces, is a syntactical sugar for a ``do'' method call. So this
 
@@ -163,6 +163,44 @@ This is a function with two arguments. If the version function had zero argument
 
 This function with zero arguments prints the current version of Twist. With two arguments, it prints additional information in regards to Twist's 1.0 version, such as changes that went in version 1.0. 
 
+That's the basic syntax. The Twist parser reads that and then it translates it to the core syntax.
+
+\section{Running Twist}
+\label{sec:running}
+
+Twist is also a Web application, and one can access it by using a Web browser. Once opened, the Twist's REPL will start. The command line interface for this interpreter is showed in the Figure~\ref{fig:twist}. 
+
+\subsection{Twist's Interpreter}
+\label{sec:interpreter}
+
+A good way to learn Twist is to interact with an interpreter and study its responses. This is very similar to the way people already interact with search engines. For this work, two types of interaction with Twist are considered: 
+
+\begin{enumerate}
+	\item Supply an expression, sometimes led by a text search, to be evaluated.
+	\item Import a script file with a set of expressions to be evaluated. 
+\end{enumerate}	
+
+The following image (Figure~\ref{fig:runtime}) represent the processing of commands issued by a user and handled by Twist:
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/runtime}
+    \caption{Twist's runtime processing.}
+    \label{fig:runtime}
+\end{figure} 
+
+Any errors caused by misusing Twist's syntax and built-in functionality will be displayed to the user right after the user has pressed the enter key. Figure~\ref{fig:error} display this.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/error}
+    \caption{Error caused my misusing Twist's syntax and built-in operations.}
+    \label{fig:error}
+\end{figure}
+
+\subsection{Built-in Functions}
+\label{sec:functions}
+ 
 As of now, only a few built-in functions have been designed:
 
 \begin{enumerate}
@@ -199,10 +237,10 @@ As of now, only a few built-in functions have been designed:
 This is still a very early design. Therefore, some of these features may change as this 
 is work in progress.
 
-\subsection{Twist's Built-in Commands}
+\subsection{Built-in Commands}
 \label{sec:retargetingops}
 
-This is still very early, so only a few built-in commands are designed.
+Only a few built-in commands are designed:
 
 \begin{enumerate}
 	\item import <url>: The command will import a twist file containing a set of 
@@ -215,18 +253,18 @@ This is still very early, so only a few built-in commands are designed.
 	to the given list of results. When using the current list of results (results produced by a 
 	query) or using the > or /> operators, the list is implicit in the operation. Therefore it can 
 	be omitted. For example, fibonacci +Int=>Int : select(loc > 20), which is the same as 
-	fibonacci +Int=>Int : select(list, a = (loc(a) > 20)). Or, fibonacci +Int=>Int : select(loc > 
+	fibonacci +Int=>Int : select(list, a = loc(a) > 20). Or, fibonacci +Int=>Int : select(loc > 
 	20) > select(loc < 7).
 	
-	\item apply(<list>, <expr>): It applies the <expr>(usually a retargeting operation) 
+	\item apply(<list>, <operation>): It applies an <operation>(e.g., a retargeting operation) 
 	to the given list of results. Similar to the select operation, the list of results can be 
 	omitted. For example, fibonacci +Int=>Int : apply(rename-method(from, to)). Or, fibonacci 
 	+Int=>Int : apply(rename-method\footnote{learn(rename-method, a, b, name(method(a), b))}(from, 
 	to)) > apply(rename-param\footnote{learn(rename-param, a, b, name(param(a), b))}(from, to)).
 		
-	\item reject(<list>, <expr>): It is similar to the select operation. The main difference is 
-	that instead of selecting those results that matched the predicate, it will reject those ones 
-	who do. 
+	\item reject(<list>, <predicate>): It is similar to the select operation. The main difference 
+	is that instead of selecting those results that matched the predicate, it will reject those 
+	ones who do. 
 	
 	\item undo, redo: The undo command rolls back a change made to one or more results. 
 	The redo is the opposite to the undo command.  
@@ -235,10 +273,11 @@ This is still very early, so only a few built-in commands are designed.
 	list of results produced by a query). When using this operation within the select and reject 
 	operations, the <result> is implicit in the operation; therefore it can be omitted. 
 	
-	\item morph(<list>, <statement>, <statement>): It tries to change from one type of statement 
+	\item morph(<list>, <pairs-of-statements>): It tries to change from one type of statement 
 	(e.g., switch statement) to another type (e.g., a series of if:else statements). Returning an 
 	error if the change cannot be made. Similar to the select, apply, and reject operations, the 
-	list of results can be omitted (this is the same for the rest of operations).   
+	list of results can be omitted (this is the same for the rest of operations). For example, : 
+	morph((if:else, switch)) (Figure~\ref{fig:basealternative} shows such a transformation).  
 	
 	\item err(result): It returns true if the result contains syntactic (parsing) errors. 
 	It returns false otherwise. Similar to the loc operation, when used in the select and reject 
@@ -248,12 +287,12 @@ This is still very early, so only a few built-in commands are designed.
 	<pairs-of-types> is a list of source-target pairs. For example, : subs((Int, Double),
 	(ArrayList, LinkedList)).
 	
-	\item split(<list>, <int> = 2): It splits a method into <int> parts. If <int> is not 
-	specified, the it is assumed that the user wants to split the method into two methods. For 
-	example, fibonacci +Int=>Int : split
+	\item split(<list>, <int> = 2): It splits a method into <int> parts. Returning an 
+	error if the change cannot be made. If <int> is not specified, the it is assumed that the user 
+	wants to split the method into two methods. For example, fibonacci +Int=>Int : split
 
    \item merge(<list>, <list-of-methods>, <method>): This is the opposite of the split command. 
-	For example, fibonacci +Int=>Int : merge((method(fib-helper), method(fib)))
+	For example, fibonacci +Int=>Int : merge((method(fib\_helper), method(fib)))
 	
 	\item param <name>, method <name>: It returns either a param matching a given name, 
 	or a method matching a given name.
@@ -297,36 +336,6 @@ The opposite of + symbol is the - symbol. This symbol means ``everywhere except 
 \begin{minted}{java}
 : fibonacci +like-1.0 -dontlike-1.0
 \end{minted}
-
-\section{Running Twist}
-\label{sec:running}
-
-\subsection{Twist's Interpreter}
-\label{sec:interpreter}
-
-A good way to learn Twist is to interact with an interpreter and study its responses, which is very similar to the way people currently interact with search engines. The command line interface for this interpreter is showed in the Figure~\ref{fig:twist}. We considered two types of interaction with Twist: 
-
-\begin{enumerate}
-	\item Supply an expression, sometimes led by a text search, to be evaluated.
-	\item Import a script file with a set of expressions to be evaluated. 
-\end{enumerate}	
-
-The following image (Figure~\ref{fig:runtime}) represent the processing of commands issued by a user and handled by Twist:
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=\textwidth]{images/runtime}
-    \caption{Twist's runtime processing.}
-    \label{fig:runtime}
-\end{figure} 
-
-Any errors caused by misusing Twist's syntax and built-in functionality will be displayed to the user right after the user has pressed the enter key. Figure~\ref{fig:error} display this.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=\textwidth]{images/error}
-    \caption{Error caused my misusing Twist's syntax and built-in operations.}
-    \label{fig:error}
-\end{figure} 
  
- This chapter has introduced Twist, a language for interacting with search results, and combining and executing code retargeting operations. 
+ 
+This chapter has introduced Twist, a language for interacting with search results, and combining and executing code retargeting operations. 

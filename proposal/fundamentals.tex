@@ -67,7 +67,7 @@ Code modification efforts represents the cost of changing the necessary tokens i
 	\label{costmodification}
 \end{equation} where $C_{s}$ is the average estimated time for one generic snippet change performed by the developer.
 
-Code disturbance expresses the cost of tinkering\cite{Jadud:2006ir} when developers face a problematic situation. It is assumed that code disturbance is proportional to the amount of interruptions---e.g., unpredictable errors---experienced by a developer during retargeting and how long each interruption takes as a snippet varies. This term is formulated as:
+Code disturbance expresses the cost of tinkering~\cite{Jadud:2006ir} when developers face a problematic situation. It is assumed that code disturbance is proportional to the amount of interruptions---e.g., unpredictable errors---experienced by a developer during retargeting and how long each interruption takes as a snippet varies. This term is formulated as:
 
 \begin{equation}
 	\epsilon(S_{i}) = T_{s} \times Interruption(S_i)
@@ -83,7 +83,7 @@ Therefore, the overall retargeting cost is defined as:
 
 From the above model, one can assume that the \emph{winner} policy is the one with the smallest total cost.
 
-Eager retargeting assumes a low cost. This is based on the observation that unsuitable results---i.e., results that cannot be retargeted---are excluded more often\footnote{i.e., the search space is reduced.}, leaving the developer only suitable choices to handle; choices that are retargetable and help reduce the cognitive distance\cite{Krueger:1992wf}, experienced by developers, to understand how to use them. Obviously, this will lead to a low disturbance and thus to a low total cost.  
+Eager retargeting assumes a low cost. This is based on the observation that unsuitable results---i.e., results that cannot be retargeted---are excluded more often\footnote{i.e., the search space is reduced.}, leaving the developer only suitable choices to handle; choices that are retargetable and help reduce the cognitive distance~\cite{Krueger:1992wf}, experienced by developers, to understand how to use them. Obviously, this will lead to a low disturbance and thus to a low total cost.  
 
 In contrast, as it has been already suggested in previous work~\cite{Brandt:2009ew, Wightman:2012gc}, a lazy retargeting policy assumes a high cost. Under this policy, it is common for one to look at each promising result (suitable or unsuitable) in its entirety\footnote{all the way to try to retarget each individual result at the IDE.}---usually one by one. If the retargeting of such result is unsuccessful, then the developer will try to explore the problem and then try all possible ways he/she can correct the problem. Not only this could lead to more frequent disturbances, more code changes and thus to a high total cost, but also to a sluggish searching interaction~\cite{Gray:2000im}.
 
