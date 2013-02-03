@@ -5,21 +5,21 @@
 
 \lettrine[lraise=0.1, nindent=0em, slope=-.5em]{T} {HIS CHAPTER} sets the stage for the complete description of \uppercase{SnipR} in the next chapters.
 
-\uppercase{SnipR} builds on an eager code retargeting policy, a policy that is executed from the search interface. Below, this policy and its opposite---a lazy code retargeting policy, a policy that is executed in the IDE---are described.
-
 \section{Eager vs. Lazy Code Retargeting}
 \label{sec:eagervslazy}
 
+\uppercase{SnipR} builds on an eager code retargeting policy, a policy that is executed from the search interface. Below, this policy and its opposite---a lazy code retargeting policy, a policy that is executed in the IDE---are described.
+
 \subsection{Eager Retargeting}
 
-Eager retargeting is the policy of continually making code changes on one or more searched results, and feeding any suitability scrutiny on the outcome back into the search process\footnote{A rapid experimentation of example code}. A process that has such a policy operates under two assumptions:
+Eager retargeting is the policy of continually making code changes to one or more searched results, and feeding any suitability scrutiny on the outcome back into the search process\footnote{A rapid experimentation of example code}. A process that has such a policy operates under two assumptions:
 
 \begin{enumerate}
 	\item Code retargeting is a \emph{cheap}---efficient---operation, and
 	\item Code retargeting ought to be done often
 \end{enumerate}
 
-Code retargeting ought to be done often in dynamic and exploratory scenarios---i.e., when the developer is working in an unfamiliar domain~\cite{Brandt:2009ew}. In such a scenario the type and number of example code may quickly change as further searches are performed. Therefore, it makes sense to frequently retarget any results to get a better picture of the result at hand and its suitability~\cite{Fowler:1999vp, Brandt:2009ew}. 
+Code retargeting ought to be done often in dynamic and exploratory scenarios---i.e., when the developer is working in an unfamiliar domain~\cite{Brandt:2009ew}. In such a scenario the type and number of code examples may quickly change as further searches are performed. Therefore, it makes sense to frequently retarget any results to get a better picture of the results and their suitability~\cite{Fowler:1999vp, Brandt:2009ew}. 
 
 This policy accounts for the fact that it may not be possible to completely and safely perform code retargeting on certain snippets. In this case, the retargeting operation will result in an error. Therefore, it can hypothesized that if changes such as renaming functions or parameters, adding or removing arguments, or reorganizing structures cannot be applied, then the cognitive distance of the snippet's abstractions is high and the pay-off for reusing it is relatively small. Consequently, this found result may not be worth the mental effort by the developer and thus it can be discarded.    
 
@@ -36,7 +36,7 @@ The expected advantages of eager retargeting are:
 
 \subsection{Lazy Retargeting}
 
-Lazy retargeting is the policy of only making code changes on a result at the point of integration in the IDE. Under this policy, there is no guarantee---beyond relative ranking values---of the result's suitability. Due to this uncertainty, a process that has such a policy operates under two assumptions:
+Lazy retargeting is the policy of only making code changes to a result at the point of integration in the IDE. Under this policy, there is no guarantee---beyond relative ranking values---of the result's suitability. Due to this uncertainty, a process that has such a policy operates under two assumptions:
 
 \begin{enumerate}
 	\item Code retargeting is an \emph{expensive} operation, and
@@ -59,7 +59,7 @@ One could model the notion of ``cost'' to retarget code examples with the follow
 	\item Code disturbance
 \end{enumerate}
  
-The code understanding effort takes into account the time needed to carry out program comprehension actions, such as locating the snippet, doing content analysis, screening snippets. This effort is denoted by $U_{s}$, which is defined as the average effort required before starting the actual retargeting actions:
+The code understanding effort takes into account the time needed to carry out program comprehension actions, such as locating the snippet, doing content analysis, screening snippets. This effort is denoted by $U_{s}$, which is defined as the average effort required before starting the actual retargeting actions.
 
 Code modification efforts represents the cost of changing the necessary tokens in a snippet. For a sequence of tokens `a', let $\alpha^{+}(a)$ denote the cost of adding changes to `a'. This term is formulated as: 
 
@@ -80,7 +80,7 @@ Therefore, the overall retargeting cost is defined as:
 \begin{equation}
 	cost(S_1, ..., S_n) = U_s + (\sum_{i=1}^{n}(\alpha(S_{i}) + \delta(S_{i})))
 	\label{totalWork}
-\end{equation} where $S_1, ..., S_n$ are different snippet variations that can be derived from retargeting actions, and these snippets are in a searched result set $R$---$S_1, ..., S_n \in R$.   
+\end{equation} where $S_1, ..., S_n$ are different snippet variations that can be derived from retargeting actions.
 
 From the above model, one can assume that the \emph{winner} policy is the one with the smallest total cost.
 
@@ -106,7 +106,7 @@ A scenario will be given to help introduce the main interaction techniques. \upp
 
 Olivia is an amateur developer and open source evangelist who frequently practices search-driven development at her workplace. Olivia would like to transition a sentiment analysis tool (that uses the Twitter API) to use the Facebook API. The updated tool should handle the sentiment classification of status updates in Facebook. She wants status updates to be classified dynamically. She is familiar with Java and has some Machine Learning experience, but does not consider herself an expert developer.
 
-Olivia starts by opening Twist---a \uppercase{SnipR}-aware snippet-centric search engine she frequently visits for discovering open source libraries. This engine spans large sets of open source projects; mostly indexed from a variety of project hosting sites, such as Github, and Google code. Olivia interacts with Twist by using Twist's read–eval–print-loop (REPL)\footnote{\url{http://en.wikipedia.org/wiki/Read-eval-print_loop}}. Twist allows Olivia to use queries and/or code retargeting operations to do code searching. The design of Twist will be described in Chapter~\ref{chap:twist}. Figure~\ref{fig:twist} shows Twist's Web interface. 
+Olivia starts by opening Twist---a \uppercase{SnipR}-aware snippet-centric search engine she frequently visits for discovering open source libraries. This engine spans large sets of open source projects; mostly indexed from a variety of project hosting sites, such as Github, and Google code. Olivia interacts with Twist by using Twist's REPL\footnote{\url{http://en.wikipedia.org/wiki/Read-eval-print_loop}}. Twist allows Olivia to use queries and/or code retargeting operations to do code searching. The design of Twist will be described in Chapter~\ref{chap:twist}. Figure~\ref{fig:twist} shows Twist's Web interface. 
 
 \begin{figure}[!ht]
     \centering
@@ -126,7 +126,7 @@ To start searching for code examples, Olivia issues a query targeting Facebook A
 \end{figure}
 % \pagebreak
 
-She tries to screen all of the results but gives up after some time. There is a lot of good stuff, but she does not have the time to look at every single result. Consequently, she uses Twist's functionality to her own advantage. She issues a command that rejects results exceeding 20 lines of code (Figure~\ref{fig:twistslash}), resulting in a more manageable set of 16 results. Consequently, Olivia's screening efforts will be reduced.
+Olivia tries to screen all of the results but gives up after some time. There is a lot of good stuff, but she does not have the time to look at every single result. Consequently, she uses Twist's functionality to her own advantage. She issues a command that rejects results exceeding 20 lines of code (Figure~\ref{fig:twistslash}), resulting in a more manageable set of 16 results. Consequently, Olivia's screening efforts will be reduced.
 
 \begin{figure}[!ht]
     \centering
@@ -137,17 +137,17 @@ She tries to screen all of the results but gives up after some time. There is a 
     \label{fig:twistslash}
 \end{figure}  
 
-Some of these results (Figure~\ref{fig:twistslash}) have highly coupled dependencies that Olivia is not interested in using, such as the ImmutableList dependency from the Google's Guava library\footnote{\url{http://code.google.com/p/guava-libraries/}}. She then issues a retargeting request that replaces those dependencies with APIs found in the Java SDK. Olivia can specify these dependencies by typing an associated abbreviation; e.g., ImmutableList can be written as IL or ImL. The execution of this request reloads the Twist page, listing the successfully retargeted snippets and adding red markers next to the failed-to-retarget snippets (Figure~\ref{fig:twistretarget}\footnote{favorites is a sub list extracted from list and its defined as: learn(favorites, ((0 list), (1 list), ...)}). These markers indicate Olivia should not spend any further effort on these results. 
+Some of these results (Figure~\ref{fig:twistslash}) have highly coupled dependencies that Olivia is not interested in using, such as the ImmutableList dependency from the Google's Guava library\footnote{\url{http://code.google.com/p/guava-libraries/}}. She then issues a retargeting request that replaces those dependencies with APIs found in the Java SDK. Olivia can specify these dependencies by typing an associated abbreviation; e.g., ImmutableList can be written as IL or ImL. The execution of this request reloads the Twist page, listing the successfully retargeted snippets and adding red markers next to the failed-to-retarget snippets (Figure~\ref{fig:twistretarget}). These markers indicate Olivia should not spend any further effort on these results. 
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/twistretarget}
-    \caption{Olivia issues the subs command, which will replace one type for 
-	 another.}
+    \caption{Olivia issues the subs command against the favorites sub list. This command 
+	 replaces one type for another. Favorites is a sub list extracted from the main list of results and its defined as: learn(favorites, ((0 list), (1 list), ...).}
     \label{fig:twistretarget}
 \end{figure} 
 
-For Olivia, the whole idea of having the failed-to-retarget snippets around is distracting. Therefore, she issues another command which will drop any failed-to-retarget results from the current list of results. Figure~\ref{fig:twistclean} shows this action. 
+For Olivia, the whole idea of having the failed-to-retarget snippets around is distracting. Therefore, she issues another command which drops any failed-to-retarget results from the current list of results. Figure~\ref{fig:twistclean} shows this action. 
 
 \begin{figure}[!ht]
     \centering
@@ -158,7 +158,7 @@ For Olivia, the whole idea of having the failed-to-retarget snippets around is d
     \label{fig:twistclean}
 \end{figure}   
 
-At this point, Olivia could actually issue more commands. However, she decides to arbitrarily click on individual results that she sees as good candidates for additional retargeting. This action offers the choice for further retargeting to gain more confidence of these results' suitability (see Figure~\ref{fig:basealternative} for an example). She then invokes a few additional commands: rename functions, and change a condition-controlled loop (e.g., for loop) to another one (e.g., while loop), matching what Olivia had in mind for how and what status updates are obtained\footnote{This process can continue (See Eager retargeting policy in Section~\ref{sec:eagervslazy}) until Olivia decides to stop.}. Again, those unsuitable results will be filtered out and thus reducing the number of results to be inspected by Olivia.
+At this point, Olivia could actually issue more commands. However, she decides to arbitrarily click on individual results that she sees as good candidates for additional retargeting. This action offers the choice for further retargeting to gain more confidence of these results' suitability (see Figure~\ref{fig:basealternative} for an example). She then invokes a few additional commands: rename functions, and change a condition-controlled loop (e.g., for loop) to another one (e.g., while loop), matching what Olivia had in mind for how and what status updates are obtained\footnote{This process can continue (See Eager retargeting policy in Section~\ref{sec:eagervslazy}) until Olivia decides to stop.}. Again, those unsuitable results are filtered out and thus reduce the number of results to be inspected by Olivia.
 
 Continuing her information gathering, Olivia may continue retargeting results until there are no more results to screen or to not like any of the different variations. This can happen, which can lead Olivia to modify her previous queries to obtain similar or different results than she had previously obtained.
 
