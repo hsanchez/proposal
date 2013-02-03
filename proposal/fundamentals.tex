@@ -21,7 +21,7 @@ Eager retargeting is the policy of continually making code changes to one or mor
 
 Code retargeting ought to be done often in dynamic and exploratory scenarios---i.e., when the developer is working in an unfamiliar domain~\cite{Brandt:2009ew}. In such a scenario the type and number of code examples may quickly change as further searches are performed. Therefore, it makes sense to frequently retarget any results to get a better picture of the results and their suitability~\cite{Fowler:1999vp, Brandt:2009ew}. 
 
-This policy accounts for the fact that it may not be possible to completely and safely perform code retargeting on certain snippets. In this case, the retargeting operation will result in an error. Therefore, it can hypothesized that if changes such as renaming functions or parameters, adding or removing arguments, or reorganizing structures cannot be applied, then the cognitive distance of the snippet's abstractions is high and the pay-off for reusing it is relatively small. Consequently, this found result may not be worth the mental effort by the developer and thus it can be discarded.    
+This policy accounts for the fact that it may not be possible to completely and safely perform code retargeting on certain snippets. In this case, the retargeting operation will result in an error. Therefore, it can hypothesized that if changes such as renaming functions or parameters, adding or removing arguments, or reorganizing structures cannot be applied, then the cognitive distance of the snippet's abstractions is high and the pay-off for reusing it is relatively small. Consequently, this found result may not be worth the developer's effort and thus it can be discarded.    
 
 The expected advantages of eager retargeting are:
 
@@ -66,7 +66,7 @@ Code modification efforts represents the cost of changing the necessary tokens i
 \begin{equation}
 	\alpha(S_{i}) = C_{s} \times (\sum_{a \in S_{i}}\alpha^{+}(a))
 	\label{costmodification}
-\end{equation} where $C_{s}$ is the average estimated time for one generic snippet change performed by the developer.
+\end{equation} where $C_{s}$ is the average estimated time for one generic snippet change to be performed by the developer.
 
 Code disturbance expresses the cost of tinkering~\cite{Jadud:2006ir} when developers face a unexpected situation. It is assumed that code disturbance is proportional to the amount of interruptions---e.g., unpredictable errors---experienced by a developer during retargeting and how long each interruption takes as a snippet varies. This term is formulated as:
 
