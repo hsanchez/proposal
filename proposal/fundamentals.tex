@@ -104,9 +104,9 @@ Since the major ``cost'' of each policy is directly connected to the time spent 
 
 A scenario will be given to help introduce the main interaction techniques. \uppercase{SnipR} offers two choices for interacting with code-centric sites: to issue queries and retargeting operations separately, or to intermix queries and retargeting operations. For sake of clarity, this section will focus on the former.
 
-Olivia is an amateur developer and open source evangelist who frequently practice search-driven development at her workplace. Olivia would like to transition a sentiment analysis tool (that uses the Twitter API) to use the Facebook API. The updated tool should handle the sentiment classification of status updates in Facebook. She wants status updates to be classified dynamically. She is familiar with Java and has some Machine Learning experience, but does not consider herself an expert developer.
+Olivia is an amateur developer and open source evangelist who frequently practices search-driven development at her workplace. Olivia would like to transition a sentiment analysis tool (that uses the Twitter API) to use the Facebook API. The updated tool should handle the sentiment classification of status updates in Facebook. She wants status updates to be classified dynamically. She is familiar with Java and has some Machine Learning experience, but does not consider herself an expert developer.
 
-Olivia starts by opening Twist---a \uppercase{SnipR}-aware snippet-centric search engine she frequently visits for discovering open source libraries. This engine spans large sets of open source projects; mostly indexed from a variety of project hosting sites, such as Github, and Google code. Olivia interacts with Twist by using Twist's REPL. Twist allows Olivia to use queries and/or code retargeting operations to do code searching. The design of Twist will be described in Chapter~\ref{chap:twist}. Figure~\ref{fig:twist} shows Twist's Web interface. 
+Olivia starts by opening Twist---a \uppercase{SnipR}-aware snippet-centric search engine she frequently visits for discovering open source libraries. This engine spans large sets of open source projects; mostly indexed from a variety of project hosting sites, such as Github, and Google code. Olivia interacts with Twist by using Twist's read–eval–print-loop (REPL)\footnote{\url{http://en.wikipedia.org/wiki/Read-eval-print_loop}}. Twist allows Olivia to use queries and/or code retargeting operations to do code searching. The design of Twist will be described in Chapter~\ref{chap:twist}. Figure~\ref{fig:twist} shows Twist's Web interface. 
 
 \begin{figure}[!ht]
     \centering
@@ -116,7 +116,7 @@ Olivia starts by opening Twist---a \uppercase{SnipR}-aware snippet-centric searc
 \end{figure}
 % \pagebreak
 
-To start searching for code examples, Olivia issues a query targeting Facebook APIs written in Java. Olivia specifically looks for functionality that deals with status or post updates. For some unexplained reason, she does not want any Android\footnote{\url{http://www.android.com}} specific source code. Consequently, Olivia's first query will contain a list of words matching her intent and a reduction in search scope. Figure~\ref{fig:twistquery} shows this query and the results produced by it. 
+To start searching for code examples, Olivia issues a query targeting Facebook APIs written in Java. Olivia specifically looks for functionality that deals with status or post updates. For some unexplained reason, she does not want any Android\footnote{\url{http://www.android.com}} specific source code. Consequently, Olivia's first query contains a list of words matching her intent and a reduction in search scope. Figure~\ref{fig:twistquery} shows this query and the results produced by it. 
 
 \begin{figure}[!ht]
     \centering
@@ -126,7 +126,7 @@ To start searching for code examples, Olivia issues a query targeting Facebook A
 \end{figure}
 % \pagebreak
 
-She tries to screen all of the results but gives up after some time. There is a lot of good stuff, but she does not have the time to look at every single result. Consequently, she will use Twist's functionality to her own advantage. She issues a command that will reject those results which size exceeds 20 lines of code (Figure~\ref{fig:twistslash}). The output of this command is clearly a more manageable set of results for Olivia. Consequently, Olivia's screening efforts will be reduced.
+She tries to screen all of the results but gives up after some time. There is a lot of good stuff, but she does not have the time to look at every single result. Consequently, she uses Twist's functionality to her own advantage. She issues a command that rejects results exceeding 20 lines of code (Figure~\ref{fig:twistslash}), resulting in a more manageable set of 16 results. Consequently, Olivia's screening efforts will be reduced.
 
 \begin{figure}[!ht]
     \centering
@@ -137,7 +137,7 @@ She tries to screen all of the results but gives up after some time. There is a 
     \label{fig:twistslash}
 \end{figure}  
 
-Some of these results (Figure~\ref{fig:twistslash}) have highly coupled dependencies that Olivia is not interested in using, such as the ImmutableList dependency from the Google's Guava library\footnote{\url{http://code.google.com/p/guava-libraries/}}. She then issues a retargeting request that will replace those dependencies with APIs found in the Java SDK. Olivia can specify these dependencies by typing an associated abbreviation; e.g., ImmutableList can be written as IL or ImL. The execution of this request reloads the Twist page, listing the successfully retargeted snippets and adding red markers next to the failed-to-retarget snippets.  These markers can point Olivia at which results she should not spend any retargeting effort from now on. Figure~\ref{fig:twistretarget} shows this command and the results produced by it\footnote{favorites is a sub list extracted from list and its defined as: learn(favorites, ((0 list), (1 list), ...)}. 
+Some of these results (Figure~\ref{fig:twistslash}) have highly coupled dependencies that Olivia is not interested in using, such as the ImmutableList dependency from the Google's Guava library\footnote{\url{http://code.google.com/p/guava-libraries/}}. She then issues a retargeting request that replaces those dependencies with APIs found in the Java SDK. Olivia can specify these dependencies by typing an associated abbreviation; e.g., ImmutableList can be written as IL or ImL. The execution of this request reloads the Twist page, listing the successfully retargeted snippets and adding red markers next to the failed-to-retarget snippets (Figure~\ref{fig:twistretarget}\footnote{favorites is a sub list extracted from list and its defined as: learn(favorites, ((0 list), (1 list), ...)}). These markers indicate Olivia should not spend any further effort on these results. 
 
 \begin{figure}[!ht]
     \centering
