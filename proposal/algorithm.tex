@@ -9,9 +9,17 @@ Most code search approaches that use program transformations start with specifyi
 
 While these outcomes have indeed proven successful, they still impose a significant manual effort on the developers---e.g., developers need to spend additional effort to make these solutions configurable and ready to go. Consequently, these methods are impractical if they are to be used---as is---in a \uppercase{SNIPR}-aware code search engine. 
 
-The above observation is the motivation for the algorithms discussed in this chapter. The aim of these algorithms is to efficiently learn and use coherent mapping-based program transformations. By applying these transformations to a snippet, \uppercase{SnipR} can replace the structure of one snippet with the structure of another. The goal is for this to happen with minimal or no cost to the developer. 
+The above observation is the motivation for the algorithms discussed in this chapter. The aim of these algorithms is to efficiently learn and use coherent mapping-based program transformations. By applying these transformations to a snippet, \uppercase{SnipR} can replace the structure of one snippet with the structure of another. The goal is for this to happen with minimal or no cost to the developer.
 
-Briefly, these algorithms represent the modules required to implement \uppercase{SnipR} functionality. For instance, the Setup step populates the \emph{Snippet Space} at indexing time, by invoking a code clone searching and detection tool. Then, the Learning step builds mappings for all the (original-clone) pairs in the \emph{Snippet Space}. When invoking \uppercase{SnipR}'s Twist (See Chapter~\ref{chap:twist} for details), the Matching step first maps the retargeting request to its corresponding optimal mapping and then applies the mapping to the original snippet.
+Briefly, these algorithms represent the modules required to implement \uppercase{SnipR} functionality. \uppercase{SnipR}'s architecture illustrates, illustrated in Figure~\ref{fig:sniprentire}, these modules. As one we can see in Figure~\ref{fig:sniprentire}, the Setup step populates the \emph{Snippet Space} at indexing time, by invoking a code clone searching and detection tool. Then, the Learning step builds mappings for all the (original-clone) pairs in the \emph{Snippet Space}. When invoking \uppercase{SnipR}'s Twist (See Chapter~\ref{chap:twist} for details), the Matching step first maps the retargeting request to its corresponding optimal mapping and then applies the mapping to the original snippet.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/SnippetRetargetingApproach}
+    \caption{SNIPR's Overall Architecture: (a). Setting up SNIPR. (b) Using SNIPR.}
+    \label{fig:sniprentire}
+\end{figure}
+
 
 In the reminder of this chapter, the algorithms or steps \uppercase{SnipR} needed to set-up and do code retargeting in a snippet-centric search engine are described in more detail. 
 
