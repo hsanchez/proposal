@@ -12,7 +12,7 @@
 
 \subsection{Eager Retargeting}
 
-Eager retargeting is the policy of continually making code changes to one or more searched results, and feeding any suitability scrutiny on the outcome back into the search process\footnote{A rapid experimentation of example code}. A process that has such a policy operates under two assumptions:
+Eager retargeting is the policy of continually making code changes to one or more search results, and feeding any suitability scrutiny on the outcome back into the search process\footnote{A rapid experimentation of example code}. A process that has such a policy operates under two assumptions:
 
 \begin{enumerate}
 	\item Code retargeting is a \emph{cheap}---efficient---operation, and
@@ -40,7 +40,7 @@ Lazy retargeting is the policy of only making code changes to a result at the po
 
 \begin{enumerate}
 	\item Code retargeting is an \emph{expensive} operation, and
-	\item Code retargeting ought to be done at the point of integration
+	\item Code retargeting ought to be done only at the point of integration
 \end{enumerate}
 
 A process that has such a policy assumes code retargeting is a costly operation~\cite{Brandt:2009ew, Wightman:2012gc}. This is based on the observation that developers, under this policy, cannot plan the impact of choosing a code example on their current work until they have tried it. This means that---at the point of integration---unrelated and/or unsuitable results are more likely to require many more code changes than suitable results.
@@ -59,7 +59,7 @@ One could model the notion of ``cost'' to retarget code examples with the follow
 	\item Code disturbance
 \end{enumerate}
  
-The code understanding effort takes into account the time needed to carry out program comprehension actions, such as locating the snippet, doing content analysis, screening snippets. This effort is denoted by $U_{s}$, which is defined as the average effort required before starting the actual retargeting actions.
+The code understanding effort takes into account the time needed to carry out program comprehension actions, such as locating the snippet, doing content analysis, screening snippets, etc. This effort is denoted by $U_{s}$, which is defined as the average effort required before starting the actual retargeting actions.
 
 Code modification efforts represents the cost of changing the necessary tokens in a snippet. For a sequence of tokens `a', let $\alpha^{+}(a)$ denote the cost of adding changes to `a'. This term is formulated as: 
 
@@ -68,7 +68,7 @@ Code modification efforts represents the cost of changing the necessary tokens i
 	\label{costmodification}
 \end{equation} where $C_{s}$ is the average estimated time for one generic snippet change to be performed by the developer.
 
-Code disturbance expresses the cost of tinkering~\cite{Jadud:2006ir} when developers face a unexpected situation. It is assumed that code disturbance is proportional to the amount of interruptions---e.g., unpredictable errors---experienced by a developer during retargeting and how long each interruption takes as a snippet varies. This term is formulated as:
+Code disturbance expresses the cost of tinkering~\cite{Jadud:2006ir} when facing an unexpected situation. It is assumed that code disturbance is proportional to the amount of interruptions---e.g., unpredictable errors---experienced by a developer during retargeting and how long each interruption takes as a snippet varies. This term is formulated as:
 
 \begin{equation}
 	\delta(S_{i}) = T_{s} \times Interruption(S_i)
@@ -84,9 +84,9 @@ Therefore, the overall retargeting cost is defined as:
 
 From the above model, one can assume that the \emph{winner} policy is the one with the smallest total cost.
 
-Eager retargeting assumes a low cost. This is based on the observation that unsuitable results---i.e., results that cannot be retargeted---are excluded more often\footnote{i.e., the search space is reduced.}, leaving the developer only suitable choices to handle; choices that are retargetable and help reduce the cognitive distance~\cite{Krueger:1992wf}, experienced by developers, to understand how to use them. Obviously, this will lead to a low disturbance value and thus to a low total cost.  
+Eager retargeting assumes a low cost. This is based on the observation that unsuitable results---i.e., results that cannot be retargeted---are excluded more often, leaving the developer only suitable choices to handle. Not only does the time to find suitable choices improves, but also less time (a.k.a., wasted) agonizing over modification problems that are costly to fix. Obviously, this will lead to a low total cost. 
 
-In contrast, as it has been already suggested in previous work~\cite{Brandt:2009ew, Wightman:2012gc}, a lazy retargeting policy assumes a high cost. Under this policy, it is common for one to look at each promising result (suitable or unsuitable) in its entirety\footnote{all the way to try to retarget each individual result at the IDE.}---usually one by one. If the retargeting of such result is unsuccessful, then---besides discarding the example and restarting the search process---the developer may consider exploring the problem and then try all possible ways he/she can correct it. Not only this could lead to more frequent disturbances and thus to a high total cost, but also to a sluggish searching interaction~\cite{Gray:2000im}.
+In contrast, as it has been already suggested in previous work~\cite{Brandt:2009ew, Wightman:2012gc}, a lazy retargeting policy assumes a high cost. Under this policy, it is common for one to look at each promising result (suitable or unsuitable) in its entirety\footnote{all the way to try to retarget each individual result at the IDE.}---usually one by one. The problem with this is that the feedback, revealing the suitability of an example, may take a significant time to get back to the developer. By then so many changes have been made that there is often no clear ending for the task (more disturbance). The developer's only recourse is to restart the search process. Not only this could lead to a high total cost, but also to a sluggish searching interaction~\cite{Gray:2000im}.  
 
 Since the major ``cost'' of each policy is directly connected to the time spent by the developer searching for suitable code, a policy leading to a \emph{cheaper} code search process leads also to a \emph{faster} code search process.
 
@@ -158,9 +158,9 @@ For Olivia, the whole idea of having the failed-to-retarget snippets around is d
     \label{fig:twistclean}
 \end{figure}   
 
-At this point, Olivia could actually issue more commands. However, she decides to arbitrarily click on individual results that she sees as good candidates for additional retargeting. This action offers the choice for further retargeting to gain more confidence of these results' suitability (see Figure~\ref{fig:basealternative} for an example). She then invokes a few additional commands: rename functions, and change a condition-controlled loop (e.g., for loop) to another one (e.g., while loop), matching what Olivia had in mind for how and what status updates are obtained\footnote{This process can continue (See Eager retargeting policy in Section~\ref{sec:eagervslazy}) until Olivia decides to stop.}. Again, those unsuitable results are filtered out and thus reduce the number of results to be inspected by Olivia.
+At this point, Olivia could actually issue more commands. However, she decides to arbitrarily click on individual results that she sees as good candidates for additional retargeting. This action offers the choice for further retargeting to gain more confidence of these results' suitability (see Figure~\ref{fig:basealternative} for an example). She then invokes a few additional commands: rename functions, and change a condition-controlled loop (e.g., for loop) to another one (e.g., while loop), matching what Olivia had in mind for how and what status updates are obtained\footnote{This process can continue (See Eager retargeting policy in Section~\ref{sec:eagervslazy}) until Olivia decides to stop.}. Again, any unsuitable results are filtered out and thus reduce the number of results to be inspected by Olivia.
 
 Continuing her information gathering, Olivia may continue retargeting results until there are no more results to screen or to not like any of the different variations. This can happen, which can lead Olivia to modify her previous queries to obtain similar or different results than she had previously obtained.
 
-When she is satisfied with the resulting code example, she can evaluate these results in more detail and thus pick the most suitable example she can integrate into her own code.
+When she is satisfied with the resulting code examples, she can evaluate these results in more detail and thus pick the most suitable example she can integrate into her own code.
 
