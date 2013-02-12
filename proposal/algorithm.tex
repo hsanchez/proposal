@@ -11,7 +11,7 @@ While these outcomes have indeed proven successful, they still impose a signific
 
 The above observation is the motivation for the algorithms discussed in this chapter. The aim of these algorithms is to efficiently learn and use coherent mapping-based program transformations. By applying these transformations to a snippet, \uppercase{SnipR} can convert the structure of one snippet into the structure of another. The goal is for this to happen with minimal or no cost to the developer.
 
-Briefly, these algorithms represent the modules required to implement \uppercase{SnipR} functionality. These modules are illustrated in Figure~\ref{fig:sniprentire}. The Setup and Learning steps occur at indexing time. Given a set of indexed snippets, the Setup step populates the \emph{Snippet Space} by invoking a code clone searching and detection tool and then considering all the possible combinations of (original-clone) pairs. The output of the Setup step is fed into the Learning step. The Learning step then builds mappings for all the (original-clone) pairs in the \emph{Snippet Space}. When invoking \uppercase{SnipR}, Twist (See Chapter~\ref{chap:twist} for details) interprets this input by searching an a mapping that will make sense of this input. At this point, the Matching step maps the retargeting request to its corresponding optimal mapping and then applies this optimal mapping to the original snippet.
+Briefly, these algorithms represent the modules required to implement \uppercase{SnipR} functionality. These modules are illustrated in Figure~\ref{fig:sniprentire}. The Setup and Learning steps occur at indexing time. Given a set of indexed snippets, the Setup step populates the \emph{Snippet Space} by invoking a code clone searching and detection tool and then considering all the possible combinations of (original-clone) pairs. The output of the Setup step is fed into the Learning step. The Learning step then builds mappings for all the (original-clone) pairs in the \emph{Snippet Space}. When invoking \uppercase{SnipR}, Twist interprets this input by searching a mapping that will make sense of this input (See Chapter~\ref{chap:twist} for details). At this point, the Matching step maps the retargeting request to its corresponding optimal mapping and then applies this optimal mapping to the original snippet.
 
 \begin{figure}[!ht]
     \centering
@@ -20,8 +20,9 @@ Briefly, these algorithms represent the modules required to implement \uppercase
     \label{fig:sniprentire}
 \end{figure}
 
-
 In the reminder of this chapter, the algorithms or steps \uppercase{SnipR} needs to set-up and do code retargeting in a snippet-centric search engine are described in more detail. 
+
+\fancybreak{\pfbreakdisplay}
 
 \section{The Setup Step}
 \label{sec:precomputation}
@@ -31,6 +32,8 @@ This algorithm relies on state-of-art approaches in code clone searching and det
 This algorithm is based on the following intuition. Even though code clone searching and detection tools, called CSD from now on, might consider a tremendous space of alternative snippets for a single snippet, the number of unique snippet alternatives and therefore the number of snippet instances to use is much lower. Consequently, it makes sense to cache and reuse the set of unique alternative snippets computed by CSD, instead of performing multiple invocations only to compute the same snippets multiple times. The resulting set of (original-clone) pairs---$S = \{(s_1, s_2) x (s_1, s_3) x (s_1, s_4) ... x (s_1, s_n)\}$---will be saved in the \emph{Snippet Space} (cached snippets). This space, or the output of this algorithm, is computed by considering all the possible combinations of (original-clone) pairs that can be revealed by using an original snippet and its clones. The \emph{Snippet Space} is maintained in the same way indexes are maintained in a search engine.
 
 For a larger number of libraries, the setup of a \emph{Snippet Space} becomes expensive, as a larger number of calls to CSD are required. To reduce this burden, the setup step builds the \emph{Snippet Space} incrementally, in-sync with the most popular libraries searched by users. By doing this, there is no need to consider all the possible combinations of (original-clone) pairs upfront; only a subset will be suffice.
+
+\fancybreak{\pfbreakdisplay}
 
 \section{The Learning Step}
 \label{sec:learning}
@@ -58,6 +61,8 @@ In a nutshell, the learning algorithm takes as an input the \emph{Snippet Space}
     \caption{Learning a mapping-based transformation.}
     \label{fig:mappinggeneration}
 \end{figure}
+
+\fancybreak{\pfbreakdisplay}
 
 \section{The Matching Step}
 \label{sec:matching}

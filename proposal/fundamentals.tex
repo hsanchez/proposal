@@ -5,6 +5,8 @@
 
 \lettrine[lraise=0.1, nindent=0em, slope=-.5em]{T} {HIS CHAPTER} sets the stage for the complete description of \uppercase{SnipR} in the next chapters.
 
+\fancybreak{\pfbreakdisplay}
+
 \section{Eager vs. Lazy Code Retargeting}
 \label{sec:eagervslazy}
 
@@ -31,8 +33,8 @@ The expected advantages of eager retargeting are:
 	\item The end users can waste less time agonizing over modification problems they find costly to fix. 
 \end{enumerate}
 
-
-\fancybreak{\pfbreakdisplay}
+% 
+% \fancybreak{\pfbreakdisplay}
 
 \subsection{Lazy Retargeting}
 
@@ -44,8 +46,8 @@ Lazy retargeting is the policy of only making code changes to a result at the po
 \end{enumerate}
 
 A process that has such a policy assumes code retargeting is a costly operation~\cite{Brandt:2009ew, Wightman:2012gc}. This is based on the observation that developers, under this policy, cannot plan the impact of choosing a code example on their current work until they have tried it. This means that---at the point of integration---unrelated and/or unsuitable results are more likely to require many more code changes than suitable results.
-
-\fancybreak{\pfbreakdisplay}
+% 
+% \fancybreak{\pfbreakdisplay}
 
 \subsection{Reasoning about these two policies}
 
@@ -84,9 +86,9 @@ Therefore, the overall retargeting cost is defined as:
 
 From the above model, one can assume that the \emph{winner} policy is the one with the smallest total cost.
 
-Eager retargeting assumes a low cost. This is based on the observation that unsuitable results---i.e., results that cannot be retargeted---are excluded more often, leaving the developer only suitable choices to handle. Not only does the time to find suitable choices improves, but also less time (a.k.a., wasted) agonizing over modification problems that are costly to fix. Obviously, this will lead to a low total cost. 
+Eager retargeting assumes a low cost. This is based on the observation that unsuitable results---i.e., results that cannot be retargeted---are excluded more often, leaving the developer only suitable choices to handle. Not only does the time to find suitable choices improves, but also less time (a.k.a., wasted) agonizing over modification problems that are costly to fix. Obviously, this leads to a low total cost. 
 
-In contrast, as it has been already suggested in previous work~\cite{Brandt:2009ew, Wightman:2012gc}, a lazy retargeting policy assumes a high cost. Under this policy, it is common for one to look at each promising result (suitable or unsuitable) in its entirety\footnote{all the way to try to retarget each individual result at the IDE.}---usually one by one. The problem with this is that the feedback, revealing the suitability of an example, may take a significant time to get back to the developer. By then so many changes have been made that there is often no clear ending for the task (more disturbance). The developer's only recourse is to restart the search process. Not only this could lead to a high total cost, but also to a sluggish searching interaction~\cite{Gray:2000im}.  
+In contrast, as it has been already suggested in previous work~\cite{Brandt:2009ew, Wightman:2012gc}, a lazy retargeting policy assumes a high cost. Under this policy, it is common for one to look at each promising result (suitable or unsuitable) in its entirety\footnote{all the way to try to retarget each individual result at the IDE.}---usually one by one. The problem with this is that the feedback, revealing the suitability of an example, may take a significant time to get back to the developer. By then so many changes have been made that there is often no clear ending for the task (more disturbance). The developer's only recourse is to restart the search process. Not only does this lead to a high total cost, but also to a sluggish searching interaction~\cite{Gray:2000im}.  
 
 Since the major ``cost'' of each policy is directly connected to the time spent by the developer searching for suitable code, a policy leading to a \emph{cheaper} code search process leads also to a \emph{faster} code search process.
 
@@ -97,7 +99,7 @@ Since the major ``cost'' of each policy is directly connected to the time spent 
 % \uppercase{SnipR} models code searching as a short cycle of alternating query, screen, and retarget phases: found code is retargeted with commands issued just following to the displaying of a result set or prior to issuing a query (Figure). This model is operationalized using a state machine (Figure): during browsing, reported results are added to a queue; when the user .    
 % 
 % when the user edits code, all pages in the queue are assigned to new characters. 
-
+\fancybreak{\pfbreakdisplay}
 
 \section{How to start developing with \uppercase{SnipR}}
 \label{sec:sniprscenario}
@@ -158,7 +160,7 @@ For Olivia, the whole idea of having the failed-to-retarget snippets around is d
     \label{fig:twistclean}
 \end{figure}   
 
-At this point, Olivia could actually issue more commands. However, she decides to arbitrarily click on individual results that she sees as good candidates for additional retargeting. This action offers the choice for further retargeting to gain more confidence of these results' suitability (see Figure~\ref{fig:basealternative} for an example). She then invokes a few additional commands: rename functions, and change a condition-controlled loop (e.g., for loop) to another one (e.g., while loop), matching what Olivia had in mind for how and what status updates are obtained\footnote{This process can continue (See Eager retargeting policy in Section~\ref{sec:eagervslazy}) until Olivia decides to stop.}. Again, any unsuitable results are filtered out and thus reduce the number of results to be inspected by Olivia.
+At this point, Olivia could actually issue more commands. However, she decides to arbitrarily click on individual results that she sees as good candidates for additional retargeting. This action offers the choice for further retargeting to gain more confidence of these results' suitability (see Figure~\ref{fig:basealternative} for an example). She then invokes a few additional commands: rename functions, and change a condition-controlled loop (e.g., for loop) to another one (e.g., while loop), matching what Olivia had in mind for how and what status updates are obtained\footnote{This process can continue (See Eager retargeting policy in Section~\ref{sec:eagervslazy}) until Olivia decides to stop.}. Again, any unsuitable results are filtered out and thus the number of results to be inspected by Olivia is reduced.
 
 Continuing her information gathering, Olivia may continue retargeting results until there are no more results to screen or to not like any of the different variations. This can happen, which can lead Olivia to modify her previous queries to obtain similar or different results than she had previously obtained.
 
