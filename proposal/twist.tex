@@ -3,6 +3,8 @@
 
 \lettrine[lraise=0.1, nindent=0em, slope=-.5em]{T}{HIS CHAPTER INTRODUCES} Twist, a language for interacting with search results, and combining and executing code retargeting operations. 
 
+\fancybreak{\pfbreakdisplay}
+
 \section{Twist}
 \label{sec:twist}
 
@@ -165,6 +167,8 @@ This function with zero arguments prints the current version of Twist. With two 
 
 That's the basic syntax. The Twist parser reads that and then it translates it to the core syntax.
 
+\fancybreak{\pfbreakdisplay}
+
 \section{Running Twist}
 \label{sec:running}
 
@@ -322,7 +326,7 @@ fibonacci +Int=>Int : first >
 rename-param(n, number) 
 \end{minted}
 	 
-Let's make one important observation. The + symbol, besides helping search by type, can be used to reduce the search scope of a query. For example, if one knows in advance what library (separated by comma if there are more than one library) to search, then one can use the + (it means ``only in'') to specify the name of the library. Like this:
+Let's make one important observation. The + symbol, besides helping search by type, can be used to reduce the search scope of a query. For example, if one knows in advance what library (separated by comma if there is more than one library) to search, then one can use the + (it means ``only in'') to specify the name of the library. Like this:
 
 \begin{minted}{java}
 : fibonacci +supermath-1.0 
