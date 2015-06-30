@@ -25,3 +25,4 @@
 proposal.pdf
 icscdocsym.pdf
 *.DS_Store
+.rake_tasks~
