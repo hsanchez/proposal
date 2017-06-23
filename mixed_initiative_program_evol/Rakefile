@@ -19,8 +19,6 @@ config['bibtex'] = 'bibtex'
 # This Rakefile is written to simplify the compiling of
 # LaTeX documents.
 #
-# v0.2.2 
-# added icse task for the ICSE 2013 Doctoral Symp..
 #
 # v0.2.1 
 # Use system instead of sh and call view inside pdf.

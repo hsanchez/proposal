@@ -3,18 +3,18 @@
 
 % \fancybreak{\pfbreakdisplay}
 
-\lettrine[lraise=0.1, nindent=0em, slope=-.5em]{T} {HIS CHAPTER} sets the stage for the complete description of \uppercase{SnipR} in the next chapters.
+\lettrine[lraise=0.1, nindent=0em, slope=-.5em]{T} {HIS CHAPTER} sets the stage for the complete description of \Tool in the next chapters.
 
 \fancybreak{\pfbreakdisplay}
 
-\section{Eager vs. Lazy Retargeting}
+\section{Eager vs. Lazy Evolution}
 \label{sec:eagervslazy}
 
-\uppercase{SnipR} builds on an eager code retargeting policy, a policy that is executed from the search interface. Below, this policy and its opposite---a lazy code retargeting policy, a policy that is executed in the IDE---are described.
+\uppercase{\Tool} builds on an eager program evolution policy, a policy that is executed from the search interface. Below, this policy and its opposite---a lazy program evolution policy, a policy that is executed in the IDE---are described.
 
-\subsection{Eager Retargeting}
+\subsection{Eager Evolution}
 
-Eager retargeting is the policy of continually making code changes to one or more search results, and feeding any suitability scrutiny on the outcome back into the search process\footnote{A rapid experimentation of example code}. A process that has such a policy operates under two assumptions:
+Eager evolution is the policy of continually making code changes to one or more search results, and feeding any suitability scrutiny on the outcome back into the search process\footnote{A rapid experimentation of example code}. A process that has such a policy operates under two assumptions:
 
 \begin{enumerate}
 	\item Code retargeting is a \emph{cheap}---efficient---operation, and
@@ -36,9 +36,9 @@ The expected advantages of eager retargeting are:
 % 
 % \fancybreak{\pfbreakdisplay}
 
-\subsection{Lazy Retargeting}
+\subsection{Lazy Evolution}
 
-Lazy retargeting is the policy of only making code changes to a result at the point of integration in the IDE. Under this policy, there is no guarantee---beyond relative ranking values---of the result's suitability. Due to this uncertainty, a process that has such a policy operates under two assumptions:
+Lazy evolution is the policy of only making code changes to a result at the point of integration in the IDE. Under this policy, there is no guarantee---beyond relative ranking values---of the result's suitability. Due to this uncertainty, a process that has such a policy operates under two assumptions:
 
 \begin{enumerate}
 	\item Code retargeting is an \emph{expensive} operation, and
@@ -96,19 +96,19 @@ Since the major ``cost'' of each policy is directly connected to the time spent 
 % \section{What rules should guide the Retargeting of found code?}
 % \label{sec:sniprrules}
 % 
-% \uppercase{SnipR} models code searching as a short cycle of alternating query, screen, and retarget phases: found code is retargeted with commands issued just following to the displaying of a result set or prior to issuing a query (Figure). This model is operationalized using a state machine (Figure): during browsing, reported results are added to a queue; when the user .    
+% \uppercase{\Tool} models code searching as a short cycle of alternating query, screen, and retarget phases: found code is retargeted with commands issued just following to the displaying of a result set or prior to issuing a query (Figure). This model is operationalized using a state machine (Figure): during browsing, reported results are added to a queue; when the user .    
 % 
 % when the user edits code, all pages in the queue are assigned to new characters. 
 \fancybreak{\pfbreakdisplay}
 
-\section{How to start developing with \uppercase{SnipR}}
+\section{How to start developing with \uppercase{\Tool}}
 \label{sec:sniprscenario}
 
-A scenario will be given to help introduce the main interaction techniques. \uppercase{SnipR} offers two choices for interacting with code-centric sites: to issue queries and retargeting operations separately, or to intermix queries and retargeting operations. For sake of clarity, this section will focus on the former.
+A scenario will be given to help introduce the main interaction techniques. \uppercase{\Tool} offers two choices for interacting with code-centric sites: to issue queries and retargeting operations separately, or to intermix queries and retargeting operations. For sake of clarity, this section will focus on the former.
 
 Olivia is an amateur developer and open source evangelist who frequently practices search-driven development at her workplace. Olivia would like to transition a sentiment analysis tool (that uses the Twitter API) to use the Facebook API. The updated tool should handle the sentiment classification of status updates in Facebook. She wants status updates to be classified dynamically. She is familiar with Java and has some Machine Learning experience, but does not consider herself an expert developer.
 
-Olivia starts by opening Twist---a \uppercase{SnipR}-aware snippet-centric search engine she frequently visits for discovering open source libraries. This engine spans large sets of open source projects; mostly indexed from a variety of project hosting sites, such as Github, and Google code. Olivia interacts with Twist by using Twist's REPL\footnote{\url{http://en.wikipedia.org/wiki/Read-eval-print_loop}}. Twist allows Olivia to use queries and/or code retargeting operations to do code searching. The design of Twist will be described in Chapter~\ref{chap:twist}. Figure~\ref{fig:twist} shows Twist's Web interface. 
+Olivia starts by opening Twist---a \uppercase{\Tool}-aware snippet-centric search engine she frequently visits for discovering open source libraries. This engine spans large sets of open source projects; mostly indexed from a variety of project hosting sites, such as Github, and Google code. Olivia interacts with Twist by using Twist's REPL\footnote{\url{http://en.wikipedia.org/wiki/Read-eval-print_loop}}. Twist allows Olivia to use queries and/or code retargeting operations to do code searching. The design of Twist will be described in Chapter~\ref{chap:twist}. Figure~\ref{fig:twist} shows Twist's Web interface. 
 
 % \begin{figure}[!ht]
 %     \centering
