@@ -21,31 +21,33 @@ educated programmers can express themselves by borrowing the same skills
 and creativity of the formally trained pros.
 
 In a new research direction, we term Program Design Mining, we propose  
-making some of the abilities\footnote{e.g., molding programs via idioms, coding principles, and design patterns}, which allow star developers to succeed, 
-available to citizen programmers by applying machine learning to program 
-design. \todo{List these abilities: e.g., idioms, design patterns, 
-coding principles} Using ready available Web data (e.g., GitHub 
-repositories), we will exploit machine learning techniques, such as 
-structured prediction, nonparametric bayesian analysis, and program 
+making some of the abilities\footnote{e.g., molding programs via idioms, 
+coding principles, and design patterns}, which allow star developers to 
+succeed, available to citizen programmers by applying machine learning 
+to program design. \todo{List these abilities: e.g., idioms, design 
+patterns, coding principles} Using ready available Web data (e.g., 
+GitHub repositories), we will exploit machine learning techniques, such 
+as structured prediction, nonparametric bayesian analysis, and program 
 induction to enable new interaction mechanisms for program design.
 
 All of these machine learning techniques leverage structure regularities 
-that are intrinsic to program designs. Well-written (object-oriented) programs, 
-for example, exhibit many structural regularities\footnote{These regularities explicitly molds programs with design and coding principles that intend to improve their quality} and their identification and manipulation improves with experience. Machine 
-learning can eliminate the need for designing experience. On the Web data, 
-every Java class is associated with an abstract syntax tree. This information 
-can be used along with the change history of this class to reason about and 
-manipulate such structural regularities, closer to way experienced developers 
-will use. 
+that are intrinsic to program designs. Well-written (object-oriented) 
+programs, for example, exhibit many structural regularities\footnote{These 
+regularities explicitly molds programs with design and coding principles that 
+intend to improve their quality} and their identification and manipulation 
+improves with experience. Machine learning can eliminate the need for 
+gaining design experience. On the Web data, every Java class is associated 
+with an abstract syntax tree. This information can be used along with the 
+change history of this class to reason about and manipulate such structural 
+regularities, closer to way experienced developers will use. 
 
 With Program Design Mining, we will entirely decouple the ability of 
 designing quality programs from years of experience. Design wisdom will 
-not come with time. It will come with new design interactions learned 
-from data. Developers will be able to evolve their programs with 
-sound design and coding principles. At every opportunity, they will try 
-a different design alternative and experience the results. Program design 
-mining will exploit ready available Web data to foster design inspiration 
-when innovation is required.
+not come with time. It will come with new design interactions (e.g., code transformations) learned from data. Developers will be able to evolve 
+their programs with sound design and coding principles. At every 
+opportunity, they will try a different design alternative and experience 
+the results. Program design mining will exploit ready available Web data 
+to foster design inspiration when innovation is required.
 
 In what follows, we will cover the intellectual merit of data-driven 
 approaches for program design, as well as the broader impact of Program 
@@ -57,21 +59,20 @@ Design Mining.
 This project proposes a novel approach for program design and 
 evolution. Encouraged by many recent advances in code transplantation, 
 data-driven Web design, and software evolution simulation, we 
-present program design mining. The key innovations behind this 
+present Program Design Mining. The key innovations behind this 
 approach include:
 
 \begin{enumerate}
-	\item Data-driven program design (we call design bouncing). Establish 
-	new design workflows from existing design knowledge. These workflows 
-	allow citizen programmers to automatically transfer the structural 
-	regularities from a well-written program into the style and structure 
-	of another.  
-	\item Operationalize learned structures, which are intrinsic to program 
-	designs to build more powerful design workflows. On our collected Web 
-	data, every Java class is associated with an abstract syntax tree, 
-	which can be used with its change history to reason about and 
-	manipulate programs with \textit{similar} structures.
-	\item Mixed-initiative program design evolution.     
+	\item Data-driven program design. Establish new design workflows (or code 
+	transformations) from existing design knowledge. These workflows allow 
+	citizen programmers to automatically transfer the structural regularities 
+	from a well-written program into the style and structure of another.  
+	\item Operationalize learned regularities and experience the results in 
+	real time. On our collected Web data, for example, every Java class is 
+	associated with an abstract syntax tree. Along with its change history, 
+	we can use this abstract representation to reason about and manipulate 
+	programs with \textit{similar} structures.
+	\item Mixed-initiative program design evolution (we call design bouncing).     
 \end{enumerate}
 
 \section*{Broader Impact} % (fold)
