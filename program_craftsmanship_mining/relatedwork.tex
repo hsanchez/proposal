@@ -1,4 +1,55 @@
 \chapter{Project Description}{}
 \label{sec:related}
 
-\startWith{o}{perationalizing} structural regularities is hard. Operationalizing programming flavor is hard. It requires the modeling of what it means for a program to have human-like program construction wisdom, the transferring of such a wisdom from external sources, and then operationalizing it locally to produce quality software. State of the art data-driven tools for program synthesis, program improvement, and code transplantation, such as X, Y, and Z, focus on the code itself and struggle with transferring code from one system to another, because of the nontrivial modifications needed to relocate unrelated foreign code fragments into a new system. 
+\startWith{d}{evelopers} frequently rely on templates when designing 
+programs. While templates provide a simple mechanism for quick generation of 
+commonly used code, their rigidity limits customization and creativity 
+to those anticipated by the template creator. Program Design Mining lifts 
+this rigidity by allowing the structural regularities of any well-written 
+programs to serve as a design template. Program Design works by matching 
+statically and semantically similar elements in programs to create coherent 
+mappings between them.
+
+
+programmatic ways in which both traditionally and 
+non-traditionally educated programmers can borrow the same skills and 
+creativity of the formally trained pros and can still express themselves.  
+
+Program Design Mining will implement a data-driven approach for 
+program design. This approach introduces a markup language for 
+representing templates and specifying integration instructions 
+for code snippets
+
+\begin{enumerate}
+	\item A new structured prediction algorithm for rapidly transferring 
+	the structural regularities of well-written (object-oriented) programs 
+	into the style and structure of another one.
+	\item A new program induction algorithm for learning and operationalizing 
+	(composition or remix) learned templates to foster program design 
+	inspiration when innovation is required.
+	\item A new semi-automatic (human-in-the-loop) program evolution algorithm 
+	for bouncing program design alternatives (and evolving programs). 
+\end{enumerate}
+
+State of the art data-driven tools for program synthesis, program 
+repair, and code transplantation, such as X, Y, and Z, focus 
+on the code itself and struggle with transferring code from one system 
+to another, because of the nontrivial modifications needed to relocate 
+unrelated foreign code fragments into new programs. 
+
+SnipMatch introduces a simple markup that allows snippet
+authors to specify search patterns and integration instructions.
+SnipMatch leverages this information, in conjunction
+with current code context, to improve snippet search and
+parameterization. 
+
+
+Instructions for integrating a snippet into the user’s source
+code are expressed using a lightweight markup embedded
+within the snippet code. The SnipMatch markup is similar
+to the markup used in Eclipse Templates [9], with several
+additions. Eclipse Templates is a built-in feature in Eclipse
+that allows users to create and insert code “templates”
+(snippets). Like SnipMatch, it allows snippets to be integrated
+into the source code by taking into account local
+variables and adding missing import statements. 
