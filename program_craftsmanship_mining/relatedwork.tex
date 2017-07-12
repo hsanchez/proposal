@@ -1,17 +1,24 @@
 \chapter{Project Description}{}
 \label{sec:related}
 
-\startWith{d}{evelopers} frequently rely on templates (e.g., 
-recipes in Eclipse) when designing programs in modern Integrated 
-Development Environments (IDEs). While these templates provide 
-a simple mechanism for implementing canned behavior, there are a 
-few issues that hinder their applicability: (1) Templates creation 
-is tedious, which restricts productivity, and (2) Templates rigidity 
-limits customization and creativity.
+\startWith{d}{evelopers} frequently rely on templates when designing 
+programs. While templates provide a simple mechanism for quick generation of 
+commonly used code, their rigidity limits customization and creativity 
+to those anticipated by the template creator. Program Design Mining lifts 
+this rigidity by allowing the structural regularities of any well-written 
+programs to serve as a design template. Program Design works by matching 
+statically and semantically similar elements in programs to create coherent 
+mappings between them.
+
+
+programmatic ways in which both traditionally and 
+non-traditionally educated programmers can borrow the same skills and 
+creativity of the formally trained pros and can still express themselves.  
 
 Program Design Mining will implement a data-driven approach for 
-program design. This approach consists of a platform, and a set of 
-algorithms, such as: 
+program design. This approach introduces a markup language for 
+representing templates and specifying integration instructions 
+for code snippets
 
 \begin{enumerate}
 	\item A new structured prediction algorithm for rapidly transferring 
@@ -29,3 +36,20 @@ repair, and code transplantation, such as X, Y, and Z, focus
 on the code itself and struggle with transferring code from one system 
 to another, because of the nontrivial modifications needed to relocate 
 unrelated foreign code fragments into new programs. 
+
+SnipMatch introduces a simple markup that allows snippet
+authors to specify search patterns and integration instructions.
+SnipMatch leverages this information, in conjunction
+with current code context, to improve snippet search and
+parameterization. 
+
+
+Instructions for integrating a snippet into the user’s source
+code are expressed using a lightweight markup embedded
+within the snippet code. The SnipMatch markup is similar
+to the markup used in Eclipse Templates [9], with several
+additions. Eclipse Templates is a built-in feature in Eclipse
+that allows users to create and insert code “templates”
+(snippets). Like SnipMatch, it allows snippets to be integrated
+into the source code by taking into account local
+variables and adding missing import statements. 
