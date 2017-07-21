@@ -7,23 +7,26 @@ designing programs. They use them to write common code constructs faster, to
 surround existing code with enclosing blocks (e.g., \texttt{try/catch} clause), or to 
 create new source files. Modern integrated development environments, like IntelliJ IDEA 
 or Eclipse, provide developers a set of predefined templates, as well as a functionality 
-to add new ones. Developers use the latter to create their own templates specific to 
-their coding habits or to their code base. 
+to add new ones. Developers use the latter to capture in a template coding habits 
+specific to them or their code base. With templates, developers don't have to figure 
+out what to write. It is already in front of them, and they just have to fill it in.  
 
-While templates help developers write common code faster, their rigidity limits both 
-customization and creativity to those anticipated by the template creator. Program 
-Design Mining leverages the simplicity of templates while excluding their regidity. It 
-uses three machine learning techniques to create new design interactions from existing 
-design knowledge: (1) structured prediction, (2) nonparametric bayesian analysis, and 
-(3) program induction. These machine techniques are not orthogonal; they complement 
-each other. 
+While templates can help developers write common code faster, their rigidity limits 
+both customization and creativity to those anticipated by the template creator. 
+Program Design Mining leverages the simplicity of templates while excluding their 
+regidity. It excludes this rigidity by using three machine learning techniques 
+to create new design interactions from existing design knowledge: (1) structured 
+prediction, (2) nonparametric bayesian analysis, and (3) program induction. These 
+machine techniques are not orthogonal; they complement each other. 
 
 Program Design Mining uses a structured prediction algorithm to operazionalize 
 well-written (object-oriented) programs. This algorithm turns each program into a 
-program design template. Each template captures the coding habits of its creator. 
-The algorithm finds static and semantic correspondences between the well-written 
-program (e.g., inferred template) and its target program. \todo{describe with 
-example how this correspondence will look like or behave like}.
+program design template which developers can apply (at will) during program design. 
+Each inferred template captures the coding habits of a program's creator. It captures 
+this wisdom by discovering static and semantic correspondences between both programs, 
+the well-written program (i.e., inferred design template), and the target program, 
+respectively. \todo{describe with example how this correspondence will look like or 
+behave like}.
 
 
 % Next, through a
