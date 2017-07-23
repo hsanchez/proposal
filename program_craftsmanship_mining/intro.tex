@@ -23,7 +23,7 @@ creativity of the formally trained pros and still express themselves.
 In a new research direction, we term Program Design Mining, we propose  
 making some of the abilities, which allow star developers to succeed, 
 available to citizen programmers by applying machine learning to program 
-design. We will leverage existing design knowledge on the Web (e.g., 
+design. We will leverage existing design knowledge found on the Web (e.g., 
 GitHub software repositories) to help program designers. On the Web, 
 every well-written program represents a concrete example of human 
 creativity and design wisdom. Given these ready available Web data, 
@@ -45,7 +45,7 @@ Well-written (object-oriented) programs, for example, exhibit many structural
 regularities\footnote{These regularities explicitly mold programs with design 
 and coding principles that intend to improve their quality} and their 
 identification and manipulation improves with experience. Machine learning 
-can eliminate the need for gaining design experience, as it allows us to learn 
+can eliminate the need for gaining such a design experience, as it allows us to learn 
 from existing design knowledge. On the Web data, every Java class is associated 
 with an abstract syntax tree. This information can be used along with the change 
 history of this class to reason about and manipulate such structural regularities, 
@@ -82,7 +82,7 @@ approach include:
 	programmers to automatically transfer the structural regularities 
 	from a well-written program into the style and structure of another.  
 	\item Semi-automatic program design tuning. Generate structural 
-	regularities recommendations by analyzing learned regularities online; 
+	regularities optimizations by analyzing learned regularities online; 
 	i.e., in parallel with structured prediction, which allows the 
 	recommendations to adapt to transfer incompatibilities. Programmers 
 	can provide feedback on the recommendations, which is taken into 
@@ -90,8 +90,8 @@ approach include:
 	\item Operationalization and evolution of learned regularities. 
 	On the to-be-collected Web data, for example, every Java class is associated 
 	with an abstract syntax tree. Along with its change history, we can use 
-	this abstract representation to reason about and manipulate programs 
-	with \textit{similar} structures.
+	this abstract representation to learn generative probabilistic models to help 
+	reason about and manipulate programs' structures.
 \end{enumerate}
 
 \section*{Broader Impact} % (fold)
