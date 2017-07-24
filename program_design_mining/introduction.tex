@@ -1,10 +1,28 @@
-Automatically proving properties about programs that manipulate heap-based data structures 
-is a hard problem. It requires inferring universally
-quantified properties about a potentially unbounded number of 
-heap locations. State of the art verification techniques, such as Craig 
-interpolation and property-based reachability, struggle finding such
-properties because of their limited support for quantifiers or their 
-inability to generalize useful properties from individual examples. 
+Program design is both a complex and creative process, which can only 
+be performed by developers after many years of training. In today's modern 
+society, while the number of people with programming ability is growing 
+at an astounding rate, the percentage of the population with a well-rounded 
+program design experience remains in the single digits. This means that we 
+are witnessing a growing gap between need and capacity. One can meet some 
+of the need by using configurable programs (e.g., templates) with canned 
+behavior, but these restrict both creativity and problem solving 
+(i.e., capacity) to those anticipated by the creators of those programs. 
+Therefore, it is critical that we find programmatic ways in which we can 
+help both traditionally and non-traditionally educated programmers borrow 
+the same skills and creativity of the formally trained pros and still 
+be able to express themselves.
+
+The use of \textit{templates} for program design is a simple but promising 
+approach to capture coding habits specific 
+
+
+% Automatically proving properties about programs that manipulate heap-based
+% data structures is a hard problem. It requires inferring universally
+% quantified properties about a potentially unbounded number of
+% heap locations. State of the art verification techniques, such as Craig
+% interpolation and property-based reachability, struggle finding such
+% properties because of their limited support for quantifiers or their
+% inability to generalize useful properties from individual examples.
 
 The use of \emph{heap invariants}~\cite{jayhorn16} 
 is a simple but promising approach to infer such
