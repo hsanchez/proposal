@@ -3,8 +3,8 @@
 
 \section*{Overview} % (fold)
 \label{sec:overview}
-
-\startWith{w}{riting code} is not a manufacturing process, it's not 
+             
+\startWith{w}{riting code} is not a manufacturing process\todo{make it fit one page}, it's not 
 always craftsmanship, it's design. Design is where developers add 
 value faster than they add cost. However, design is both a complex 
 and creative process, which can only be performed by developers after 
@@ -13,54 +13,56 @@ number of people with programming ability is growing at an astounding
 rate, the percentage of the population with a well-rounded program 
 design experience remains in the single digits. This means that we are 
 witnessing a growing gap between need and capacity. One can meet some of 
-the need by using configurable programs with canned behavior, but these 
-restrict both creativity and problem solving (i.e., capacity) to those 
-anticipated by the creators of those programs. Therefore, it is critical 
-that we find programmatic ways in which we can help both traditionally 
-and non-traditionally educated programmers borrow the same skills and 
-creativity of the formally trained pros and still express themselves.
+the need by using configurable programs (e.g., templates) with canned 
+behavior, but these restrict both creativity and problem solving 
+(i.e., capacity) to those anticipated by the creators of those programs. 
+Therefore, it is critical that we find programmatic ways in which we can 
+help both traditionally and non-traditionally educated programmers borrow 
+the same skills and creativity of the formally trained pros and still 
+be able to express themselves.
 
 In a new research direction, we term Program Design Mining, we propose  
 making some of the abilities, which allow star developers to succeed, 
 available to citizen programmers by applying machine learning to program 
-design. We will leverage existing design knowledge on the Web (e.g., 
+design. We will leverage existing design knowledge found on the Web (e.g., 
 GitHub software repositories) to help program designers. On the Web, 
 every well-written program represents a concrete example of human 
 creativity and design wisdom. Given these ready available Web data, 
-Program Design Mining will identify and then manipulate structural 
-regularities \cite{minsky1991law} of (object-oriented) programs, such idioms, 
-coding rules, and design patterns. Program Design Mining exploits three machine 
-learning applications to enable new interaction mechanisms for program 
-design: (1) structured prediction \cite{collins2002discriminative} for 
-finding static and semantic correspondences between programs, which can 
-be used by programmers to transfer the structural regularities from one 
-program into the structure of the other; (2) program induction \cite{lake2015human} 
-for learning generative models that could help program designers manipulate 
-(and evolve) the transfered structural regularities; and (3) nonparametric 
-bayesian analysis \cite{allamanis2014mining} for dealing with incompatibilities 
-between structural regularities.
+Program Design Mining will identify, operationalize, and then manipulate 
+structural regularities \cite{minsky1991law} of (object-oriented) programs, 
+such idioms, coding rules, and design patterns. Program Design Mining 
+will enable these new interaction mechanisms by exploiting three 
+machine learning applications: (1) structured prediction 
+\cite{collins2002discriminative} for finding static and semantic correspondences 
+between programs, which can be used by programmers to transfer the structural 
+regularities from one program into the structure of the other; (2) program 
+induction \cite{lake2015human} for learning generative models that could help 
+program designers manipulate (and evolve) the transfered structural regularities; 
+and (3) nonparametric bayesian analysis \cite{allamanis2014mining} for dealing 
+with incompatibilities between structural regularities.
 
-All of these techniques leverage the inherent structure of program designs. 
-Well-written (object-oriented) programs, for example, exhibit many structural 
-regularities\footnote{These regularities explicitly mold programs with design 
-and coding principles that intend to improve their quality} and their 
-identification and manipulation improves with experience. Machine learning 
-can eliminate the need for gaining design experience, as it allows us to learn 
-from existing design knowledge. On the Web data, every Java class is associated 
-with an abstract syntax tree. This information can be used along with the change 
-history of this class to reason about and manipulate such structural regularities, 
-closer to way experienced developers will do. 
+All of these machine learning techniques leverage the inherent structure of 
+program designs. Well-written (object-oriented) programs, for example, exhibit 
+many structural regularities\footnote{These regularities explicitly mold programs with design 
+and coding principles that intend to improve their quality} and their identification and manipulation 
+improves with experience. Machine learning can eliminate the need for gaining 
+such a design experience, as it allows us to learn from existing design knowledge. 
+On the Web data, every Java class is associated with an abstract syntax tree. 
+This information can be used along with the change history of this class to reason 
+about and manipulate such structural regularities, closer to way experienced 
+developers will do. 
 
 With Program Design Mining, we will decouple the ability of designing quality 
 programs from the time it takes to fine tune such an ability. Design wisdom 
 will not come with many years of practice \cite{weiser1983programming, 
-winslow1996programming}. It will come with new design workflows (modeled as code 
-transformations) learned from the programs' change history. Developers will be able 
-to evolve their programs with sound design and coding principles. At every 
-opportunity, they will try a different design alternative, recommended by 
-our tools, and experience the results. Program design mining will exploit ready 
-available Web data to foster design inspiration when innovation is required, 
-and thus reducing the gap between need and capacity.
+winslow1996programming}. It will come with less time and through new design 
+workflows (e.g., code transformations) learned from programs' change 
+history. Developers will be able to evolve their programs with sound design and 
+coding principles. At every opportunity, developers will try different a design 
+alternative and experience the results. If they like, then they will keep it, 
+otherwise, they discard it. Program design mining will exploit ready available 
+Web data to foster design inspiration when innovation is required, and thus 
+reducing the gap between need and capacity.
 
 In what follows, we will cover the intellectual merit of data-driven 
 approaches for program design, as well as the broader impact of Program 
@@ -81,7 +83,7 @@ approach include:
 	programmers to automatically transfer the structural regularities 
 	from a well-written program into the style and structure of another.  
 	\item Semi-automatic program design tuning. Generate structural 
-	regularities recommendations by analyzing learned regularities online; 
+	regularities optimizations by analyzing learned regularities online; 
 	i.e., in parallel with structured prediction, which allows the 
 	recommendations to adapt to transfer incompatibilities. Programmers 
 	can provide feedback on the recommendations, which is taken into 
@@ -89,8 +91,8 @@ approach include:
 	\item Operationalization and evolution of learned regularities. 
 	On the to-be-collected Web data, for example, every Java class is associated 
 	with an abstract syntax tree. Along with its change history, we can use 
-	this abstract representation to reason about and manipulate programs 
-	with \textit{similar} structures.
+	this abstract representation to learn generative probabilistic models to help 
+	reason about and manipulate programs' structures.
 \end{enumerate}
 
 \section*{Broader Impact} % (fold)
