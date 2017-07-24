@@ -1,0 +1,491 @@
+\newcommand{\true}{\ensuremath{\mathsf{true}}\xspace}
+\newcommand{\false}{\ensuremath{\mathsf{false}}\xspace}
+
+\newcommand{\smallpar}[1]{\medskip\noindent\emph{#1}:}
+
+\newcommand{\expr}{\ensuremath{\textit{t}}\xspace}
+%local var
+\newcommand{\lvar}{\ensuremath{\textit{x}}\xspace}
+\newcommand{\lvarp}{\ensuremath{\textit{y}}\xspace}
+%pointer var
+\newcommand{\pvar}{\ensuremath{\textit{p}}\xspace}
+\newcommand{\qvar}{\ensuremath{\textit{q}}\xspace}
+%class var
+\newcommand{\cvar}{\ensuremath{\textit{c}}\xspace}
+
+\newcommand{\fvar}{\ensuremath{\textit{f}}\xspace}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\lstset{language=Java,
+basicstyle=\ttfamily\small,
+frame=none,
+rulecolor=\color{gray},
+breaklines=true,
+tabsize=2,
+morekeywords={assume, assert},
+captionpos=b,
+numbers=none,                   
+keywordstyle=\color{blue},
+commentstyle=\color{green2} }
+
+
+\input{prelim}
+
+\subsubsection{Efficient Horn-encoding of Heap Interaction for Java-like Languages}
+Using heap invariants as described above is sound, but may become imprecise 
+when the analysis too often abstracts the state of an object by its invariant.
+Consider the example in Figure~\ref{fig-update}. The class \texttt{A} has a 
+constructor where \texttt{x} is first set to zero (implicitly) and then
+set to one by the constructor. 
+
+
+\begin{figure}[ht]
+\centering
+\begin{minipage}{.3\textwidth}
+\begin{lstlisting}
+public class A {
+ int x;
+ public A() {
+ 	x=1;
+ 	assert(x==1);
+ }
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\begin{align*}
+\textbf{pull}(l_x, this)\\
+l_x = 0 \\
+\textbf{push}(this, l_x)\\
+\textbf{pull}(l_x, this)\\
+l_x = 1 \\
+\textbf{push}(this, l_x)\\
+\textbf{pull}(l_x, this)\\
+assert (l_x==1)
+\end{align*}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\begin{align*}
+\textbf{assume} \phi_A(this, l_x)\\
+l_x = 0 \\
+\textbf{assert}\phi_A(this, l_x)\\
+\textbf{assume}\phi_A(this, l_x)\\
+l_x = 1 \\
+\textbf{assert}\phi_A(this, l_x)\\
+\textbf{assume}\phi_A(this, l_x)\\
+assert (l_x==1)
+\end{align*}
+\end{minipage}
+\caption{The left column shows code where the constructor of \texttt{A} first performs an implicit update that sets \texttt{x} to zero and then an explicit update that sets \texttt{x} to one. The middle column shows the encoding of
+this constructor using pull and push, and the right shows the program after replacing pull and push by heap invariants.}
+\label{fig-update}
+\end{figure}
+
+On the right, the figure shows the encoding using where pull and push statements have been 
+replaced by the heap invariant for class \texttt{A}. Most Horn clause solvers will
+instantiate $\phi_A$ by the disjunction $\phi_A(a_0, a_1) := (a_1=0\vee a_1=1)$. This invariant describes all states \texttt{this} can take, but it is not sufficient to verify the assertion at the end of the constructor. 
+
+To address the problem highlighted in this example, this project proposes the following two research tasks:
+\begin{enumerate}
+\item Minimize the pull and push statements to reduce the points where we abstract from concrete states.
+\item Keep a partial order over push statements to allow the Horn solver to infer disjunctives that form an invariant between pairs of push statements. 
+\end{enumerate}
+The intuition for the first point is that a program does not have to push an 
+object until it pulls another object that might interfere with this object, and 
+that it does not have to pull  objects that were pulled earlier unless 
+there was a push to a comparable type. 
+
+This project will identify cases where pull and push statements can be omitted by using a 
+may-alias analysis. This includes defining a set of transformation rules that 
+minimize the number of pull and push statements in a program with respect to 
+a given entry point, and verifying that these transformations are sound and 
+optimal. In particular, the project will work on defining the optimal
+number of pull and push statements for a given program under some soundness
+assumption.
+
+
+Instead of using an off-the-shelf alias analysis, this project will investigate
+the extent to which Datalog-based alias analysis algorithms, such 
+as~\cite{DBLP:conf/aaai/MangalZKNN16,Zhang:2016:QMS:2837614.2837658}, can be
+interwoven with the Horn clause encoding used during the verification. Combining
+the SAT-based alias checks with the SMT-based path feasibility checks of the
+verifier can have a mutual benefit to both algorithms. The alias analysis
+gets path-sensitive information from the verifier, and the verifier can quickly
+prune certain paths. In previous work~\cite{DBLP:conf/nfm/Schwartz-Narbonne15}, 
+we have combined SAT-based reachability checks with SMT-based unreachability 
+checks and demonstrated that the combination significantly improves 
+performance for complex benchmarks. This project will investigate
+if the same effect can be demonstrated for alias analysis.
+
+
+The second research direction will establish a partial ordering over push 
+statements. The goal is to pass the information from the partial ordering
+as an additional argument to the push statements, and thus into the predicate
+for the heap invariant. A Horn clause solver will then be able to use
+this information to derive a disjunctive invariant where each disjunct is
+a local invariant that holds between two push statements.
+
+
+
+\subsubsection{Implementation of Context-aware Heap Invariants}
+Minimizing the number of pulls and pushes makes reasoning about programs 
+simpler, since it reduces the points where the analysis can lose precision.
+Another way to improve the analysis is to optimize the 
+arguments passed to the 
+pull and push statements. The Horn solver can use only these arguments
+ as vocabulary when searching for suitable heap 
+invariants. If the pull and push statements contain too much information, 
+they may misguide or slow down the invariant search by introducing too many
+disjuncts. If pull and push statements contain too little
+information, they restrict the class of invariants the Horn solver can infer. 
+
+This project will explore how the context of a heap access can be used to 
+either omit heap accesses or expand the arguments passed into the 
+pull and push statements with meta information that can be used to identify
+new invariants.
+
+\paragraph{Rich-references.} Some fields of an object do not change 
+throughout the lifetime of the object. These fields can be moved into the
+local state to ensure that the Horn solver does not lose information about
+their value when inferring heap invariants.
+
+This project will investigate the encoding of references
+as tuples instead of simple variables to carry values of immutable fields as 
+part of the reference. 
+Such a tuples can contain the dynamic type of a reference, the size of an array,
+and any other value of immutable fields. The tuple encoding allows the analysis
+to access the fields in the tuple without performing an additional pull. This
+ensures that 
+the analysis does not lose information about constant values.
+The following 
+assignment shows how references can be encoded using tuples:
+\begin{align*}
+\texttt{ s = ''foo''}\, & ~~\leadsto~~ \, 
+\langle id, type, length \rangle = \langle 42, String.class, 3\rangle
+\end{align*}
+The reference to \texttt{s} is encoded as a tuple that contains the 
+immutable information about \texttt{s}. For any Java object, we have the 
+immutable information of the location on the heap ($id$) and the
+type assigned to it during allocation ($type$). The $id$ element 
+will be discussed in more detail later.
+Since Strings in 
+Java are immutable, their $length$ can also be encoded into the tuple. 
+The actual data of the string is also immutable, but since it is
+an array of unknown size, it may not be efficient to encode each 
+character as part of the tuple. That is, deciding which information to
+move into rich references requires tunable metrics so the local
+state does not grow beyond what a decision procedure can handle efficiently.
+
+\begin{figure}[ht]
+\centering
+\begin{minipage}{.3\textwidth}
+\begin{lstlisting}
+ void example() {
+  Strign s = "Hello,";
+  Strign t = "world";
+  assert s.length!=t.length;
+ }
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\begin{align*}
+s = new() \\
+t = new() \\
+\textbf{push}(s, String.class, 6, \ldots)\\
+\textbf{push}(t, String.class, 5, \ldots)\\
+\textbf{pull}(type_s, length_s, \ldots, s)\\
+\textbf{pull}(type_t, length_t, \ldots, t)\\
+assert (length_s\neq length_t)
+\end{align*}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\begin{align*}
+ref_s = \langle new(), String.class, 6\rangle \\
+ref_t = \langle new(), String.class, 5\rangle \\
+\textbf{push}(ref_s, \ldots)\\
+\textbf{push}(ref_t, \ldots)\\
+assert (6 \neq 5)
+\end{align*}
+\end{minipage}
+\caption{The left shows a Java listing that compare two Strings by length. 
+The middle shows an encoding where all field accesses are handled
+using pull and push. For brevity, we assume that \texttt{new()} is a 
+function that returns a fresh memory address. The right shows an encoding
+using rich references. Note that, with rich references, the length of the
+Strings remains part of the local state and hence the assertion becomes
+a comparison of constants.
+}
+\label{fig-tuple-example}
+\end{figure}
+
+The example in Figure~\ref{fig-tuple-example} compares the 
+previously described encoding to the rich reference encoding. For brevity,
+we assume the existence of a helper function \texttt{new} that returns
+fresh heap locations. In practice, handling heap allocation is more complicated. 
+The previous encoding, showed in the middle column, updates and
+reads fields using pull and push, which may lead to a loss of information, e.g., 
+if the Horn solver infers an invariant like $length=5 \vee length=6$. Such an
+invariant is valid, but insufficient to verify the assertion. With the rich 
+reference encoding in the right column, 
+the length of the Strings becomes a local variable as part of the reference.
+Hence, the verification procedure does not lose information about the length
+of the individual Strings and can verify the assertion. For this example, minimizing pull and push statements could solve the 
+problem as well, but it is easy to make the control-flow of the example more
+complicated so minimizing the pull and push statements is not sufficient.
+
+
+This project will investigate different encodings of rich-references
+and evaluate their ability to verify interesting Java programs. 
+More specifically the project identifies the following two work areas:
+\begin{enumerate}
+\item Move all immutable fields of an object into rich references. 
+\item Re-use the may-alias analysis from the previous step to identify fields that
+are constant for a particular reference and move those into the reference as well.
+\end{enumerate}
+The first step is conceptually straight forward but requires some work to ensure
+soundness for the object initialization mechanism of Java. By keeping immutable 
+fields as part of the reference instead of obtaining them using pull, the analysis
+can preserve their precise value. The second step is conceptually more challenging. Such an analysis has to ensure
+that the decision that a field is mutable is in line with other soundness 
+assumptions about library calls.
+
+
+Rich references help the verification procedure to preserve concrete values of
+fields that do not change during execution. Another way to improve precision is
+to provide additional information to the Horn solver in the pull and push 
+statements to find better disjunctive invariants.
+
+\paragraph{Augment Pull and Push Statements.}
+The project will investigate different sources of information that can
+be encoded into pull and push statements, such as the allocation site 
+of an object, the current 
+thread, or a counter of allocated objects. The different encodings will be 
+benchmarked on a specifically developed set of benchmarks. The benchmarks will
+be shared with the community for comparison. 
+
+\begin{figure}[ht]
+\centering
+\begin{minipage}{.3\textwidth}
+\begin{lstlisting}
+class Example {
+  public int v;
+
+  void set(int val){
+    this.v = val;
+  }
+  void static test() {
+    Example a = new Example();
+    Example b = new Example();
+    a.set(1);
+    b.set(2);
+    assert a.v!=b.v;
+  }
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\begin{align*}
+set( & this, val)  := \\ 
+& \textbf{pull}(l_v, this)\\
+& \textbf{push}(l_v, val)\\
+test(&)  := \\ 
+& \textbf{push}(a, 0)\\
+& \textbf{push}(b, 0)\\
+& set(a, 1) \\
+& set(b, 2) \\
+& \textbf{pull}(v_a, a)\\
+& \textbf{pull}(v_b, b)\\
+& \textbf{assert}(v_a\neq v_b)
+\end{align*}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\begin{align*}
+set(& this, caller, val) := \\ 
+& \textbf{pull}(l_v, caller, this)\\
+& \textbf{push}(l_v, caller, val)\\
+test(& )  := \\ 
+& \textbf{push}(a, 0)\\
+& \textbf{push}(b, 0)\\
+& set(a, \texttt{L0}, 1) \\
+& set(b, \texttt{L1}, 2) \\
+& \textbf{pull}(v_a, a)\\
+& \textbf{pull}(v_b, b)\\
+& \textbf{assert}(v_a\neq v_b)
+\end{align*}
+\end{minipage}
+\caption{Example of rich reference encoding that includes an ID for the current calling context. The left shows a listing where a field gets updated in a setter.
+The middle shows encoding without considering the caller of \texttt{set}. The 
+right column shows an encoding where a caller ID is
+added to the arguments of pull and push.}
+\label{fig-caller-id}
+\end{figure}
+
+Figure~\ref{fig-caller-id} shows an example of how additional arguments in
+pull and push statements can help to verify programs. The left column shows
+a program with a test method we want to verify that uses a setter to update a field. A verification attempt with the 
+current encoding, shown in the middle column, is unlikely to be successful 
+because a Horn solver will infer the summary $v=1 \vee v=2$ for the update of
+\texttt{v} in the method \texttt{set}. 
+
+To help the Horn solver find an invariant that is sufficient to verify 
+the assertion, this project will explore different strategies for providing 
+additional information in the pull and push statement. For this example, it is 
+sufficient to add an extra argument to pull and push that keeps track of the
+current calling context. The right column of Figure~\ref{fig-caller-id} shows
+an example of such an encoding. Here, a unique identifier is used to distinguish
+calling contexts. With this, the Horn solver will be able to identify a 
+disjunctive invariant of the form 
+$(caller=L0\wedge v=1) \vee (caller=L1\wedge v=2)$ that is sufficient to
+verify the assertion in \texttt{test}.
+
+A central part of the work on this project will focus on identifying data
+that can be encoded into pull and push statements and on the generation of
+benchmark problems that require this information to find suitable invariants.
+Such benchmarks can form interesting clusters of verification problems that
+will also be of interest to other tool developers.
+
+
+
+\subsubsection{Multi-object Heap Invariants}
+The first two parts of the project focus on an improved encoding of 
+programs that assists a Horn solver in finding better 
+heap invariants. With this encoding, we can only infer heap 
+invariants that speak about one object. Invariants for properties 
+such as sortedness, or contents of arrays, which reference multiple
+objects, cannot be inferred using this approach.
+
+To address this problem, this project will investigate the use of
+k-indexed invariants to express properties about multiple objects.
+Indexed invariants~\cite{Sanchez:2012:IGP:2414936.2414950} have been
+used successfully to encode parameterized systems. The work 
+in~\cite{DBLP:journals/corr/HojjatRSY14} shows how a communicating
+timed system can be encoded into Horn clauses so that an 
+off-the-shelf Horn solver can infer k-indexed invariants. 
+A simple version of k-indexed invariants for communicating systems 
+of $n$ processes $p_1,\ldots,p_n$ with a
+global state $g$, and a local state $l[p_i]$ for each process 
+$p_i$ can be expressed as follows: let $A_k\subseteq \{0,1\}^n$ be
+the set of all bit-vectors of length $n$, where for 
+any $\overline{a}\in A$ at most $k$ elements have the value $1$ and all 
+other elements have value $0$. Further, let $l[\overline{a}]$ be the
+sequence of local states $l[i_1], \ldots, l[i_k]$, where 
+$i_1, \ldots i_k$ are the non-zero positions in $\overline{a}$.
+Then, let $R_{\overline{a}}(g,l[\overline{a}])$ be a predicate that
+speaks about the global state and the local states of the $k$ 
+processes referenced with non-zero indices in $\overline{a}$. With
+this predicate, a k-indexed invariant is then expressed as a
+conjunction:
+\[
+Inv(g,l)= 
+\bigwedge_{\overline{a}\in A_k} R_{\overline{a}}(g,l[\overline{a}])
+\]
+The expressibility of this type of k-invariant is limited to 
+n-bounded systems with homogeneous processes. This can be extended
+to unbounded systems with heterogeneous processes as discussed in~\cite{DBLP:journals/corr/HojjatRSY14}.
+
+This project will follow this direction, but instead of encoding
+multiple processes, it will encode multiple objects. The local 
+states of the process then correspond to the state of the fields 
+of an object. 
+
+The current encoding of memory access into push and pull statements
+can be seen as 1-indexed heap invariants. For a 2-indexed encoding,
+the pull and push statements would be augmented to take a second
+(rich-)reference and the values of the corresponding fields as input.
+
+\begin{figure}[ht]
+\lstset{language=Java,
+numbers=left}
+\centering
+\begin{minipage}{.95\textwidth}
+\centering
+\begin{minipage}{.48\textwidth}
+\begin{lstlisting}
+class MyList {
+  public MyList next;
+  public int val;
+
+  static void 
+   verifySorted(MyList h) {
+    if (h==null) return;
+    while(h.next!=null) {
+      MyList n = h.next
+      assert(h.val<=n.val);
+      h=n;
+    }
+  }
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{.49\textwidth}
+\begin{lstlisting}[firstnumber=15]
+  static void createLst(int n) {
+    MyList h = new MyList();
+    h.val=0;
+    MyList cur = h;
+    for (int i=1;i<n;i++) {
+      MyList nx = new MyList();
+      nx.val = i;
+      cur.next = nx;
+      cur = nx;
+    }
+    verifySorted(h);
+  }
+}
+\end{lstlisting}
+\end{minipage}
+\end{minipage}
+\caption{Example program illustrating the concept of k-indexed invariants. The
+class implements a simple list of integers with a test method \texttt{createLst}
+that creates a list of length \texttt{n} and uses \texttt{verifySorted}
+to ensure the result is sorted.}
+\label{fig-sorted}
+
+\lstset{language=Java,
+numbers=none}
+\end{figure}
+
+Figure~\ref{fig-sorted} shows an example program where the assertion in line~10
+cannot be verified without invariants that speak about multiple objects. To prove
+this assertion, the Horn solver needs to be able to state that, for any two connected
+list elements, the value of the predecessor is smaller or equal to the value of the 
+successor.
+
+For example, the body of \texttt{createLst} contains three references of type \texttt{MyList}: 
+\texttt{h}, \texttt{cur}, and \texttt{nx}; that is, an invariant for 
+\texttt{MyList} inside this procedure should be at most a 3-indexed invariant.
+
+The memory encoding from the previous sections can be
+seen as a 1-index encoding. For 1-index encoding, the pull and push statements 
+will carry arguments about one object of type \texttt{MyList}, and the Horn
+solver is likely to find an invariant such as $0\leq val < n$. Although this is a valid
+invariant, it is not useful to prove the sortedness property.
+
+For a 2-index encoding, the pull and push statements will receive additional
+arguments for a second reference, such as
+\[
+\textbf{push}(type,ref_1, val_1, next_1, ref_2, val_2, next_2)
+\]
+For the procedure \texttt{createLst} from the example, this encoding would allow the
+ Horn solver to infer invariants like:
+ \[
+ (ref_2=next_1 \wedge val_1\leq val_2)
+ \vee (ref_1=next_2 \wedge val_2\leq val_1)
+ \]
+
+The use of k-indexed invariants raises several interesting problems, which
+the proposed project plans to explore:
+\begin{itemize}
+\item How to identify a suitable $k$ to verify an interesting set of 
+properties without sacrificing performance.
+\item How to keep the inferred invariants small; e.g., by restricting search
+to symmetric invariants.
+\item Develop a test harness for each $k$, containing problems that cannot
+be verified with a lower $k$.
+\end{itemize}
+
+
+
+

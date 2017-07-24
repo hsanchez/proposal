@@ -1,0 +1,79 @@
+The literature on verification of data-structure manipulating 
+programs is rich. Separation logic~\cite{Reynolds02,IshtiaqO01} has
+emerged as a succinct heap logic that is amenable to local
+reasoning. Separation logic extends Hoare Logic to support reasoning
+about shared mutable data structures. 
+Initial works use {\it frame rules} for modular
+verification of heap-manipulating programs 
+against user-supplied
+specifications~\cite{BerdineCO05}.
+More recently, {\it
+  bi-abduction}~\cite{calcagno2009compositional} 
+   has been proposed to automatically
+infer pre/post specifications on data structure shapes. Pek
+et al.~\cite{PekQM14} describe a technique that adapts ideas of
+natural proofs for separation logic~\cite{Qiu0SM13} to automate
+verification proofs of data-structure manipulation in programming
+language. jStar~\cite{DistefanoP08} is a tool for Java that uses
+abstract shape analysis for inferring invariants. Instead of using a
+specific purpose-oriented logic, the proposed work is based on a generic
+underlying logic to capture the verification conditions (i.e. Horn
+clauses). In \cite{McCloskeyRS10} the authors describe a technique based on
+abstract interpretation to reason about programs that use data structures
+for which a proof of correctness requires a combination of heap and numeric
+reasoning. Such technique is not fully automatic, the user needs to provide some initial 
+predicates, and it does not scale to large programs since it requires inlining of 
+function calls. 
+Nguyen et al.~\cite{NguyenDQC07} describe a logic-based approach that involves providing
+an entailment procedure. The logic allows for user-defined, well-founded inductive
+predicates for expressing shape and size properties of data structures. Their
+approach can express invariants that involve other numeric properties of data
+structures, such as heights of trees. However, their approach
+is limited to separation logic, and the user needs to provide
+shape and size predicates of data structure. 
+
+
+Numerous approaches have been presented that generate quantified
+inductive invariants. For example, the work
+of Bjorner et al.\ \cite{BjornerMR13}, in which the Horn solver is
+guided by constraining the form of the proof, enables it to find
+suitable (quantified) invariants even in challenging cases. A related
+technique for approximating array behavior was presented
+recently~\cite{DBLP:conf/sas/MonniauxG16}.  A number of abstract
+interpretation methods have domains that represent universally
+quantified facts \cite{GulwaniMT08,Cousot15}.  The proposed work, like
+in \cite{BjornerMR13}, avoids the explicit construction of
+abstract post operators, and of widening and refinement procedures needed in
+these approaches. The work in \cite{LarrazRR13} synthesizes a class of
+universally quantified linear invariants of array programs. Our
+technique aims to synthesize a general class of invariants.
+
+The work on heap invariants is inspired by techniques based on dependent
+refinement and liquid types~\cite{RondonKJ08}.  Refinement-type
+  systems are a lightweight form of dependent types, where the
+additional precision in the system is limited to constraints, or
+predicates, expressed in a logic composed of decidable theories.
+Variations of refinement types and their applications have been
+studied in many settings
+(e.g. \cite{FreemanP91,XiP99,KnowlesF10,BengtsonBFGM08}).  
+%
+Liquid types~\cite{RondonKJ08} allow automatic inference of dependent
+types precise enough to prove a variety of properties.  Our approach
+is formulated in terms of invariants (in contrast to types), and
+mainly focuses on deriving heap invariants for
+object-oriented programs.
+  
+The use of push and pull in this proposal is similar to  unfold/fold
+techniques used for program transformation~\cite{BurstallD77} on purely
+functional programs.
+A similar technique called unroll/roll was later used in alias
+types~\cite{WalkerM00} to manually witness the isomorphism between a recursive
+type and its unfolding.
+
+The proposed approach to find invariants for linked data structures is 
+inspired by k-index invariants~\cite{Sanchez:2012:IGP:2414936.2414950} which can be seen as an extension of thread-modular model 
+checking~\cite{Flanagan:2003:TMC:1767111.1767125}. These approaches focus
+on parallel systems. This proposal aims to transfer this technique to handle
+linked heap data structures.
+
+

@@ -1,0 +1,85 @@
+% GN: changed to 11pt to meet the 15 chars/in spec.  
+% With 10pt there are 16.5 chars/in.
+\documentclass[11pt, letterpaper]{article}
+
+\usepackage{xspace}
+\usepackage{amssymb,amsmath}
+\usepackage{latexsym}
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{todo}
+\usepackage{wrapfig}
+\usepackage{xspace}
+
+\usepackage{listings}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+%\setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{8in}
+
+%\oddsidemargin -0.25in
+%\evensidemargin -0.25in
+
+% Text width:
+%\textwidth 6.9in
+
+% Top margin:
+% Actual margin is 1.5 in + this number
+%\topmargin -.3in
+
+% Text height:
+%\textheight 8.7in
+
+
+% \usepackage{graphicx}
+% \usepackage{url}
+\usepackage{minted}
+\usepackage{listings}
+\usepackage{cite}
+% \renewcommand\bibname{References}
+
+\pagestyle{plain}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{example}{Example}
+
+
+\newcommand{\pdm}{\textsf{Program Design Mining}\xspace}
+\newcommand{\jayhorn}{\textsf{JayHorn}\xspace}
+
+% control section numbering
+\setcounter{section}{1}
+\renewcommand{\thesection}{\Alph{section}}
+\newcommand{\fulltitle}{{\hfill{{\small{SHF:Small:Program Design Mining}}}}}
+\newcommand{\mytitle}{{\hfill{{\small{SHF:Small:Program Design Mining}}}}}
+
+% directives.tex is created by the Makefile
+% In this file we will redefine \note and \fixme and add includeonly directives
+% \input{directives}
+
+\begin{document}
+
+\include{summary}
+\include{description}
+
+\newpage
+\setcounter{page}{1}
+
+%\section{References}
+\addtocounter{section}{1}
+\def\refname{\thesection~~~\bf References \mytitle}
+\bibliography{main}
+\bibliographystyle{plain}
+
+
+
+\include{facilities}
+\include{data_management_plan}
+
+\end{document}
+
