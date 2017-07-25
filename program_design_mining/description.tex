@@ -28,89 +28,11 @@
 \input{introduction}
 
 %%% ----------------------------------------------------------------------------
-\subsection{Related Work: Memory Models and Verification Techniques}
-\label{sec-existing}
 \input{relatedwork}
-
-
-\subsection{Technical Approach}
-\label{sec-extension}
 \input{technical_approach}
 
 % --------------------------------------------------------------------
 
-
-\subsection{Plan of Work} % {Implementation and Evaluation}
-\label{sec-impl}
-The proposed research will be implemented as part of the \jayhorn tool,
-which is freely available and open-source. Findings will be documented
-as scientific publications where possible or as part of the \jayhorn
-developer blog. 
-
-A large part of the anticipated contribution will be the set of
-benchmarks that are generated during the execution of this project to 
-showcase which class of programs can be verified with specific extensions
-to \jayhorn. The benchmarks will be shared along with an infrastructure
-to run \jayhorn and comparable tools.
-
-The project duration is three years, and tasks will be carried out in parallel.
-While the three proposed tasks have mutual beneficial effects, each task can
-be carried out without relying on the success of the other tasks. 
-The effect of each proposed task will be evaluated in isolation and in 
-combination with the other tasks. 
-
-We are currently in discussion with the developers of several other 
-verification tools (
-CBMC~\cite{DBLP:conf/tacas/KroeningT14}, CPAChecker~\cite{Beyer:2011:CTC:2032305.2032321}, Ultimate~\cite{heizmann2015ultimate}, and Smack~\cite{cav2014-re}) who
-are also actively working on analysis tools for Java. We expect
-that the results of this project can also be disseminated as part of a verification
-competition as it is customary for C verification tools. 
-
-\subsection{Broader Impact}
-Computer systems affect most parts of our lives. 
-Countless examples of the grave consequences 
-caused by unreliable or vulnerable software systems
-include  severe financial 
-damages or even the loss of lives. With the looming advent of 
-the internet-of-things, the amount of code  grows at a staggering pace 
-demanding for more automated and more sophisticated tools to ensure
-software quality.
-This project contributes an automated light-weight verification technique that
-will help developers write high assurance code.
-Further, the project will create a suite of benchmarks to serve as 
-baseline for other verification tool developers.  
-
-This project will also engage in efforts to organize a verification competition 
-for Java tools. Tool competitions like the \textsf{svcomp}~\cite{svcomp} 
-or \textsf{smtcomp}~\cite{smtcomp} have strongly influenced the quality of 
-tools in their respective fields, and this project aims at a similar development for Java-based tools.
-
-Although SRI International is a nonprofit research institute rather than a degree-granting educational institution, it makes considerable impact on research and education through its freely distributed tools and  academic visitor programs. The PVS \cite{owre1992pvs}, SAL \cite{bensalem2000overview}, HybridSAL \cite{tiwari2012hybridsal}, and Yices \cite{dutertre2014yices} tools developed at SRI are made freely available. These tools are widely used in academia and industry. In particular, the Yices SMT solver is used as a generic back-end solver. This project will directly contribute to enhancing the reasoning capabilities of Yices, and will have immediate impact on the community of Yices users. Through Visiting Fellow and International Fellow programs, SRI welcomes numerous academic visitors to our Computer Science Laboratory for periods ranging from a few months to several years.  Visitors include professors on sabbatical leave, postdoctoral researchers, and Ph.D. students.  Most of our previous NSF grants have been used to support summer graduate  and postdoctoral students.  
-
-\subsection{Results from Prior NSF Support}
-% (iii) Results from Prior NSF Support
-
-% If any PI or co-PI identified on the project has received NSF funding in the
-% past five years, information on the award(s) is required. Each PI and co-PI
-% who has received more than one award (excluding amendments) must report on
-% the award most closely related to the proposal. The following information
-% must be provided:
-
-% (a) the NSF award number, amount and period of support;
-% (b) the title of the project;
-% (c) a summary of the results of the completed work, including, for a research
-% project, any contribution to the development of human resources in science
-% and engineering;
-% (d) publications resulting from the NSF award;
-% (e) a brief description of available data, samples, physical collections and
-% other related research products not described elsewhere; and
-% (f) if the proposal is for renewed support, a description of the relation of
-% the completed work to the proposed work.
-%
-% Reviewers will be asked to comment on the quality of the prior work described
-% in this section of the proposal. Please note that the proposal may contain up
-% to five pages to describe the results. Results may be summarized in fewer
-% than five pages, which would give the balance of the 15 pages for the Project
-% Description.
-
-The PI has had no prior NSF support.
+\input{plan_of_work}
+\input{broaderimpact}
+\input{priorfunding}
