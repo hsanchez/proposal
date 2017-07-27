@@ -2,10 +2,10 @@ Designing software is a complex and creative skill, which can only be
 (effectively) performed by developers after many years of training. As such,
 while it would seem a natural fit, there has been limited work, from a machine
 learning perspective, on reducing the gap between acquiring this design ability
-and the time it takes to fine tune it. With this project, we will reduce this
-gap, by applying machine learning to the problem of semi-automatically designing
-quality programs, fostering program design inspiration when innovation is
-required.
+and the time it takes to fine tune it, experienced by many citizen programmers.
+With this project, we will reduce this gap, by applying machine learning to the
+problem of semi-automatically designing quality programs, keeping humans in the
+loop and fostering program design inspiration when innovation is required.
 
 The use of machine learning techniques for program design is a promising
 approach to learn and operationalize coding habits specific to star programmers
@@ -24,24 +24,33 @@ limits both customization and creativity to those anticipated by the template
 creator \cite{Kumar2011-hy}. \pdm addresses this rigidity by exploiting both the
 simplicity of templates and the diversity of available programs on the Web.
 Given these ready available Web data, \pdm uses nonparametric bayesian analysis
-\cite{allamanis2014mining} to capture in templates structural regularities that
-occur often in well-written programs, more often than expected by chance;
-structured prediction \cite{collins2002discriminative} to learn how to transfer
-these structural regularities between programs; and program induction
+\cite{allamanis2014mining} to capture structural regularities that occur often
+in well-written programs, more often than expected by chance; structured
+prediction \cite{collins2002discriminative} to learn how to transfer these
+structural regularities between programs; and program induction
 \cite{lake2015human} to learn how to fine tune (or evolve) those transfered
 regularities.
 
-Using machine learning techniques to exploits the inherent structure of program
+Using machine learning techniques to exploits the structure of program
 designs affords significant advantages over predesigned (cookie-cutter)
 programs. Well-written (object-oriented) programs, for example, exhibit many
-structural regularities, which have explicitly molded them with design and coding
-principles intended to improve their quality. On version controlled
+structural regularities, which were introduced to mold them with design and
+coding principles intended to improve their quality. On version controlled
 repositories, every compilable Java class is associated with an Abstract Syntax
 Tree. This information can be used along with change history of this class to
 reason about and to manipulate structure regularities, closer to what
 experienced developers would do.
 
-The proposed project will be implemented as part of
+The proposed project will be implemented as part of the IntelliJ IDEA
+Community Edition IDE \cite{jet2017intellij}. IntelliJ IDEA is a Java
+integrated development environment (IDE) for developing software.
+\todo(Finish this paragraph)
+
+Like most modern integrated development environments, IntelliJ IDEA
+architecture is modular. \todo(Finish this paragraph)
+
+The proposed work focuses on the middle-end aspect of code generation.
+\todo(Finish this paragraph)
 
 % Automatically proving properties about programs that manipulate heap-based
 % data structures is a hard problem. It requires inferring universally
