@@ -28,7 +28,7 @@ Given these ready available Web data, \pdm uses nonparametric bayesian analysis
 in well-written programs, more often than expected by chance; structured
 prediction \cite{collins2002discriminative} to learn how to transfer these
 structural regularities between programs; and program induction
-\cite{lake2015human} to learn how to fine tune (or evolve) those transfered
+\cite{lake2015human} to learn how to fine tune (or evolve) those transferred
 regularities.
 
 Using machine learning techniques to exploits the structure of program
@@ -49,13 +49,17 @@ installed on the IDE using IntelliJ Platform SDK. The platform will
 automatically create a sandbox for copying and debugging the developed tool.
 
 Like most machine learning based tools, this project requires lots of data and
-data preprossesing. This includes data cleaning, munging and bringing data
+data preprocessing. This includes data cleaning, munging and bringing data
 to a suitable format, such that machine learning models can be applied on
-that data. And a backend that uses off-the-shelf decision procedures to verify
-properties about the program.
+that data. And a backend that indexes open source Java projects and uses
+off-the-shelf decision procedures to verify code changes in the affected
+programs.
 
-The proposed work focuses on the middle-end aspect of code generation.
-\todo{Finish this paragraph}
+This project focuses on implementing an infrastructure for applying three
+machine learning techniques to program design and then expose its functionality
+through a RESTful API. The interface to the backend is modular and can easily
+be extended to other machine learning techniques, such as Genetic Improvement
+\cite{white2011evolutionary}. 
 
 % Automatically proving properties about programs that manipulate heap-based
 % data structures is a hard problem. It requires inferring universally

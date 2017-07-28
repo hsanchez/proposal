@@ -1,17 +1,17 @@
-\subsection{Related Work: Memory Models and Verification Techniques}
+\subsection{Related Work: Program Improvement and Machine Learning Techniques}
 \label{sec-existing}
 
-The literature on verification of data-structure manipulating 
+The literature on verification of data-structure manipulating
 programs is rich. Separation logic~\cite{Reynolds02,IshtiaqO01} has
 emerged as a succinct heap logic that is amenable to local
 reasoning. Separation logic extends Hoare Logic to support reasoning
-about shared mutable data structures. 
+about shared mutable data structures.
 Initial works use {\it frame rules} for modular
-verification of heap-manipulating programs 
+verification of heap-manipulating programs
 against user-supplied
 specifications~\cite{BerdineCO05}.
 More recently, {\it
-  bi-abduction}~\cite{calcagno2009compositional} 
+  bi-abduction}~\cite{calcagno2009compositional}
    has been proposed to automatically
 infer pre/post specifications on data structure shapes. Pek
 et al.~\cite{PekQM14} describe a technique that adapts ideas of
@@ -24,16 +24,16 @@ underlying logic to capture the verification conditions (i.e. Horn
 clauses). In \cite{McCloskeyRS10} the authors describe a technique based on
 abstract interpretation to reason about programs that use data structures
 for which a proof of correctness requires a combination of heap and numeric
-reasoning. Such technique is not fully automatic, the user needs to provide some initial 
-predicates, and it does not scale to large programs since it requires inlining of 
-function calls. 
+reasoning. Such technique is not fully automatic, the user needs to provide some initial
+predicates, and it does not scale to large programs since it requires inlining of
+function calls.
 Nguyen et al.~\cite{NguyenDQC07} describe a logic-based approach that involves providing
 an entailment procedure. The logic allows for user-defined, well-founded inductive
 predicates for expressing shape and size properties of data structures. Their
 approach can express invariants that involve other numeric properties of data
 structures, such as heights of trees. However, their approach
 is limited to separation logic, and the user needs to provide
-shape and size predicates of data structure. 
+shape and size predicates of data structure.
 
 
 Numerous approaches have been presented that generate quantified
@@ -58,14 +58,14 @@ additional precision in the system is limited to constraints, or
 predicates, expressed in a logic composed of decidable theories.
 Variations of refinement types and their applications have been
 studied in many settings
-(e.g. \cite{FreemanP91,XiP99,KnowlesF10,BengtsonBFGM08}).  
+(e.g. \cite{FreemanP91,XiP99,KnowlesF10,BengtsonBFGM08}).
 %
 Liquid types~\cite{RondonKJ08} allow automatic inference of dependent
 types precise enough to prove a variety of properties.  Our approach
 is formulated in terms of invariants (in contrast to types), and
 mainly focuses on deriving heap invariants for
 object-oriented programs.
-  
+
 The use of push and pull in this proposal is similar to  unfold/fold
 techniques used for program transformation~\cite{BurstallD77} on purely
 functional programs.
@@ -73,10 +73,8 @@ A similar technique called unroll/roll was later used in alias
 types~\cite{WalkerM00} to manually witness the isomorphism between a recursive
 type and its unfolding.
 
-The proposed approach to find invariants for linked data structures is 
-inspired by k-index invariants~\cite{Sanchez:2012:IGP:2414936.2414950} which can be seen as an extension of thread-modular model 
+The proposed approach to find invariants for linked data structures is
+inspired by k-index invariants~\cite{Sanchez:2012:IGP:2414936.2414950} which can be seen as an extension of thread-modular model
 checking~\cite{Flanagan:2003:TMC:1767111.1767125}. These approaches focus
 on parallel systems. This proposal aims to transfer this technique to handle
 linked heap data structures.
-
-
