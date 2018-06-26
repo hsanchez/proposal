@@ -1,0 +1,130 @@
+%% opacity stuff
+\usepackage{tikz}
+% Font stuff
+\usepackage{titlesec}
+% to change titles font family
+\usepackage{titling}
+
+%%% declare fonts and set some formats
+% fontspec to use non-latex with xetex
+\usepackage{fontspec}
+
+% todos and highlighting
+\usepackage{soul}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+
+\newcommand\twodigits[1]{%
+   \ifnum#1<10 0#1\else #1\fi
+}
+
+% Sections
+% fonts
+% \setmainfont{[CrimsonText-Regular.ttf]}
+% \newfontfamily\headingfont[]{Inconsolata}
+\newfontfamily{\calibrir}{calibri.ttf}[]
+\newfontfamily{\calibrib}{Calibri-Bold.ttf}[]
+% \titleformat*{\section}{\LARGE\headingfont}
+
+\titleformat{\section}[runin]
+{\calibrib\large\bfseries}{\twodigits{\thesection} $\vert$}{0.45em}{\addperiod}
+\newcommand{\addperiod}[1]{#1.}
+
+% Subsections
+\titleformat{\subsection}[runin]
+{\calibrib\normalsize\bfseries}{\thesubsection \hskip 1mm $\vert$}{0.45em}{\addperiod}
+
+\newcommand{\sectionx}[2]{\medskip\noindent{{\bfseries{#1 $\vert$ #2.}}}}
+
+\definecolor{lred}{RGB}{255, 153, 153}
+\definecolor{lpurp}{RGB}{204, 204, 255}
+\definecolor{lorange}{RGB}{255, 204, 102}
+\definecolor{dorange}{RGB}{255, 204, 153}
+
+
+\newcommand{\unsure}[2]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red]{#1}\sethlcolor{lred} \texthl{#2}}
+\newcommand{\change}[2]{\todo[linecolor=lpurp,backgroundcolor=lpurp,bordercolor=lpurp]{#1}\sethlcolor{lpurp} \texthl{#2}}
+\newcommand{\info}[2]{\todo[linecolor=dorange,backgroundcolor=dorange,bordercolor=dorange]{#1}\sethlcolor{dorange}\texthl{#2}}
+\newcommand{\improvement}[2]{\todo[linecolor=blue!20!white,backgroundcolor=cyan,bordercolor=blue!20!white]{#1}\sethlcolor{cyan} \texthl{#2}}
+\newcommand{\thiswillnotshow}[2]{\todo[disable]{#1}#2}
+\newcommand{\explainindetail}[2]{\todo[color=green!40]{#1}\sethlcolor{green}\texthl{#2}}
+
+%% Contributors
+\newcommand{\Daniel}{{\bfseries DJS: }}
+\newcommand{\Huascar}{{\bfseries HAS: }}
+\newcommand{\Jim}{{\bfseries JW: }}
+\newcommand{\Owen}{{\bfseries OA: }}
+
+% Organizations
+\newcommand{\SRI}{SRI International \hskip 0.1em}
+\newcommand{\UCSC}{University of California Santa Cruz \hskip 0.1em}
+
+\makeatletter
+ \if@todonotes@disabled
+ \newcommand{\todox}[2]{#1}
+ \else
+ \newcommand{\todox}[2]{\todo{#2}\texthl{#1}}
+ \fi
+ \makeatother
+
+\setlength{\marginparwidth}{2cm}
+% \setlength{\footskip}{10pt}
+% \setlength{\headheight}{5pt}
+\setlength{\footskip}{10pt}
+\setlength{\headheight}{34pt}
+
+
+\newcommand{\project}{{\hfill{{\small{Green Linters}}}}}
+\newcommand{\projectid}{White Paper 17-467 ECU}
+\renewcommand{\DTMdisplaydate}[4]{#2-#3-#1}
+
+\definecolor{lgray}{gray}{0.8}
+\definecolor{sgray}{gray}{0.3}
+\definecolor{sriblue}{RGB}{46, 116, 181}
+\definecolor{sriblue2}{RGB}{153, 204, 255}%{51, 134, 237}
+\definecolor{sriblue3}{RGB}{0, 184, 230}
+
+ % \newcommand{\otext}[1]{{\footnotesize \textcolor{sriblue2}{\transparent{0.3}{#1}}}}
+
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{AllPages}{
+\lhead{\textcolor{lgray}{SRI \projectid}
+\smallskip \textcolor{sriblue2}{\hrule height 1pt}}
+\rhead{\textcolor{lgray}{\today}
+\smallskip \textcolor{sriblue2}{\hrule height 1pt}}
+\chead{}
+\cfoot{\textcolor{sriblue2}{\hrule height 1pt} \medskip
+\textcolor{sgray}{\thepage}\\{\footnotesize \textcolor{lgray}{Use or
+disclosure of white paper data is subject to the restriction on the title
+page of this white paper.}}}
+}
+
+\fancypagestyle{FirstPage}{
+\lhead{}
+% \rhead{\bfseries SRI International}
+\rhead{\includegraphics[width=6cm]{images/srilogo.png}
+\smallskip \textcolor{lgray}{\hrule height 1pt}}
+\cfoot{\textcolor{lgray}{\hrule}
+\vskip -3mm \textcolor{lgray}{\linespread{0.4}\begin{spacing}{0.3}\justify
+{\scriptsize This white paper includes data that shall not be disclosed
+outside of the Government and shall not be duplicated, used, or disclosed--in
+whole or in part--for any purpose other than to evaluate this document. If,
+however, a contract is awarded to this offeror or quoter as a result of--or in
+connection with--the submission of these data, the Government shall have the
+right to duplicate, use, or disclose the data to the extent provided in the
+resulting contract. This restriction does not limit the Government's right to
+use information contained in these data if it is obtained from another source
+without restriction. The data subject to this restriction are contained on all
+pages of this white paper.}
+\end{spacing}}
+\smallskip \textcolor{lgray}{\hrule}
+\tikz\node[inner sep=0pt,opacity=0.5]{\textcolor{sriblue3}{{\calibrir\scriptsize SRI International}}};
+\textcolor{lgray}{
+{\scriptsize $\cdot$ }{\scriptsize 333 Ravenswood Avenue}
+{\scriptsize $\cdot$ }{\scriptsize Menlo Park, CA 94024}
+{\scriptsize $\cdot$ }{\scriptsize 650.859.2000}
+{\scriptsize $\cdot$ }{\scriptsize www.sri.com}}}}
+
+% Filter out all marginpar warnings
+\usepackage{silence}
+\WarningFilter*{latex}{Marginpar on page \thepage\space moved}
