@@ -1,7 +1,4 @@
 \documentclass[11pt,letterpaper,twoside]{article}
-% * <owen@soe.ucsc.edu> 2017-10-26T23:47:51.701Z:
-%
-% ^.
 
 \usepackage{xspace}
 \usepackage{url}
@@ -19,48 +16,13 @@
 \pagestyle{AllPages}
 \begin{document}
 
-\thispagestyle{FirstPage}
-
-\begingroup
-\setlength{\parindent}{0pt}% Remove paragraph indent
-\setlength{\tabcolsep}{0pt}% Remove tabular column separation
-{\calibrib\large \bfseries 01 $\vert$ Social Generative Models of Software Development \\
-  \textcolor{sriblue}{02 $\vert$ SRI International: White Paper XX-XXX}}
-\smallskip\noindent
-\noindent
-\endgroup
-
-\hspace{3mm} {\calibrir \normalsize{{\bfseries
-\textcolor{sgray}{\calibrib In response}}$:$ to DARPA Seedling\//Open BAA, NSF SaTC}}
-% \smallskip\noindent
-
-\begin{multicols}{2}
-\noindent{\textcolor{sgray}{\calibrib{03 $\vert$ Technical Point of Contact}}}:\\
-{\calibrib{PI:}}    {\calibrir Dr. Huascar A. Sanchez} \\
-{\calibrib{Phone:}} {\calibrir TBD} \\
-{\calibrib{Email:}} {\calibrir TBD}
-
-\columnbreak
-
-\noindent{\textcolor{sgray}{\calibrib{Contracting Point of Contact}}}:\\
-{\calibrib{Contracts Manager: }} {\calibrir Colleen Conway} \\
-{\calibrib{Phone:}} {\calibrir(650) 859-4199} \\
-{\calibrib{Email:}} {\calibrir colleen.conway@sri.com}
-\end{multicols}
-
-\smallskip\noindent{\textcolor{sgray}{\calibrib{04 $\vert$ Budget}}}\\
-{\calibrib{Cost Estimate:}} \$$999,999$ (CPFF ROM Cost)\\
-{\calibrib{Period of Performance:}} 12 Months,
-\DTMdisplaydate{2018}{01}{01}{-1} -- \DTMdisplaydate{2018}{12}{31}{-1}\\
-{\calibrib{Subcontractor:}}
-\vskip 5mm
-
-\setcounter{section}{4}
+\input{projectdetails}
 \input{technical-goals}
 \input{comparison-state-of-art}
 \input{technical-challenges}
 \input{team-members}
-\input{key-deliverables}
-\input{success-metrics}
+% \input{key-deliverables}
+% \input{success-metrics}
 
 \end{document}
+

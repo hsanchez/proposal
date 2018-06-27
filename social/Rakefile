@@ -1,0 +1,107 @@
+# Copyright Huascar Sanchez, 2017.
+# encoding: utf-8
+
+def config
+  # in this Rakefile we can allow that
+  $config ||= {}
+end
+
+# main TeX file without extension
+config['main'] = 'proposal'
+
+# TeX command to invoke: xelatex, pdflatex, etc
+config['latex'] = 'xelatex'
+
+# BiBTeX command to invoke, or nil if it is not necessary
+config['bibtex'] = 'bibtex'
+
+task :default => [ :pdf ]
+
+desc 'Open the output PDF file'
+task :view do
+  raise NotImplementedError if Rake::Win32.windows?
+  invoke 'open', "#{config['main']}.pdf"
+end
+
+
+desc 'Build MSR Paper'
+task :build => [ :pdf] do
+  cleaner = proc { |path| rm_f(path) }
+  ext = %w[aux bbl blg toc nav log out lof lot]
+  ext.each do |res|
+    Dir.glob("*.#{res}", &cleaner)
+  end
+end
+
+desc 'Create PDF'
+task :pdf => [ :info, :clean] do
+  latex '-draftmode', '-halt-on-error', '-shell-escape', "#{config['main']}.tex"
+  if config['bibtex']
+    bibtex config['main']
+    latex '-draftmode', '-halt-on-error', '-shell-escape', "#{config['main']}.tex"
+  end
+  latex '-halt-on-error', '-shell-escape', "#{config['main']}.tex"
+  Rake::Task['view'].execute
+end
+
+namespace :pdf do
+  desc 'Build PDF in Draft Mode'
+  task :draft do
+    latex '-draftmode',
+          '-halt-on-error',
+          '-shell-escape',
+          "#{config['main']}.tex"
+  end
+end
+
+desc 'Cleanup'
+task :clean => [ :trash ] do
+  cleaner = proc { |path| rm_f(path) }
+  ext = %w[aux bbl blg toc nav log out]
+  ext.each do |res|
+    Dir.glob("*.#{res}", &cleaner)
+  end
+end
+
+desc 'Trash created doc.pdf'
+task :trash do
+  rm "#{config['main']}.pdf" if File.exist?("#{config['main']}.pdf")
+end
+
+desc 'Print configuration'
+task :info do
+  puts "Configuration: #{config.inspect}"
+
+  begin
+    latex '--version'
+  rescue StandardError
+    'LaTeX is not installed'
+  end
+
+  if config['bibtex']
+    begin
+      bibtex '--version'
+    rescue StandardError
+      raise 'BiBTeX is not installed'
+    end
+  end
+end
+
+def rm(*args)
+  invoke('rm', args)
+end
+
+def invoke(command, *arguments)
+  args = arguments.flatten.map { |arg| "'#{arg}'" }.join(' ')
+  system "#{command} #{args}"
+end
+
+def latex(*args)
+  raise unless config['latex']
+  invoke(config['latex'], args)
+end
+
+def bibtex(*args)
+  raise ArgumentError unless config['bibtex']
+  invoke(config['bibtex'], args)
+end

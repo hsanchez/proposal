@@ -1,40 +1,82 @@
-\section{Technical Goals}
+\section{Technical Goals}%Anticipatory
 \label{sec:goals}
 % DJS: For this initial paragraph, I would like us to try and answer the first few Heilmeyer questions, because these are critical components for DARPA. Let'ssee if we can succinctly address each question with an answer.
 \thiswillnotshow{Heilmeyer Q1: What are you trying to do? Articulate your objectives using absolutely no jargon.}{
-Imagine being able to simulate the group dynamics of a software engineering team with such fidelity that you could predict emergent programming misbehavior, catch bad code or wrong design choices before they become engrained into a project, and even identify social engineering.
-Interpersonal interactions have an undeniable effect on software projects by influencing team behaviors and performance, and these social dynamics can frequently be difficult to isolate, measure, and assess.}
+Imagine being able to simulate future development states of a software system
+under development, and the software engineering team dynamics shaping its
+development, with such fidelity that you could predict emergent programming
+misbehavior, catch suspicious code or wrong design choices, before they become
+ingrained in the system, and even cause imminent failures. Interpersonal
+interactions have undeniable effects on the evolution of a software system by
+influencing team behavior, design and implementation choices, and these social
+dynamics can frequently be difficult to isolate, measure, and assess.
+
+% Imagine being able to simulate the group dynamics of a software engineering
+% team with such fidelity that you could predict emergent programming
+% misbehavior, catch suspicious code or wrong design choices before they
+% become engrained into a project, and even identify social engineering. Interpersonal interactions have an undeniable effect on software projects
+% by influencing team behaviors and performance, and these social dynamics
+% can frequently be difficult to isolate, measure, and assess.
+}
 %exert unseen force on software projects that influence team behavior, reaction, and performance, and for those reasons getting them right is crucial to the success of a software development project.
 \thiswillnotshow{Heilmeyer Q2: How is it done today, and what are the limits of current practice?}{
-Currently, we determine the success of software development projects almost entirely on source code and their revision history, disregarding the complex group dynamics and social interactions that mold them.}
+Many programming analysis approaches for improving software quality and
+trustability are based almost entirely on code, binaries, and a thorough
+analysis (i.e., either formal, or empirical) of the current state of the
+software system, and sometimes even on the past states, disregarding the complex
+group dynamics and social interactions that have molded them.
+
+% Currently, we determine the success of open source projects almost
+% entirely on source code and their revision history, disregarding the
+% complex group dynamics and social interactions that mold them.
+}
 % Heilmeyer Q3: What is new in your approach and why do you think it will be successful?
 \thiswillnotshow{Heilmeyer Q3: What is new in your approach and why do you think
-it will be successful?}{We propose extending beyond the code, and utilizing the
-rich social interactions that take place within projects' communication channels
-(e.g., issue tracking, pull requests) to develop a set of generative
-probabilistic models that predict emergent programming misbehavior.} These
-models should be robust to changes in project activity as contributors,
-time, circumstance, and interests frequently change in software development
-projects.
+it will be successful?}{
+
+This project introduces a new, disruptive view on program analysis, called
+look-ahead software introspection (LIT). LIT is aimed at measuring the quality
+and trustability of a software system by extending beyond code and binaries
+analysis, and utilizing both the rich social interactions that take place within
+software development team (the Social Life of the Software, a phrase we coined
+to describe these interactions), and the future development states of the
+system, to predict emergent programming misbehavior before they become serious
+issues. LIT is activated at runtime, when viewing a source file, or an entire
+software project. This offers significant advantages. For one, when the
+developer hovers the mouse cursor over the artifact, then the analysis results
+are immediately available for display, saving valuable developer time. For
+another, these results highlights code issues in design time, which developer
+can use to asses the quality and trustability of either the current source code,
+or the current software project.  The goal of LIT is to identify whether the
+current state of a software system exhibit symptoms that may be indicative of
+harmful bugs and/or security flaws.}
+% We propose extending beyond the code, and utilizing both
+% the rich social interactions that take place within projects'
+% communication channels (e.g., issue tracking, pull requests) and
+% [the input-and-output relationships] to develop a set of generative
+% probabilistic models that predict emergent programming misbehavior.}
+% These models should be robust to changes in project activity as
+% contributors, time, circumstance, and interests frequently change in
+% software development projects. This form of analysis speculative: ??
+
 % Heilmeyer Q4: Who cares? If you are successful, what difference will it make?
 \thiswillnotshow{Heilmeyer Q4: Who cares? If you are successful, what difference will it make?}{The stakeholders of this project include individuals and organizations who rely on open source software to execute important strategic business and mission requirements, such as city governments, websites owners, and the Department of Defense (DOD). Stakeholders will be able to guard against compromised open source software before their integration into their critical systems.}
 
 \subsection{Motivation}
 \label{subsec:motivation}
 
-The root of this project's motivation is the fact that the world is being
-rebuilt in code. From the ever-growing Internet of Things (\textit{IoT}) to
-advanced military operations, we are more dependent on critical software systems
-than ever before.  Compounding on this alarming reality is the fact that
-numerous critical systems integrate components from large open source projects
-where it is difficult to monitor a type of behavior that is indicative of
-adversaries rather than of the situation, such as the injection of
-vulnerabilities and social engineering. Here, we will learn to capture
-interesting group dynamics patterns, which are specific to active contributors
-or specific to the projects in general, by introspecting large amounts of code
-and social interaction histories in open-source \textit{IoT} platforms on
-GitHub. Then, we will represent these patterns in a form that we can
-algorithmically operationalize.
+The root of this project's motivation is the fact that open source software is
+eating the world. From the ever-growing Internet of Things (\textit{IoT}) to
+advanced military operations, we are more dependent on software systems than
+ever before.  Compounding on this alarming reality is the fact that numerous
+critical systems integrate components from large open source projects where it
+is difficult to monitor a type of behavior that is indicative of adversaries
+rather than of the situation, such as the injection of vulnerabilities and
+social engineering. Here, we will learn to capture interesting group dynamics
+patterns, which are specific to active contributors or specific to the projects
+in general, by introspecting large amounts of code and social interaction
+histories in open-source \textit{IoT} platforms on GitHub. Then, we will
+represent these patterns in a form that we can algorithmically operationalize.
 
 \subsection{Tasks}
 \label{subsec:tasks}
@@ -67,6 +109,15 @@ the following discrete tasks;
   to predict programming (mis)behavior actions that could lead to defect-prone
   changes in open source projects. We can expect to eventually generate samples
   that depict entirely plausible programming (mis)behavior with security risks.
+
+  %%% USE THIS PARAGRAPH
+  % to
+  % explore-and-exploit future development states. By exploring and exploiting such
+  % states, we will develop predictive models, and software measurements, to
+  % discover hidden insights and relationships representing latent programming
+  % misbehavior in a software system, in order to make accurate predictions about
+  % the quality and trustability of it.
+
 %   \item[Task 6:] Cognitive Model. Develop a model of cognitive burden and load
 % % * <owen@soe.ucsc.edu> 2017-10-26T23:48:37.916Z:
 % %
