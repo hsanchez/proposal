@@ -2,11 +2,11 @@
 \label{sec:goals}
 % DJS: For this initial paragraph, I would like us to try and answer the first few Heilmeyer questions, because these are critical components for DARPA. Let'ssee if we can succinctly address each question with an answer.
 \thiswillnotshow{Heilmeyer Q1: What are you trying to do? Articulate your objectives using absolutely no jargon.}{
-Imagine being able to simulate future development states of a software system
-under development, and the software engineering team dynamics shaping its
-development, with such fidelity that you could predict emergent programming
-misbehavior, catch suspicious code or wrong design choices, before they become
-ingrained in the system, and even cause imminent failures. Interpersonal
+Imagine being able to simulate future development states of a software system,
+according to the software engineering team dynamics shaping its development,
+with such fidelity that you could predict emergent programming misbehavior,
+catch suspicious code or wrong design choices, before they become ingrained in
+the system, and even predict whether imminent system failures. Interpersonal
 interactions have undeniable effects on the evolution of a software system by
 influencing team behavior, design and implementation choices, and these social
 dynamics can frequently be difficult to isolate, measure, and assess.
@@ -33,23 +33,29 @@ group dynamics and social interactions that have molded them.
 % Heilmeyer Q3: What is new in your approach and why do you think it will be successful?
 \thiswillnotshow{Heilmeyer Q3: What is new in your approach and why do you think
 it will be successful?}{
-
 This project introduces a new, disruptive view on program analysis, called
-look-ahead software introspection (LIT). LIT is aimed at measuring the quality
-and trustability of a software system by extending beyond code and binaries
-analysis, and utilizing both the rich social interactions that take place within
-software development team (the Social Life of the Software, a phrase we coined
-to describe these interactions), and the future development states of the
-system, to predict emergent programming misbehavior before they become serious
-issues. LIT is activated at runtime, when viewing a source file, or an entire
-software project. This offers significant advantages. For one, when the
-developer hovers the mouse cursor over the artifact, then the analysis results
-are immediately available for display, saving valuable developer time. For
-another, these results highlights code issues in design time, which developer
-can use to asses the quality and trustability of either the current source code,
-or the current software project.  The goal of LIT is to identify whether the
-current state of a software system exhibit symptoms that may be indicative of
-harmful bugs and/or security flaws.}
+look-ahead software introspection (LIT), by analogy with the look-ahead read
+operation of a disk cache. LIT examines more development states on a software
+system than are needed, to improve performance. If the next development state,
+for example, exhibit symptoms that may be indicative of harmful bugs and/or
+security flaws, then the analysis is already in memory and it is immediately
+available for display.
+
+LIT is aimed at measuring the quality and trustability of a software system by
+extending beyond code and binaries analysis, and utilizing both the rich social
+interactions that take place within software development team (the Social Life
+of the Software, a phrase we coined to describe these interactions), and the
+future development states of the system generated from them, to predict emergent
+programming misbehavior before they become serious issues. LIT is activated at
+runtime, when viewing a source file, or an entire software project. This offers
+significant advantages. For one, when the developer hovers the mouse cursor over
+the artifact, then the analysis results are immediately available for display,
+saving valuable developer time. For another, these results highlights code
+issues in design time, which developer can use to asses the quality and
+trustability of either the current source code, or the current software project.
+The goal of LIT is to identify whether the current state of a software system
+exhibit symptoms that may be indicative of harmful bugs and/or security flaws.
+}
 % We propose extending beyond the code, and utilizing both
 % the rich social interactions that take place within projects'
 % communication channels (e.g., issue tracking, pull requests) and
@@ -98,26 +104,14 @@ the following discrete tasks;
   hierarchy information based on project roles, interactions, and GitHub
   activity, and then infer network structure and relationships using theories of
   hierarchical network structure and centrality.
-  \item[Task 3:] \unsure{\Huascar Task 4 covers this content.}{Social Engineering Detection. Analyze language components to
-  extract features related to manipulation and persuasion in inter-personal
-  interactions on communication channels.}
-  \item[Task 4:] Social generative models of software development. Learn the
+  \item[Task 3:] Social generative models of software development. Learn the
   natural features of a dataset (produced from previous tasks), whether
   categories or dimensions or something else entirely, using a generative
   adversarial network (GAN) approach.
-  \item[Task 5:] Programming (mis)behavior linting. Leverage this GAN approach
-  to predict programming (mis)behavior actions that could lead to defect-prone
-  changes in open source projects. We can expect to eventually generate samples
-  that depict entirely plausible programming (mis)behavior with security risks.
-
-  %%% USE THIS PARAGRAPH
-  % to
-  % explore-and-exploit future development states. By exploring and exploiting such
-  % states, we will develop predictive models, and software measurements, to
-  % discover hidden insights and relationships representing latent programming
-  % misbehavior in a software system, in order to make accurate predictions about
-  % the quality and trustability of it.
-
+  \item[Task 4:] Developing predictive models, and software measurements, to
+  discover hidden insights and relationships representing latent programming
+  misbehavior in a software system, in order to make accurate predictions
+  about the quality and trustability of it.
 %   \item[Task 6:] Cognitive Model. Develop a model of cognitive burden and load
 % % * <owen@soe.ucsc.edu> 2017-10-26T23:48:37.916Z:
 % %
@@ -128,41 +122,42 @@ the following discrete tasks;
 %   cognition (such as individual circadian rhythms).
 \end{itemize}
 
-The interesting research question is how much we can generalize from open source
-projects' data, on Github, to predict such risky behavior. One of our core
-aspirations of this project is to develop algorithms and data-driven techniques
-that endow computers with an understanding of programming behaviors in open
-source projects but that are not too complex to perform efficient analysis. This
-has implications for how programming (mis)behavior evidence we generate and use
-to inform owners and users of open source projects.
+The interesting research question is how much we can generalize from the
+revision history of software systems and the group dynamics that molded such
+history. One of our core aspirations of this project is to develop algorithms
+and data-driven techniques that endow computers with an understanding of
+programming behaviors in a software system under development but that are not
+too complex to perform efficient program analysis. This has implications for how
+programming (mis)behavior evidence we generate and use to inform owners and
+users of the quality and trustability of their systems.
 
-\subsection{Predicting Programming (Mis)Behavior with GANs}
-\label{subsec:fundamentals}
-
-The ability to accurately predict programming (mis)behavior is critical for the
-development of green linters. Traditional modeling methods use simple parametric
-models and behavioral cloning. This project will adopt an imitation learning
-method to learn from live observations from demonstrated (mis)behavior. This
-method not only minimizes cascading errors intrinsic to previous modeling
-methods, but also produces human-like behavior that is robust to activity
-perturbations within open source projects.
-
-Figure \ref{fig:outline} outlines our approach for producing data-driven
-programming (mis)behavior linters. Our approach involves a four-stage pipeline.
-First, we mine the revision history of a group of popular \textit{IoT} open
-source projects, as well as these the social interactions among these projects'
-contributors. Second, we learn from example demonstrations (without rewards)  a
-discriminator and a generator for policies imitating human-like behavior. Third,
-we put these artifacts together to use to produce a set of data-driven analyzers
-that open source projects can install as plugins.  The last step involves
-operationalizing these analyzers. This last step will result in the firing of
-behavior linting events, which will inform project owners of emergent
-programming misbehavior forming in their projects.
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=11cm,height=4.5cm,keepaspectratio]
-{images/greenlintersworkflow.png}
-\caption{{\bfseries Project Outline and Strategy}.}
-\label{fig:outline}
-\end{figure}
+% \subsection{Predicting Programming (Mis)Behavior with GANs}
+% \label{subsec:fundamentals}
+%
+% The ability to accurately predict programming (mis)behavior is critical for the
+% development of green linters. Traditional modeling methods use simple parametric
+% models and behavioral cloning. This project will adopt an imitation learning
+% method to learn from live observations from demonstrated (mis)behavior. This
+% method not only minimizes cascading errors intrinsic to previous modeling
+% methods, but also produces human-like behavior that is robust to activity
+% perturbations within open source projects.
+%
+% Figure \ref{fig:outline} outlines our approach for producing data-driven
+% programming (mis)behavior linters. Our approach involves a four-stage pipeline.
+% First, we mine the revision history of a group of popular \textit{IoT} open
+% source projects, as well as these the social interactions among these projects'
+% contributors. Second, we learn from example demonstrations (without rewards)  a
+% discriminator and a generator for policies imitating human-like behavior. Third,
+% we put these artifacts together to use to produce a set of data-driven analyzers
+% that open source projects can install as plugins.  The last step involves
+% operationalizing these analyzers. This last step will result in the firing of
+% behavior linting events, which will inform project owners of emergent
+% programming misbehavior forming in their projects.
+%
+% \begin{figure}[ht!]
+% \centering
+% \includegraphics[width=11cm,height=4.5cm,keepaspectratio]
+% {images/greenlintersworkflow.png}
+% \caption{{\bfseries Project Outline and Strategy}.}
+% \label{fig:outline}
+% \end{figure}
