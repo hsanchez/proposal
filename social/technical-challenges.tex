@@ -1,0 +1,15 @@
+\section{Technical Challenges}
+\label{sec:challenges}
+Modeling individual and team behavior and their effects on open source projects
+is a challenge because it requires data across a range of circumstances that one
+can use to identify consistent patterns and individual role identities. It also
+requires validating these patterns in order to verify if these patterns captured individuals' behavior -- i.e., evaluation with ground truth.
+
+Creating data sets with ground truth to support our modeling activities is laborious and challenging, and sometimes impossible to do -- lack of ground truth. To address this problem systematically, we will consider the following evaluation approaches:
+
+\begin{enumerate}
+  \item Collect historical data (e.g., revision history) about an open source project and contributors for a period of time and then perform a spatiotemporal evaluation. Assuming we can guarantee activities recurrence, or periodicity, over time in open source project, we can use popular machine learning methods to predict the like times contributors are successful at getting their pull requests (e.g., code changes) accepted by the owners of the open source project, or the likely times sets of accepted changes have broken the open source project. if we cannot guarantee activities recurrence, or periodicity, then we can use crowdsourcing to ask opinions of multiple experts, and the choose a solution the majority of experts agree on.
+  \item Introspect open source projects' activities (e.g., issues created, pull request opened/closed) to measure the effectiveness of conversations in different communication channels in producing change. We can asses these conversations in assessed in terms of how much one learned from it, what kind of learning took place, whether it was engaging or not, and what kind of actions individuals decided because of it (e.g., accepting a pull request).
+\end{enumerate}
+
+Evaluation of big social networks that host open source projects means new challenges. One is the lack of ground truth. However, we can use an array of proven scientific methods from different areas, such statistics, anthropology, and ethology to evaluate our findings.

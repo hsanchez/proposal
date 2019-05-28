@@ -1,0 +1,181 @@
+%% opacity stuff
+\usepackage{tikz}
+\usepackage{titlesec}
+% to change titles font family
+\usepackage{titling}
+
+%%% declare fonts and set some formats
+% fontspec to use non-latex with xetex
+\usepackage{fontspec}
+
+% todos and highlighting
+\usepackage{soul}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+
+\newcommand\twodigits[1]{%
+   \ifnum#1<10 0#1\else #1\fi
+}
+
+% Sections
+% fonts
+% \setmainfont{[CrimsonText-Regular.ttf]}
+% \newfontfamily\headingfont[]{Inconsolata}
+\newfontfamily{\CalibriRegular}{Calibri-Regular.ttf}[Path = fonts/]
+\newfontfamily{\CalibriBold}{Calibri-Bold.ttf}[Path = fonts/]
+\newfontfamily{\LatoLight}{Lato-Light.ttf}[Path = fonts/]
+\newfontfamily{\LatoBold}{Lato-Bold.ttf}[Path = fonts/]
+\newfontfamily{\LatoRegular}{Lato-Regular.ttf}[Path = fonts/]
+
+% \titleformat*{\section}{\LARGE\headingfont}
+\setmainfont[Path = fonts/] {Lato-Light}
+
+\titleformat{\section}[runin]
+{\LatoBold\bfseries}{\twodigits{\thesection} $\vert$}{0.45em}{\addperiod}
+\newcommand{\addperiod}[1]{#1.}
+
+% Subsections
+\titleformat{\subsection}[runin]
+{\LatoBold\normalsize\bfseries}{\thesubsection \hskip 1mm $\vert$}{0.45em}{\addperiod}
+
+\newcommand{\sectionx}[2]{\medskip\noindent{{\bfseries{#1 $\vert$ #2.}}}}
+
+%% colors
+\definecolor{lred}{RGB}{255, 153, 153}
+\definecolor{lpurp}{RGB}{204, 204, 255}
+\definecolor{lorange}{RGB}{255, 204, 102}
+\definecolor{dorange}{RGB}{255, 204, 153}
+
+%% Heilmeyer colors
+\definecolor{greenq}{RGB}{125, 232, 125}
+\definecolor{orangie}{RGB}{255, 204, 128}
+\definecolor{grimms}{RGB}{163, 194, 194}
+\definecolor{grimms1}{RGB}{209, 199, 204}
+\definecolor{cares}{RGB}{207, 200, 193}
+
+
+%% collaboration
+\newcommand{\unsure}[2]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red]{#1}\sethlcolor{lred} \texthl{#2}}
+\newcommand{\change}[2]{\todo[linecolor=lpurp,backgroundcolor=lpurp,bordercolor=lpurp]{#1}\sethlcolor{lpurp} \texthl{#2}}
+\newcommand{\info}[2]{\todo[linecolor=dorange,backgroundcolor=dorange,bordercolor=dorange]{#1}\sethlcolor{dorange}\texthl{#2}}
+\newcommand{\improvement}[2]{\todo[linecolor=blue!20!white,backgroundcolor=cyan,bordercolor=blue!20!white]{#1}\sethlcolor{cyan} \texthl{#2}}
+\newcommand{\thiswillnotshow}[2]{\todo[disable]{#1}#2}
+\newcommand{\explainindetail}[2]{\todo[color=green!40]{#1}\sethlcolor{green}\texthl{#2}}
+
+%% Heilmeyer questions
+\newcommand{\firstquest}[2]{\todo[linecolor=greenq,backgroundcolor=greenq,bordercolor=greenq]{#1}\sethlcolor{greenq} \texthl{#2}}
+\newcommand{\secondquest}[2]{\todo[linecolor=orangie,backgroundcolor=orangie,bordercolor=orangie]{#1}\sethlcolor{orangie} \texthl{#2}}
+\newcommand{\thirdquest}[2]{\todo[linecolor=grimms,backgroundcolor=grimms,bordercolor=grimms]{#1}\sethlcolor{grimms} \texthl{#2}}
+\newcommand{\thirdquestone}[2]{\todo[linecolor=grimms1,backgroundcolor=grimms1,bordercolor=grimms1]{#1}\sethlcolor{grimms1} \texthl{#2}}
+\newcommand{\fourthquest}[2]{\todo[linecolor=cares,backgroundcolor=cares,bordercolor=cares]{#1}\sethlcolor{cares} \texthl{#2}}
+
+%%% SOME BASIC CONF PARAMETERS
+
+%% Proposal title
+\newcommand{\ProjectTitle}{Look-Ahead Software Introspection}
+
+%% PI
+\newcommand{\PI}{Firstname Lastname, Ph.D}
+\newcommand{\PIPhone}{+1 (650) 859-XXXX}
+\newcommand{\PIEmail}{firstname.lastname@sri.com}
+
+%% COST
+\newcommand{\Cost}{\$$999,999$ }
+
+%% Performance period
+\newcommand{\Period}{12 Months,
+\DTMdisplaydate{2018}{01}{01}{-1} -- \DTMdisplaydate{2018}{12}{31}{-1} }
+
+%% Contributors
+\newcommand{\Daniel}{{\bfseries DJS: }}
+\newcommand{\Huascar}{{\bfseries HAS: }}
+\newcommand{\Jim}{{\bfseries JW: }}
+\newcommand{\Owen}{{\bfseries OA: }}
+
+% Organizations
+\newcommand{\SRI}{SRI International \hskip 0.1em}
+% \newcommand{\UCSC}{University of California Santa Cruz \hskip 0.1em}
+
+\makeatletter
+ \if@todonotes@disabled
+ \newcommand{\todox}[2]{#1}
+ \else
+ \newcommand{\todox}[2]{\todo{#2}\texthl{#1}}
+ \fi
+ \makeatother
+
+\setlength{\marginparwidth}{2cm}
+% \setlength{\footskip}{10pt}
+% \setlength{\headheight}{5pt}
+\setlength{\footskip}{10pt}
+\setlength{\headheight}{34pt}
+
+
+\newcommand{\project}{{\hfill{{\small{Green Linters}}}}}
+\newcommand{\projectid}{White Paper 17-467 ECU}
+\renewcommand{\DTMdisplaydate}[4]{#2-#3-#1}
+
+\definecolor{lgray}{gray}{0.8}
+\definecolor{sgray}{gray}{0.3}
+\definecolor{sriblue}{RGB}{46, 116, 181}
+\definecolor{sridraft}{RGB}{230, 230, 230}
+% \definecolor{sriblue2}{RGB}{90,188,218}%{51, 134, 237}
+\definecolor{sriblue2}{RGB}{153, 204, 255}%{51, 134, 237}
+\definecolor{sriblue3}{RGB}{0, 184, 230}
+ % \newcommand{\otext}[1]{{\footnotesize \textcolor{sriblue2}{\transparent{0.3}{#1}}}}
+
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{AllPages}{
+\lhead{\textcolor{lgray}{{\small SRI \projectid}}
+\smallskip \textcolor{sriblue2}{\hrule height 1pt}}
+\rhead{\textcolor{lgray}{\small\today}
+\smallskip \textcolor{sriblue2}{\hrule height 1pt}}
+\chead{}
+\cfoot{\textcolor{sriblue2}{\hrule height 1pt} \medskip
+\tikz\node[inner sep=0pt,opacity=0.5]{\textcolor{sgray}{\thepage}};\\{\footnotesize \textcolor{lgray}{Use or
+disclosure of white paper data is subject to the restriction on the title
+page of this white paper.}}}
+}
+
+\fancypagestyle{FirstPage}{
+\lhead{}
+% \rhead{\bfseries SRI International}
+\rhead{\includegraphics[width=6cm]{images/srilogo.png}
+\smallskip \textcolor{lgray}{\hrule height 1pt}}
+\cfoot{\textcolor{lgray}{\hrule}
+\vskip -3mm \textcolor{lgray}{\linespread{0.4}\begin{spacing}{0.3}\justify
+{\scriptsize This white paper includes data that shall not be disclosed
+outside of the Government and shall not be duplicated, used, or disclosed--in
+whole or in part--for any purpose other than to evaluate this document. If,
+however, a contract is awarded to this offeror or quoter as a result of--or in
+connection with--the submission of these data, the Government shall have the
+right to duplicate, use, or disclose the data to the extent provided in the
+resulting contract. This restriction does not limit the Government's right to
+use information contained in these data if it is obtained from another source
+without restriction. The data subject to this restriction are contained on all
+pages of this white paper.}
+\end{spacing}}
+\smallskip \textcolor{lgray}{\hrule}
+\tikz\node[inner sep=0pt,opacity=0.5]{\textcolor{sriblue3}{{\LatoRegular\scriptsize SRI International}}};
+\textcolor{lgray}{
+{\scriptsize $\cdot$ }{\scriptsize 333 Ravenswood Avenue}
+{\scriptsize $\cdot$ }{\scriptsize Menlo Park, CA 94024}
+{\scriptsize $\cdot$ }{\scriptsize 650.859.2000}
+{\scriptsize $\cdot$ }{\scriptsize www.sri.com}}}}
+
+% Filter out all marginpar warnings
+\usepackage{silence}
+\WarningFilter*{latex}{Marginpar on page \thepage\space moved}
+
+\usepackage[printwatermark]{xwatermark}
+\newsavebox\mybox
+\savebox\mybox{\tikz[color=sridraft,opacity=0.5]\node{\large DRAFT};}
+\newwatermark*[
+  allpages,
+  angle=45,
+  scale=8,
+  xpos=-20,
+  ypos=15
+]{\usebox\mybox}
+
+\usepackage{appendix}

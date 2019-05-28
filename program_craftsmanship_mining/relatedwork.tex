@@ -1,24 +1,49 @@
 \chapter{Project Description}{}
 \label{sec:related}
 
-\startWith{d}{evelopers} frequently rely on templates when designing 
-programs. While templates provide a simple mechanism for quick generation of 
-commonly used code, their rigidity limits customization and creativity 
-to those anticipated by the template creator. Program Design Mining lifts 
-this rigidity by allowing the structural regularities of any well-written 
-programs to serve as a design template. Program Design works by matching 
-statically and semantically similar elements in programs to create coherent 
-mappings between them.
+\startWith{w}{e start} the discussion of Program Design Mining with templates. 
+Templates are prewritten snippets of code that developers frequently rely on when 
+designing programs. They use them to write common code constructs faster, to 
+surround existing code with enclosing blocks (e.g., \texttt{try/catch} clause), or to 
+create new source files. Modern integrated development environments, like IntelliJ IDEA 
+or Eclipse, provide developers a set of predefined templates, as well as a functionality 
+to add new ones. Developers use the latter to capture in a template coding habits 
+specific to them or to their code base. With templates, developers don't have to figure 
+out what to write. It is already before them, and they just have to fill it in.  
+
+While templates can help developers write common code faster, their rigidity limits 
+both customization and creativity to those anticipated by the template creator. 
+Program Design Mining leverages the simplicity of templates while excluding their 
+regidity. It excludes this rigidity by using three machine learning techniques 
+to create new design interactions from existing design knowledge: (1) structured 
+prediction, (2) nonparametric bayesian analysis, and (3) program induction. These 
+machine techniques are not orthogonal; they complement each other. The key algorithms 
+behind this approach include:
 
 
-programmatic ways in which both traditionally and 
-non-traditionally educated programmers can borrow the same skills and 
-creativity of the formally trained pros and can still express themselves.  
-
-Program Design Mining will implement a data-driven approach for 
-program design. This approach introduces a markup language for 
-representing templates and specifying integration instructions 
-for code snippets
+% Next, through a
+% program induction algoritm, it generates structural regularities recommendations
+% by analyzing previously learned regularities online and taking developers' feedback
+% into consideration. Lastly, it operationalizes learned regularities through a boun
+%
+% With Program Design Mining, programmmers could bounce different (and compatible) design
+% alternatives recommended by the system to fine tune their current program
+% design.
+%
+%
+% Program Design works by
+% finding statically and semantically correspondences between programs and then
+% leverages those correspondences to transfer
+%
+%
+% programmatic ways in which both traditionally and
+% non-traditionally educated programmers can borrow the same skills and
+% creativity of the formally trained pros and can still express themselves.
+%
+% Program Design Mining will implement a data-driven approach for
+% program design. This approach introduces a markup language for
+% representing templates and specifying integration instructions
+% for code snippets
 
 \begin{enumerate}
 	\item A new structured prediction algorithm for rapidly transferring 
@@ -30,6 +55,33 @@ for code snippets
 	\item A new semi-automatic (human-in-the-loop) program evolution algorithm 
 	for bouncing program design alternatives (and evolving programs). 
 \end{enumerate}
+
+\section*{Research goals} % (fold)
+\label{sec:goals}
+
+First, Program Design Mining uses a structured prediction algorithm to operationalize 
+well-written (object-oriented) programs. This algorithm turns each program into a 
+program design template which developers can apply (at will) during program design. 
+Each inferred template captures the coding habits of a program's creator. It captures 
+this wisdom by discovering static and semantic correspondences between both programs, 
+the well-written program (i.e., inferred design template), and the target program, 
+respectively. \todo{describe with example how this correspondence will look like or 
+behave like}.
+
+\section*{Background} % (fold)
+\label{sec:background}
+
+Program Design Mining has its roots in two communities: design and creativity 
+support tools, and the emerging area ofprocedural content generation for games. 
+In this section, we situate our proposed work in these contexts.
+
+\subsection*{The Role of the Computer in Creativity Support Tools} % (fold)
+\label{subsec:creativity}
+
+An early discussion of the role of a computer in an intelligent design assistant
+
+\section*{Related Work} % (fold)
+\label{sec:related}
 
 State of the art data-driven tools for program synthesis, program 
 repair, and code transplantation, such as X, Y, and Z, focus 

@@ -1,0 +1,456 @@
+
+This project will develop a new encoding of Java-like languages into Horn clauses 
+using the concept of heap invariants. The encoding will be implemented as part
+of our \jayhorn tool~\cite{jayhorn16}. \jayhorn is a software model 
+checking tool for Java. It takes single-threaded and reflection-free Java bytecode
+as input and tries to verify that a user-provided \textsf{main} method cannot throw an
+undeclared exception. To that end, \jayhorn performs the following steps, which have been implemented as part of our preliminary work:
+\begin{enumerate}
+\item Elimination of implicit control-flow in Java bytecode.
+\item Simplification of heap access by introducing pull
+and push statements.
+\item Abstraction of heap using heap invariants.
+\end{enumerate}
+We briefly discuss this preliminary work to introduce the relevant terminology
+before outlining the planned research. A more detailed description of these 
+steps can be found in~\cite{jayhorn16} and in the \jayhorn development 
+blog\footnote{\url{jayhorn.github.io/jayhorn/blog}}. 
+
+
+\paragraph{Elimination of implicit control-flow.}
+\jayhorn uses the Soot bytecode library~\cite{vall99soot} to obtain a 
+Jimple representation of the analyzed program, and performs a series of program 
+transformations to simplify the program and add runtime checks for several implicit
+assertions, such as Null\-Pointer\-Exception or 
+Array\-Index\-Out\-Of\-Bounds\-Exception before translating the 
+simplified program into a system of constrained Horn clauses.
+\begin{figure}[tb]
+\begin{center}
+\begin{align*}
+\textit{Program} \; ::= & \; \textit{Method}^* \\
+\textit{Method} \; ::= & \; f(\lvar_1, \ldots,
+\lvar_n)\{\textit{Stmt}\textbf{;}^*\}\\
+ \textit{Stmt} \; ::= & \; \textit{label}:\; \textit{Stmt} 
+\; |   \; \textbf{goto} \,  \textit{label}^+
+\; |  \; \lvar:= \textit{t}
+\; |   \; \textbf{load}(\lvar, \pvar.\fvar) 
+\; |   \; \textbf{store}(\pvar.\fvar, \expr) \\
+| & 
+ \; (\lvarp_1, \ldots, \lvarp_m) := f(\expr_1, \ldots, \expr_n)
+ \; | \; \textbf{return} \; (\expr_1, \ldots, \expr_m)
+\\
+| & 
+ \; \textbf{assume}(\expr) \;  | \; \textbf{assert}(\expr) 
+ \;  | \; \textbf{havoc}(\lvar_1,\ldots,\lvar_n) 
+\end{align*}
+\end{center}
+\caption{Syntax of the simplified bytecode used by \jayhorn. To model abstraction, e.g., from library calls whose code we cannot access, the syntax also provides a \texttt{havoc} statement to represent non-deterministic updates.\label{fig-syntax}}
+\end{figure}
+
+In the transformed program, implicit control-flow stemming from the dispatch 
+of virtual methods and exceptional flow is replaced by explicit 
+control-flow to simplify processing.
+The resulting language is a simplified version of Java bytecode that can be described 
+using the syntax in Figure~\ref{fig-syntax} where we use the following 
+conventions: $\lvar, y, z$ refer to local variables; $\pvar, r$ are 
+local variables that refer to
+a memory location on the heap, and $\expr, s$ are side-effect-free
+expressions over variables and constants.  A program in this language
+consists of a set of methods (or functions) with one distinct
+main-method. Each method consists of a sequence of (possibly
+labeled) statements. Labels are symbolic representations of the
+program counter associated with a particular statement. The first
+statement in the sequence is the entry point of the method. 
+
+Methods
+return a pair consisting of the last thrown exception 
+(or \texttt{null} if no exception has been thrown) and the actual
+return value (or \texttt{null} if the method does not return a
+value). Encoding exceptional flow through additional return values
+is a known technique used in tools like ESC/Java or 
+Spec\#. This encoding
+is sound as long as all statements that may throw an exception
+explicitly update this return value and leave the method, and if 
+the value is checked for nullness after every method call.
+In this encoding, 
+the last statement on every path through a method is a 
+return-statement. Control
+flows from one statement to the next as the program counter
+increases. 
+The statement $\textbf{assert}(\expr)$ terminates
+an execution erroneously if $\expr$ evaluates to $\mathit{false}$
+and has no effect otherwise. 
+The statement $\textbf{assume}(\expr)$ blocks the execution
+if $\expr$ evaluates to $\mathit{false}$ on the current state and has
+no effect, otherwise. Like in other verification languages, such as
+ Boogie~\cite{Leino:2010:PIV:2175554.2175588}, \jayhorn uses
+\textbf{assume} and non-deterministic goto to model
+conditional choices and loops. Assignment statements $\lvar:=\expr$
+update a variable~$\lvar$ to the value of $\expr$.  The statement
+$\textbf{havoc}(\lvar_1,\ldots,\lvar_n)$ assigns non-deterministic
+values to the variables $\lvar_1,\ldots,\lvar_n$. 
+
+
+Initially, heap interaction is modeled, like in Java bytecode, using
+\textbf{load} and \textbf{store}.
+The statement $\textbf{load}(\lvar, \pvar.\fvar)$ loads the value of
+field \fvar of \pvar into a local variable
+\lvar; accordingly, $\textbf{store}(\pvar.\fvar, \expr)$ updates field
+\fvar of object~\pvar to the value of expression \expr. For simplicity, 
+assume, for static fields, a global $\lvar$ that can be used as base.
+
+A method
+call $(\lvarp_1, \ldots, \lvarp_m) := f(\expr_1, \ldots, \expr_n)$ to
+a method $f(\lvar_1, \ldots, \lvar_n)$ executes the body of the method
+$f$ until a $\textbf{return}\;(\textit{ret}_1, \ldots, \textit{ret}_m)$ 
+statement is
+reached, then control returns and the values of the
+expressions~$\textit{ret}_1, \ldots, \textit{ret}_m$ are assigned to $\lvarp_1,
+\ldots, \lvarp_m$. As discussed earlier, one of the return expressions is
+used to store the last thrown exception. Call statements will be followed
+by conditional choices to check if the call terminated exceptionally before
+evaluating its other returns values.
+
+Virtual method calls are resolved by explicitly enumerating
+all possible calls and guarding them with the appropriate \texttt{instanceof}
+test. Note that this approach is sound but inefficient. Later we discuss
+how \jayhorn is extended with a points-to analysis that can be used to
+prune irrelevant cases. 
+
+This language does not provide primitives 
+for object creation; instead, allocation is encoded by passing around a counter
+that indexes the next free memory block, while constructors are turned
+into ordinary methods.
+
+
+Semantically, the state of a program is a triple $(S, H, pc)$, where
+$S : \textit{Vars} \rightarrow \mathbb{Z}$ is the local store, $H :
+\mathbb{Z}\times \textit{fields} \rightarrow \mathbb{Z}$ is the heap;
+and $pc$ is the program counter pointing to the current
+statement. Execution of statements updates the program state in the
+expected way; in particular, an assignment statement $\lvar:=\expr$ in
+a state $(S, H, pc)$ updates the local store so that $(S[\lvar
+\mapsto \expr^S], H, pc+1)$ where $\expr^S$ denotes the
+  value of expression $\expr$ under store~$S$; a statement
+$\textbf{load}(\lvar, \pvar.\fvar)$ has the effect $(S[\lvar \mapsto
+H(S(\pvar).\fvar)], H, pc+1)$; a statement
+$\textbf{store}(\pvar.\fvar, \expr)$ has effect $(S,
+H[S(\pvar).\fvar\mapsto \expr^S], pc+1)$. For a heap entry
+  $H[\pvar.\fvar]$ with $\pvar \in \mathbb{Z}$ and
+  $\fvar\in\textit{fields}$, we assume that $\pvar$ is associated with
+  a reference type $\cvar$ that contains the field $\fvar$.  Since we
+  generate programs from type-checked code, this will be the case by
+  construction. A method call $(\lvarp_1, \ldots, \lvarp_m) :=
+f(\expr_1, \ldots, \expr_n)$ will 1) store the program counter~$pc$
+and values of local variables in fresh temporary variables, 2)
+assign the values of the arguments $\expr_i$ to the corresponding
+formal arguments $\lvar_i$, and 3) jump to the invoked method.
+After return, the program counter and all local variables are
+restored.
+
+%
+A path in a program is a sequence of statements starting from the first
+statement in the \textsf{main} method of a program. A path is complete if it
+reaches the end of the \textsf{main} method. A trace is an initial state and the
+path of all statements that are executed when starting the program from this
+state. A trace terminates if its path is finite. 
+A trace is infeasible if its path ends on an assumption violation. 
+A program is safe if it has no feasible error trace.
+
+
+% We model exceptional returns of a method by adding an additional return value
+% (our language allows tuples as return values). This return value is either 
+% the \texttt{null} reference or the reference of the last thrown exception. 
+% On the caller site, we then have to distinguish if this value is non-null and
+% forward the exception accordingly. With this modeling of exceptional flow, 
+% an \emph{error trace} is a trace where the exceptional return value is non-null and 
+% the type of the return value is not in the set of types declared in the 
+% throws-clause of \textsf{main}\footnote{Arbitrary safety properties can 
+% be expressed using assertions since Java assertions are turned into 
+% exceptions by the compiler.}.
+
+The presented language simplifies the verification process by making exceptional
+flow and dynamic dispatch of virtual invocations explicit. Further, it makes
+invocations of static initializers and default variable initialization explicit. A program in this language that 
+does not use the heap can be verified by any off-the-shelf model checker. What makes
+the problem complicated is the heap; proving safety requires finding invariants 
+for a potentially unbounded number of objects. 
+
+\paragraph{Heap interaction.} To make the language more accessible to
+model checking, \jayhorn bundles field accesses by pulling 
+all fields of an object into the local state in one transaction before
+modifying its fields, and pushing all fields back in a single 
+transaction after it is done with our modifications. To that end, two
+adding two additional statements, \textbf{pull} and \textbf{push} are 
+added to language:
+\begin{equation*}
+ \textit{Stmt}_{\mathit{PP}} \; ::= \; \textit{Stmt}
+ \; | \; \textbf{push}_\textit{\cvar}(\pvar,
+     \expr_1,\ldots,\expr_n)
+ \; | \; \textbf{pull}_\textit{\cvar}(\lvar_1,\ldots,\lvar_n,
+\pvar)
+\end{equation*}
+Here, \cvar is a reference type with fields $\fvar_1,\ldots,\fvar_n$,
+and \pvar is a reference of type \cvar.  The intuition of the new
+statements is that, the number of heap interactions can be reduced
+by bundling them. Instead of having to handle separate heap accesses
+for each field using \textbf{load} and \textbf{store}, 
+the state of an object is pulled into local variables, and
+all modifications to that object can be performed locally until
+the changes need to be made visible using a push.
+
+
+The naming similarity to push and pull
+in \textsf{Git} is intentional: pull fetches the current version of a
+reference type from the heap and push communicates the local changes
+back to the heap. This idea is not to be confused with the concept of
+pack and unpack in~\cite{leino2004object}. The transformation from
+\textbf{load}/\textbf{store} to \textbf{push}/\textbf{pull} will
+prepare the ground for the later step of describing object states
+using heap invariants.
+
+For program counter~$pc$ pointing to a statement
+$\textbf{push}_\cvar(\pvar, \expr_1,\ldots,\expr_n)$, where $\pvar$ is
+a variable of reference type~\cvar\ with fields
+$\fvar_1,\ldots,\fvar_n$, and $\expr_1,\ldots,\expr_n$ are expressions
+whose type conforms to $\fvar_1,\ldots,\fvar_n$, the semantics of
+$\textbf{push}$ is to simultaneously update the fields
+$\fvar_1,\ldots,\fvar_n$ of $p$ to the values of
+$\expr_1,\ldots,\expr_n$:
+\[
+(S,H,pc) \;\rightarrow\;
+(S, H[S(\pvar).\fvar_1 \mapsto \expr_1^S,\,
+S(\pvar).\fvar_2 \mapsto \expr_2^S,\, \ldots
+\ldots], pc+1)
+\]
+%
+Similarly, the semantics of
+$\textbf{pull}_\cvar(\lvar_1,\ldots,\lvar_n, \pvar)$ is to
+simultaneously load the contents of the fields
+$\fvar_1,\ldots,\fvar_n$ of $p$ and store them in the local variables
+$\lvar_1,\ldots,\lvar_n$:
+\[
+(S,H,pc)
+\;\rightarrow\;
+(S[\lvar_1 \mapsto H(S(\pvar).\fvar_1),\,
+\lvar_2\mapsto H(S(\pvar).\fvar_2),\,
+\ldots], H, pc+1)
+\]
+
+Given this semantics, it is clear that \textbf{load} and
+\textbf{store} instructions can be uniformly replaced with
+\textbf{pull} and \textbf{push} statements.
+% In addition to that, we define a set
+%of simplification rules to minimize the number of usages of
+%\textbf{pull} and \textbf{push}.
+%
+Assume \cvar\ is a reference type with fields
+$\fvar_1,\ldots,\fvar_n$, and $k \in \{1, \ldots, n\}$ is one of
+the field indexes, occurrences of \textbf{load} and \textbf{store} can
+then be eliminated using the following replacement rules (in which
+$\lvarp_1 \ldots \lvarp_n$ are fresh local variables):
+\begin{align}
+  \label{eq:loadRepl}
+  \textbf{load}(\lvar, \pvar.\fvar_k) &~~\leadsto~~
+  \textbf{pull}_\cvar(\lvarp_1,\ldots,\lvarp_n, \pvar);\;\; x:=\lvarp_k
+  \\
+  \label{eq:storeRepl}
+  \textbf{store}(\pvar.\fvar_k, \expr) &~~\leadsto~~
+  \textbf{pull}_\cvar(\lvarp_1,\ldots,\lvarp_n, \pvar);\;\;
+  \lvarp_k := \expr;\;\;
+  \textbf{push}_\cvar(\pvar, \lvarp_1,\ldots,\lvarp_n)
+\end{align}
+
+
+
+\paragraph{Heap Invariants.}
+The representation of heap accesses using $\textbf{push}$ and
+$\textbf{pull}$ enables \jayhorn to make the step from precise
+program execution semantics to summarization of states using
+invariants. 
+
+The summarization is performed by replacing 
+$\textbf{push}_\cvar$ and $\textbf{pull}_\cvar$ statements symbolic
+invariants representing possible states of objects of
+type~$\cvar$. Assume a type $\cvar$ with fields $\fvar_1, \ldots,
+\fvar_n$, a \emph{$\cvar$-invariant} is a formula~$\phi_\cvar$ over
+pairwise distinct (fresh) variables $\pvar, \lvar_1, \ldots, \lvar_n$,
+and will be used to capture the possible states of an object of
+type~$\cvar$ at address~$\pvar$. As a convention, for expressions~$s,
+\expr_1, \ldots, \expr_n$, we write $\phi_\cvar(s, \expr_1, \ldots,
+\expr_n)$ for the result of the substitution~$\phi_\cvar[\pvar/s,
+\lvar_1/\expr_1, \ldots, \lvar_n/\expr_n]$.
+
+The elimination of $\textbf{push}_\cvar$ and $\textbf{pull}_\cvar$ 
+statements through
+the $\cvar$-invariant~$\phi_\cvar$ is performed by an exhaustive
+application of the following replacement rules:
+\begin{align}
+  \label{eq:pushRepl}
+  \textbf{push}_\cvar(\pvar, \expr_1,\ldots,\expr_n) &~~\leadsto~~
+  \textbf{assert}(\phi(\pvar, \expr_1 \ldots \expr_n))
+  \\
+  \label{eq:pullRepl}
+  \textbf{pull}_\cvar(\lvar_1,\ldots,\lvar_n, \pvar) &~~\leadsto~~
+  \textbf{havoc}(\lvar_1,\ldots,\lvar_n);\;\;
+  \textbf{assume}(\phi(\pvar, \lvar_1 \ldots \lvar_n))
+\end{align}
+In other words, instead of actually writing data to memory, the
+resulting program asserts that the data satisfies the stipulated
+invariant~$\phi_\cvar$; reading data from memory is translated to
+generating arbitrary values satisfying the invariant. 
+
+% This
+% transformation is \emph{sound:}
+% \begin{lemma}
+%   Let $P_{\mathit{PP}}$ be a program that does not
+%   contain~\textbf{load} or \textbf{store} instructions, and
+%   $P_{\text{inv}}$ the result of exhaustively applying
+%   \eqref{eq:pushRepl} and \eqref{eq:pullRepl}. If $P_{\mathit{PP}}$
+%   does not access uninitialized memory, then $P_{\mathit{PP}}$ is
+%   correct if $P_{\text{inv}}$ is correct (but in general not vice
+%   versa).
+% \end{lemma}
+
+\paragraph{Horn encoding.}
+At this point, our language contains only local variables and the 
+translation into logic becomes simple. To prove the safety of all 
+assertions in a program, we encode
+the program into a set of constrained Horn clauses (CHC).
+
+A CHC is a formula~$C \wedge B_1 \wedge
+\cdots \wedge B_n \to H$, where $C$ is a constraint over variables
+and interpreted predicates (e.g.,  $>$ or $+$). Each $B_i$ is an
+application of a relational symbol $p(\expr_1, \ldots, \expr_n)$ to
+terms $\expr_i$ in first-order logic. We refer to $C \wedge B_1 \wedge
+\cdots \wedge B_n$ as the body of a Horn clause. The
+head of a Horn clause $H$ is, similar to $B_i$, an application
+$p(\expr_1, \ldots, \expr_n)$, or $\mathit{false}$.
+A set of CHCs is solvable if there is an instantiation
+of the used relational symbols for which all Horn clauses are valid.
+As shown in~\cite{verificationAsSMT}, the assertion checking problem
+can be reduced to the solvability of Horn clauses.
+
+Given a method $f(\lvar_1, \ldots, \lvar_n)$ with $n$ arguments and
+$k$ results. To represent the contract of $f$, we
+follow the standard encoding (e.g., \cite{GrebenshchikovLPR12})
+and assume two predicates $\mathit{pre}_f$ and $\mathit{post}_f$,
+where $\mathit{pre}_f$ has arity~$n$ and $\mathit{post}_f$ has
+arity~$n+k$; those predicates will represent the precondition and
+postcondition of $f$.
+We further assume one predicate $\mathit{pc}_i$ per program location
+$\mathit{pc}=i$. The arity $m = n + l$ of this symbol is determined by
+the number~$n$ of arguments of $f$, and the number~$l$ of program
+variables that can be alive at this program point (live variables can
+be computed statically). In addition to that, we create one predicate
+$\phi_\cvar$ for each $\cvar$-invariant for each $\cvar$ used in the
+program. The arity~$m+1$ of $\phi_\cvar$ is determined by the
+number~$m$ of fields in $c$ (one additional argument is needed for the
+object reference). These predicates are shared between all methods.
+
+For the method entry point, we introduce one Horn clause connecting
+the precondition with the method entry~$\mathit{pc} = 1$:
+\begin{align*}
+  \mathit{pre}_f(\lvar_1, \ldots, \lvar_n) & ~\to~
+  \mathit{pc}_1(\lvar_1,\ldots, \lvar_n, \ldots)% \\
+%  \mathit{pc}_n(\lvar_1,\ldots, \lvar_m) & \to \mathit{post}_f(\lvar_1,\ldots,
+%  \lvar_m)
+\end{align*}
+
+For each statement $s$ at program counter $\mathit{pc}=i$ whose
+execution transitions to $\mathit{pc}=j$, a Horn
+clauses of the following shape is generated:
+%
+\[
+\mathit{pc}_i(\lvar_1,\ldots, \lvar_n, \ldots) \wedge \psi ~\to~
+\mathit{pc}_j(\lvar_1,\ldots,\lvar_n, \ldots) \]
+%
+The method arguments are always carried through in this clause (since
+postconditions can refer to the method arguments), while further
+predicate arguments, and the guard $\psi$, depend on the nature of the
+statement~$s$. Intuitively, the Horn clause expresses that, if we are
+at program counter $i$ and the invariant $\mathit{pc}_i$ and the
+condition $\psi$ hold, then we can transition to program counter $j$
+where the invariant $\mathit{pc}_j$ has to hold. Additional clauses
+are introduced for method calls, \textbf{return}, and \textbf{assert}
+statements.
+
+%\medskip
+%
+The translation from the individual statements to clauses is mostly
+straightforward, we only show the most interesting cases.
+
+
+A statement~$\textbf{assert}(\phi)$ at $\mathit{pc}=i$ is translated
+to two Horn clauses:
+\begin{align}
+  \label{eq:assertFalse}
+  \mathit{pc}_i(\lvar_1,\ldots, \lvar_n, \lvarp_1, \ldots, \lvarp_l)
+  \wedge \neg \phi &~\to~
+  \mathit{false}
+  \\
+  \notag
+  \mathit{pc}_i(\lvar_1,\ldots, \lvar_n, \lvarp_1, \ldots, \lvarp_l) &~\to~
+  \mathit{pc}_{i+1}(\lvar_1,\ldots,\lvar_n, \ldots)
+\end{align}
+where we assume that $\phi$ is formulated over the live
+variables~$\lvarp_1, \ldots, \lvarp_l$.
+
+As a special case, for a statement~$\textbf{assert}(\phi(\pvar,
+\expr_1 \ldots \expr_n))$ introduced by \eqref{eq:pushRepl},
+clause~\eqref{eq:assertFalse} is turned into an implication
+\begin{equation*}
+  \mathit{pc}_i(\lvar_1,\ldots, \lvar_n, \lvarp_1, \ldots, \lvarp_l) ~\to~
+  \phi_\cvar(p, \expr_1 \ldots \expr_n)
+\end{equation*}
+
+
+A call $(\lvarp_1, \ldots, \lvarp_{k'}) := g(\expr_1, \ldots,
+\expr_{n'})$ to method~$g$ is represented by two clauses,
+one asserting the precondition of $g$, and one applying the
+postcondition:
+\begin{align*}
+\mathit{pc}_i(\lvar_1, \ldots, \lvar_n, \lvarp_1, \ldots, \lvarp_l) &
+~\to~ \mathit{pre}_g(\expr_1,\ldots,\expr_{n'}) \\
+\begin{array}{@{}l@{}}
+  \mathit{pc}_i(\lvar_1, \ldots, \lvar_n, \lvarp_1, \ldots, \lvarp_l)
+  \wedge\mbox{}
+  \\
+  \mathit{post}_g(\expr_1,\ldots,\expr_{n'}, r_1, \ldots, r_{k'})
+\end{array}
+ &
+~ \to~ \mathit{pc}_{i+1}(\lvar_1,\ldots,\lvar_k,
+\ldots, r_1,\ldots,r_{k'},\ldots)
+\end{align*}
+Expressions~$\expr_1,\ldots,\expr_{n'}$ are again formulated over live
+variables~$\lvarp_1, \ldots, \lvarp_l$, while the result
+variables~$r_1,\ldots,r_{k'}$ in the second clause are used to update
+relevant live variables in the post-state.
+
+A statement $\textbf{return} \ (t_1, \ldots, t_k)$ at
+$\mathit{pc}=i$ is dually represented as a clause asserting the
+postcondition:
+\begin{equation*}
+\mathit{pc}_i(\lvar_1, \ldots, \lvar_n, \lvarp_1, \ldots, \lvarp_l)
+~\to~ \mathit{post}_f(\lvar_1, \ldots, \lvar_n,\expr_1,\ldots,\expr_{k}) 
+\end{equation*}
+
+To verify that no bad state is reachable from the program
+entry, \jayhorn adds an additional Horn clause: $true \to
+\mathit{pre}_{\text{main}}$ to assert that the precondition of
+\texttt{main} has to be \textit{true} (i.e., no input can violate an
+assertion).
+%
+% In practice, we have to add a prelude to the Horn clauses representing
+% \texttt{main}. The representation discussed above assumes that the
+% execution of the program starts with a completely empty heap but, for
+% example, the \texttt{main} method of a Java program takes an array of
+% strings as input that exists prior to the execution of
+% \texttt{main}. Hence, we need to add a short prelude that allocates
+% this array and fills it with non-deterministic values.
+
+All these steps are implemented as part of the \jayhorn tool and are
+sufficient to verify a set of interesting Java programs. Several limitations to this approach will be addressed by
+the proposed research to handle classes of problems that are currently
+out of scope.
+
